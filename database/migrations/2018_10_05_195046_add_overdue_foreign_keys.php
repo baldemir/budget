@@ -14,6 +14,7 @@ class AddOverdueForeignKeys extends Migration {
             $table->foreign('space_id')->references('id')->on('spaces');
             $table->foreign('recurring_id')->references('id')->on('recurrings');
             $table->foreign('tag_id')->references('id')->on('tags');
+            $table->foreign('account_id')->references('id')->on('accounts');
         });
 
         Schema::table('earnings', function ($table) {

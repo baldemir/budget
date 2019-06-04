@@ -11,6 +11,7 @@ class CreateSpendingsTable extends Migration {
             $table->unsignedInteger('space_id');
             $table->integer('recurring_id')->unsigned()->nullable();
             $table->integer('tag_id')->unsigned()->nullable();
+            $table->unsignedInteger('account_id');
             $table->date('happened_on');
             $table->string('description');
             $table->integer('amount');
