@@ -34,6 +34,12 @@
                         <input type="text" name="amount" />
                         @include('partials.validation_error', ['payload' => 'amount'])
                     </div>
+
+                    <div class="input input--small mb-0">
+                        <label>{{ __('fields.account') }}</label>
+                        <input type="text" name="account_id" />
+                        @include('partials.validation_error', ['payload' => 'account_id'])
+                    </div>
                 </div>
                 <div class="box__section box__section--highlight text-right">
                     <button class="button">@lang('actions.create')</button>
