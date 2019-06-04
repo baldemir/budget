@@ -36,9 +36,9 @@
             <validation-error v-if="errors.amount" :message="errors.amount"></validation-error>
         </div>
         <div class="input">
-            <label>Account</label>
-            <input type="text" v-model="account_id" />
-            <validation-error v-if="errors.account" :message="errors.account"></validation-error>
+            <label>Amount</label>
+            <input type="text" v-model="amount" />
+            <validation-error v-if="errors.amount" :message="errors.amount"></validation-error>
         </div>
         <div v-if="type == 'spending'">
             <div class="input row">
