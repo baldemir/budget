@@ -8,6 +8,6 @@ Route::group(['middleware' => 'auth:api'], function() {
 });
 
 
-Route::middleware('auth:api')->group( function () {
-    Route::get('set/transaction', 'API\ProductController');
+Route::group(['middleware' => 'auth:api'], function() {
+    Route::get('set/transaction', 'API\TransactionController@index');
 });
