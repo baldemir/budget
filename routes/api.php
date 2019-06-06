@@ -9,5 +9,5 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 
 Route::middleware('auth:api')->group( function () {
-    Route::resource('set/transaction', 'API\ProductController');
+    Route::get('set/transaction', 'API\ProductController');
 });
