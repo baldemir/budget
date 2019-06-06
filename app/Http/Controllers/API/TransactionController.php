@@ -10,7 +10,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use Validator;
 
 
-class ProductController extends BaseController
+class TransactionController extends BaseController
 {
     /**
      * Display a listing of the resource.
