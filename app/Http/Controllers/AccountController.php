@@ -15,7 +15,7 @@ class AccountController extends Controller {
 
     public function index() {
         return view('accounts.index', [
-            'tags' => session('space')->tags()->orderBy('created_at', 'DESC')->get()
+            'accounts' => session('space')->accounts()->orderBy('created_at', 'DESC')->get()
         ]);
     }
 
