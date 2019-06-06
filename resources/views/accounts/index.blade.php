@@ -22,7 +22,7 @@
                 @foreach ($accounts as $account)
                     <div class="box__section row">
                         <div class="row__column row__column--compact row__column--middle mr-2">
-                            <div style="width: 15px; height: 15px; border-radius: 2px; background: #F25C68;"></div>
+                            <div style="width: 15px; height: 15px; border-radius: 2px; background: #{{ $account->color }};"></div>
                         </div>
                         <div class="row__column row__column--middle">{{ $account->name }}</div>
                         <div class="row__column row__column--middle">{{ $account->spendings->count() }}</div>

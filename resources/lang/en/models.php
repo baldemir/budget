@@ -7,6 +7,9 @@ return [
     'tags' => 'Tags',
     'tag' => 'Tag',
 
+    'tags' => 'Accounts',
+    'tag' => 'Account',
+
     'recurrings' => 'Recurrings',
     'recurring' => 'Recurring',
 
