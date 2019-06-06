@@ -171,7 +171,8 @@
                             _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                             date: this.date,
                             description: this.description,
-                            amount: this.amount
+                            amount: this.amount,
+                            account_id: this.account_id
                         }
 
                         if (this.type == 'spending' && this.tag) {
