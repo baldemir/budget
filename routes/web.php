@@ -57,6 +57,15 @@ Route::group(['middleware' => ['auth']], function () {
         'destroy'
     ]);
 
+    Route::resource('/accounts', 'AccountController')->only([
+        'index',
+        'create',
+        'store',
+        'edit',
+        'update',
+        'destroy'
+    ]);
+
 
     Route::get('/reports', 'ReportController@index')->name('reports.index');
     Route::get('/reports/{slug}', 'ReportController@show');
