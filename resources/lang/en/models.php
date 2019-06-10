@@ -4,11 +4,11 @@ return [
     'spaces' => 'Spaces',
     'space' => 'Space',
 
+    'accounts' => 'Accounts',
+    'account' => 'Account',
+
     'tags' => 'Tags',
     'tag' => 'Tag',
-
-    'tags' => 'Accounts',
-    'tag' => 'Account',
 
     'recurrings' => 'Recurrings',
     'recurring' => 'Recurring',

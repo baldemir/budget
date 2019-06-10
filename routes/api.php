@@ -5,7 +5,11 @@ use Illuminate\Http\Request;
 
 
 
-Route::group(['middleware' => 'auth:api'], function() {
-    Route::get('getTransactions', 'API\TransactionController@index');
-    Route::get('setTransaction', 'API\TransactionController@store');
+Route::middleware('auth:api')->group( function () {
+    Route::resource('transactions', 'API\TransactionController');
+    Route::post('addGarantiTransactions', 'API\TransactionController@addGarantiTransactions');
+    Route::post('addCeptetebTransactions', 'API\TransactionController@addCeptetebTransactions');
+    Route::post('extensionLogin', 'API\LoginController@extensionLogin');
 });
+
+

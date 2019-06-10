@@ -18,7 +18,8 @@ class Spending extends Model {
         'tag_id',
         'happened_on',
         'description',
-        'amount'
+        'amount',
+        'account_id'
     ];
 
     protected $dispatchesEvents = [
@@ -40,6 +41,10 @@ class Spending extends Model {
     // Relations
     public function import() {
         return $this->belongsTo(Import::class);
+    }
+
+    public function space() {
+        return $this->belongsTo(Space::class);
     }
 
     public function recurring() {

@@ -10,6 +10,9 @@ return [
     'total_spent' => 'Total Spent',
     'most_expensive_tag' => 'Most Expensive Tag',
     'most_expensive_day' => 'Most Expensive Day',
+    'total_earnt' => "Total Earnt",
+    'total_spent' => "Total Spent",
+    'difference' => "Difference",
 
     'analysis' => 'Analysis',
 
