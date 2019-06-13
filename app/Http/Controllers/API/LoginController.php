@@ -29,6 +29,7 @@ class LoginController extends BaseController
             if (Auth::guard('web')->attempt($credentials)){
                 if($uye->api_token ==null){
                     $uye->api_token = $this->generateToken();
+                    $uye->save();
                 }
                 return $this->sendResponse($uye, 'Logged in successfully.');
             }else{
