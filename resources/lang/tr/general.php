@@ -12,6 +12,10 @@ return [
     'most_expensive_day' => 'En Pahalı Gün',
     'total_earnt' => "Toplam Kazanılan",
     'difference' => "Fark",
+    'verify_password' => "Şifreyi Doğrula",
+    'register' => "Kayıt Ol",
+    'login' => "Giriş Yap",
+    'forgot_my_password' => "Şifremi unuttum",
 
     'analysis' => 'Analiz',
 
@@ -20,6 +24,9 @@ return [
     'profile' => 'Profil',
     'account' => 'Hesap',
     'preferences' => 'Tercihler',
+    'new_in_kolay_butce' => 'Kolay Bütçe\'de yeni misin?',
+    'reset_password' => 'Şifre Resetle',
+    'submit' => 'Gönder',
 
     'empty_state' => 'Henüz hiç :resource yok',
 

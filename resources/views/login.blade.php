@@ -11,26 +11,26 @@
                 <form method="POST">
                     {{ csrf_field() }}
                     <div class="input">
-                        <label>E-mail</label>
+                        <label>{{ __('fields.email') }}</label>
                         <input type="email" name="email" value="{{ old('email') }}" />
                     </div>
                     <div class="input">
-                        <label>Password</label>
+                        <label>{{ __('fields.password') }}</label>
                         <input type="password" name="password" />
                     </div>
                     <div class="row row--separate" style="justify-content: space-between;">
                         <div class="row__column row__column--compact">
-                            <button class="button">Log in</button>
+                            <button class="button">{{ __('general.login') }}</button>
                         </div>
                         <div class="row__column row__column--compact row__column--middle">
-                            <a href="/reset_password">Forgot your password?</a>
+                            <a href="/reset_password">{{ __('general.forgot_my_password') }}</a>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
         <div class="text-center mt-2">
-            <a class="fs-sm" href="/register">New to Kolay Bütçe?</a>
+            <a class="fs-sm" href="/register">{{ __('general.new_in_kolay_butce') }}</a>
         </div>
     </div>
 @endsection
