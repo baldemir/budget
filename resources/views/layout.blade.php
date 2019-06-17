@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <link rel="stylesheet" href="/storage/twemoji-flags.css" />
-        <script src="/storage/fontawesome/all.min.js"></script>
+        <script src="/storage/all.min.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:400,400i,600,600i" />
         <link rel="stylesheet" href="/css/app.css" />
         <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css" />
@@ -55,7 +55,7 @@
                         <ul class="navigation__menu">
                             <li>
                                 <button-dropdown>
-                                    <a slot="button" href="/transactions/create">{{ __('actions.create') }} {{ __('models.transaction') }}</a>
+                                    <a slot="button" href="/transactions/create">{{ __('actions.create_transaction') }}</a>
                                     <ul slot="menu" v-cloak>
                                         <li>
                                             <a href="/tags/create">{{ __('actions.create') }} {{ __('models.tag') }}</a>

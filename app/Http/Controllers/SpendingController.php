@@ -82,6 +82,12 @@ class SpendingController extends Controller {
             ]);
     }
 
+    public function edit(Spending $spending) {
+        $this->authorize('edit', $spending);
+
+        return view('spendings.edit', compact('spending'));
+    }
+
     public function restore($id) {
         $spending = Spending::withTrashed()->find($id);
 

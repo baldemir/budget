@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="text-center mt-2">
-            <a class="fs-sm" href="/login">Already on Budget?</a>
+            <a class="fs-sm" href="/login">Already on Kolay Bütçe?</a>
         </div>
     </div>
 @endsection

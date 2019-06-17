@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="text-center mt-2">
-            <a class="fs-sm" href="/register">New to Budget?</a>
+            <a class="fs-sm" href="/register">New to Kolay Bütçe?</a>
         </div>
     </div>
 @endsection
