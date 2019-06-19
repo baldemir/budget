@@ -15,6 +15,7 @@
                     initial="{{ Auth::user()->language }}"></searchable>
                 @include('partials.validation_error', ['payload' => 'language'])
             </div>
+
             <div class="input input--small">
                 <label>{{ __('fields.theme') }}</label>
                 <select name="theme">

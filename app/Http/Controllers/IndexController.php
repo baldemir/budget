@@ -11,7 +11,7 @@ class IndexController extends Controller {
         if (Auth::check()) {
             return redirect()->route('dashboard');
         }
-
-        return redirect()->route('login');
+        return view('homepage');
+        //return redirect()->route('login');
     }
 }

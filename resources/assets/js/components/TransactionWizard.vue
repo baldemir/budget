@@ -4,14 +4,14 @@
             <button
                 class="bg__button"
                 :class="{ 'bg__button--active': type == 'earning' }"
-                @click="switchType('earning')">Earning</button>
+                @click="switchType('earning')">Gelir</button>
             <button
                 class="bg__button"
                 :class="{ 'bg__button--active': type == 'spending' }"
-                @click="switchType('spending')">Spending</button>
+                @click="switchType('spending')">Gider</button>
         </div>
         <div class="input" v-if="type == 'spending'">
-            <label>Tag</label>
+            <label>Etiket</label>
             <searchable
                 name="tag"
                 :items="tags"
@@ -19,24 +19,24 @@
             <validation-error v-if="errors.tag_id" :message="errors.tag_id"></validation-error>
         </div>
         <div class="input">
-            <label>Date</label>
+            <label>Tarih</label>
             <date-picker @DateUpdated="onDateUpdate"></date-picker>
             <div class="hint mt-05">YYYY-MM-DD</div>
             <validation-error v-if="errors.date" :message="errors.date"></validation-error>
             <validation-error v-if="errors.day" :message="errors.day"></validation-error>
         </div>
         <div class="input">
-            <label>Description</label>
+            <label>Açıklama</label>
             <input type="text" v-model="description" :placeholder="type == 'earning' ? 'Paycheck February' : 'Birthday Present for Angela'" />
             <validation-error v-if="errors.description" :message="errors.description"></validation-error>
         </div>
         <div class="input">
-            <label>Amount</label>
+            <label>Tutar</label>
             <input type="text" v-model="amount" />
             <validation-error v-if="errors.amount" :message="errors.amount"></validation-error>
         </div>
         <div class="input">
-            <label>Account</label>
+            <label>Hesap</label>
             <input type="text" v-model="account_id" />
             <validation-error v-if="errors.account_id" :message="errors.account_id"></validation-error>
         </div>
@@ -46,18 +46,18 @@
                     <input type="checkbox" id="test" v-model="isRecurring" />
                 </div>
                 <div class="row__column">
-                    <label for="test">This is a recurring spending&mdash;create it for me in the future</label>
+                    <label for="test">Bu tekrar eden bir harcama&mdash;sonraki aylar için de oluştur.</label>
                 </div>
             </div>
             <div v-if="isRecurring">
                 <div class="input">
-                    <label>How long will this spending go on for?</label>
+                    <label>Bu harcama ne kadar devam edecek?</label>
                     <div class="row">
                         <div class="row__column row__column--compact mr-1">
                             <input id="noEnd" type="radio" v-model="recurringEnd" value="forever" />
                         </div>
                         <div class="row__column">
-                            <label for="noEnd">Forever :(</label>
+                            <label for="noEnd">Hep :(</label>
                         </div>
                     </div>
                     <div class="row">
@@ -65,7 +65,7 @@
                             <input id="fixedEnd" type="radio" v-model="recurringEnd" value="fixed" />
                         </div>
                         <div class="row__column">
-                            <label for="fixedEnd">Until</label>
+                            <label for="fixedEnd">Şu tarihe kadar</label>
                             <date-picker name="end" :start-date="recurringEndDate" @DateUpdated="onEndUpdate"></date-picker>
                             <div class="hint mt-05">YYYY-MM-DD</div>
                             <validation-error v-if="errors.end" :message="errors.end"></validation-error>

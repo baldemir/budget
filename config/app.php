@@ -80,13 +80,15 @@ return [
     'locale' => 'tr',
 
     'locales' => [
+        /*
         'en' => 'English',
         'nl' => 'Dutch',
         'dk' => 'Danish',
         'de' => 'German',
         'fr' => 'French',
         'pt' => 'Portuguese',
-        'tr' => 'Turkish'
+        */
+        'tr' => 'Türkçe'
     ],
 
     /*
