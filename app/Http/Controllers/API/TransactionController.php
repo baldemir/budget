@@ -256,7 +256,6 @@ class TransactionController extends BaseController
         $isDuplicate = Spending::where('description', $description)
             ->where('happened_on', $happened_on)
             ->where('space_id', $space_id)
-            ->where('tag_id', $tag_id)
             ->where('amount', $amount)
             ->withTrashed()
             ->first();
