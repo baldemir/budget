@@ -325,7 +325,7 @@ class TransactionController extends BaseController
 
                     $tag = new Tag();
                     $tag->name = "-";
-                    $tag->color= rand_color();
+                    $tag->color= $this->rand_color();
                     $tag->space_id = $spaceId;
                     $tag->save();
                 }
