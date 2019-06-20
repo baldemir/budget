@@ -7,16 +7,6 @@
     <div class="wrapper my-3">
         <div class="row">
             <div class="row__column row__column--middle">
-
-                <div class="chart-container">
-                    <canvas id="chart"></canvas>
-                </div>
-
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="row__column row__column--middle">
                 <h2>{{ __('models.earnings') }}</h2>
             </div>
             <div class="row__column row__column--compact row__column--middle">
@@ -89,29 +79,5 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function () {
-            data = {
-                datasets: [{
-                    data: [110, 120, 130],
-                    backgroundColor: ['red', 'green', 'blue'],
-                    label: 'Dataset 1'
-                }],
-                // These labels appear in the legend and in the tooltips when hovering different arcs
-                labels: [
-                    'Red',
-                    'Yellow',
-                    'Blue'
-                ]
-            };
-
-            Chart.Doughnut('chart', {
-                type: 'pie',
-                data: data,
-                options: {
-                    responsive: true
-                }
-            });
-
-        });
     </script>
 @endsection
