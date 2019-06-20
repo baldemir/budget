@@ -42,7 +42,7 @@ class DashboardController extends Controller {
         $totalEarnt = session('space')->earnings()->whereRaw('YEAR(happened_on) = ? AND MONTH(happened_on) = ?', [$currentYear, $currentMonth])->sum('amount');
 
         $tagRepository = new TagRepository();
-        $mostExpensiveTags = $tagRepository->getMostExpensiveTags($space_id, 3, $currentYear, $currentMonth);
+        $mostExpensiveTags = $tagRepository->getMostExpensiveTags($space_id, 5, $currentYear, $currentMonth);
 
         $balanceTick = 0;
         $dailyBalance = [];
