@@ -37,4 +37,6 @@ return [
     'you_deleted_spending' => "Giderinizi başarılı şekilde kaldırdınız.",
     'most_expensive' => 'En Pahalı',
     'undo' => 'Geri Al',
+    'earnings_distribution' => 'Gelir Dağılımı',
+    'spendings_distribution' => 'Gider Dağılımı',
 ];

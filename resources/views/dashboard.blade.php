@@ -8,8 +8,7 @@
         <searchable
                 name="tag"
                 initial="{{$monthYear}}"
-                :items='@json($tags)'
-                @SelectUpdated="monthYearUpdated"></searchable>
+                :items='@json($tags)'></searchable>
 
         <div class="row row--gutter row--responsive my-3">
             <div class="row__column">
@@ -28,6 +27,25 @@
                 <div class="card card--green">
                     <h2 style="font-size: 20px;">{!! $currency !!} {{ number_format(($totalEarnt - $totalSpent) / 100, 2) }}</h2>
                     <div class="mt-1" style="color: #A7AEBB;">{{ __('general.difference') }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row--gutter row--responsive my-3">
+            <div class="row__column">
+                <div class="card card--blue">
+                    <h2 style="font-size: 20px;">{{ __('general.earnings_distribution') }}</h2>
+                    <div class="mt-1" style="color: #A7AEBB;">
+                        <canvas id="earningsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row__column">
+                <div class="card card--blue">
+                    <h2 style="font-size: 20px;">{{ __('general.spendings_distribution') }}</h2>
+                    <div class="mt-1" style="color: #A7AEBB;">
+                        <canvas id="spendingsChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,5 +96,50 @@
                 }
             }
         });
+        $(document).ready(function () {
+            data = {
+                datasets: [{
+                    data: @json($earningAmounts),
+                    backgroundColor: @json($earningColors),
+                    label: 'Dataset 1'
+                }],
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+                labels: @json($earningCats)
+            };
+
+            Chart.Doughnut('earningsChart', {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true,
+                    legend: {
+                        display: false,
+                    },
+                }
+            });
+
+            data2 = {
+                datasets: [{
+                    data: @json($spendingAmounts),
+                    backgroundColor: @json($spendingColors),
+                    label: 'Dataset 1'
+                }],
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+                labels: @json($spendingCats)
+            };
+
+            Chart.Doughnut('spendingsChart', {
+                type: 'pie',
+                data: data2,
+                options: {
+                    responsive: true,
+                    legend: {
+                        display: false,
+                    },
+                }
+            });
+
+        });
     </script>
+
 @endsection

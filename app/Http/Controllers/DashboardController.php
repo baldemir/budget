@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\TagRepository;
+use App\Utils;
 use Illuminate\Http\Request;
 
 use App\Earning;
@@ -51,6 +52,32 @@ class DashboardController extends Controller {
 
         $totalSpent = session('space')->spendings()->whereRaw('YEAR(happened_on) = ? AND MONTH(happened_on) = ?', [$currentYear, $currentMonth])->sum('amount');
         $totalEarnt = session('space')->earnings()->whereRaw('YEAR(happened_on) = ? AND MONTH(happened_on) = ?', [$currentYear, $currentMonth])->sum('amount');
+
+        $totalEarnt2 = session('space')->earnings()->whereRaw('YEAR(happened_on) = ? AND MONTH(happened_on) = ?', [$currentYear, $currentMonth])->groupBy('description')->selectRaw('SUM(amount) total, description')->orderBy('total')->get();
+        $totalSpent2 = session('space')->spendings()->whereRaw('YEAR(happened_on) = ? AND MONTH(happened_on) = ?', [$currentYear, $currentMonth])->groupBy('tag_id')
+            ->join('tags', 'spendings.tag_id', '=', 'tags.id')->selectRaw('SUM(amount) total, tag_id, name')->orderBy('total')->get();
+
+        $earningCats = [];
+        $earningAmounts = [];
+        $earningColors = [];
+
+        $spendingCats = [];
+        $spendingAmounts = [];
+        $spendingColors = [];
+        foreach ($totalEarnt2 as $earnt){
+            $earningCats[] = $earnt["description"];
+            $earningAmounts[] = Utils::formatAmount($earnt["total"]);
+            $earningColors[] = "#" . Utils::rand_color();
+        }
+
+        foreach ($totalSpent2 as $spent){
+            $spendingCats[] = $spent["name"];
+            $spendingAmounts[] = Utils::formatAmount($spent["total"]);
+            $spendingColors[] = "#" . Utils::rand_color();
+        }
+
+
+
 
         $tagRepository = new TagRepository();
         $mostExpensiveTags = $tagRepository->getMostExpensiveTags($space_id, 5, $currentYear, $currentMonth);
@@ -104,7 +131,13 @@ class DashboardController extends Controller {
 
             'daysInMonth' => $daysInMonth,
             'dailyBalance' => $dailyBalance,
-            'tags' => $tags
+            'tags' => $tags,
+            'earningCats' => $earningCats,
+            'earningAmounts' => $earningAmounts,
+            'earningColors' => $earningColors,
+            'spendingCats' => $spendingCats,
+            'spendingAmounts' => $spendingAmounts,
+            'spendingColors' => $spendingColors,
         ]);
     }
 }
