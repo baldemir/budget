@@ -66,9 +66,10 @@
             </div>
         @endif
         <div class="box mt-3">
-            <div class="box__section box__section--header">Daily Balance</div>
+            <div class="box__section box__section--header">{{ __('general.daily_expenses') }}</div>
             <div class="box__section">
-                <div class="ct-chart ct-major-twelfth"></div>
+
+                <canvas id="dailyChart"></canvas>
             </div>
         </div>
     </div>
@@ -96,6 +97,8 @@
                 }
             }
         });
+
+
         $(document).ready(function () {
             data = {
                 datasets: [{
@@ -108,7 +111,6 @@
             };
 
             Chart.Doughnut('earningsChart', {
-                type: 'pie',
                 data: data,
                 options: {
                     responsive: true,
@@ -129,7 +131,6 @@
             };
 
             Chart.Doughnut('spendingsChart', {
-                type: 'pie',
                 data: data2,
                 options: {
                     responsive: true,
@@ -138,6 +139,27 @@
                     },
                 }
             });
+            data3 = {
+                datasets: [{
+                    data: [{!! implode(',', $dailyBalance) !!}],
+                    label: 'Harcama',
+                    borderColor: "rgb(75, 192, 192)",
+                    pointBackgroundColor: '#FA0'
+                }],
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+                labels: [{!! implode(',', range(1, $daysInMonth)) !!}]
+            };
+
+            Chart.Line('dailyChart',{
+                data: data3,
+                options: {
+                    responsive: true,
+                    legend: {
+                        display: false,
+                    },
+                }
+            });
+
 
         });
     </script>

@@ -39,4 +39,5 @@ return [
     'undo' => 'Geri Al',
     'earnings_distribution' => 'Gelir Dağılımı',
     'spendings_distribution' => 'Gider Dağılımı',
+    'daily_expenses' => 'Günlük Harcamalar'
 ];

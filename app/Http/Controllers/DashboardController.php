@@ -85,7 +85,7 @@ class DashboardController extends Controller {
         $balanceTick = 0;
         $dailyBalance = [];
         for ($i = 1; $i <= $daysInMonth; $i ++) {
-            $balanceTick += session('space')
+            $balanceTick = session('space')
                 ->spendings()
                 ->where('happened_on', $currentYear . '-' . $currentMonth . '-' . $i)
                 ->sum('amount');

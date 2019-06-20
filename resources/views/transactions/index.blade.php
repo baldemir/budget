@@ -49,6 +49,7 @@
                         <div class="box">
                             @foreach ($transactions as $transaction)
                                 <div class="box__section row">
+                                    <div class="row__column row__column--middle">{{ date('d-m-Y', strtotime($transaction->happened_on))}}</div>
                                     <div class="row__column row__column--middle">{{ $transaction->description }}</div>
                                     <div class="row__column">
                                         @if ($transaction->tag)
