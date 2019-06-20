@@ -17,8 +17,32 @@ class EarningController extends Controller {
         ];
     }
 
-    public function index() {
+    public function index(Request $request) {
         $user = Auth::user();
+
+        $earningsByMonth = [];
+
+        for ($month = 12; $month >= 1; $month --) {
+            $query = session('space')
+                ->earnings()
+                ->whereYear('happened_on', date('Y'))
+                ->whereMonth('happened_on', $month);
+
+
+            if ($import_id = $request->get('filter_by_import')) {
+                $filter = 'import';
+
+                $query->where('import_id', $import_id);
+            }
+
+            $earningsThisMonth = $query->orderBy('happened_on', 'DESC')
+                ->get();
+
+            if (count($earningsThisMonth)) {
+                $earningsByMonth[$month] = $earningsThisMonth;
+            }
+        }
+
 
         $earnings = session('space')
             ->earnings()
@@ -26,7 +50,7 @@ class EarningController extends Controller {
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        return view('earnings.index', compact('earnings'));
+        return view('earnings.index', compact('earnings', 'earningsByMonth'));
     }
 
     public function create() {
