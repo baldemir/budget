@@ -66,7 +66,7 @@ class EarningController extends Controller {
             'amount' => $amount
         ])->save();
 
-        return redirect()->route('earnings.index');
+        return redirect()->route('transactions.index');
     }
 
     public function destroy(Earning $earning) {
