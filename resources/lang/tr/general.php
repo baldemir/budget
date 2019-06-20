@@ -35,5 +35,6 @@ return [
     'know_how_to_make_this_app_better' => 'Öneri ve şikayetleriniz var mı?',
     'you_deleted_earning' => "Gelirinizi başarılı şekilde kaldırdınız.",
     'you_deleted_spending' => "Giderinizi başarılı şekilde kaldırdınız.",
+    'most_expensive' => 'En Pahalı',
     'undo' => 'Geri Al',
 ];

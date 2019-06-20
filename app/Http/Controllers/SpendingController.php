@@ -93,7 +93,7 @@ class SpendingController extends Controller {
         $this->authorize('update', $spending);
 
         $request->validate($this->validationRules());
-        $amount = str_replace(',', '.', str_replace('.', '', $request->input('amount')));
+        $amount = str_replace('.', '', str_replace(',', '', $request->input('amount')));
         $spending->fill([
             'tag_id' => $request->input('tag_id'),
             'happened_on' => $request->input('date'),
