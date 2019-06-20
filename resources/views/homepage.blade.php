@@ -197,7 +197,7 @@
         <p><i class="fas fa-check c-primary mr-1"></i> Banka hesap hareketlerinizi otomatik olarak içe aktarma.</p>
     </li>
     <li>
-        <p><i class="fas fa-check c-primary mr-1"></i> Cepteteb ve Garanti BBVA internet bankacılığı ile tam entegrasyon.</p>
+        <p><i class="fas fa-check c-primary mr-1"></i> <a href="https://chrome.google.com/webstore/detail/kolay-b%C3%BCt%C3%A7e/acfnniefnegcmggkdobblgpmghndemai">Kolay Bütçe Chrome Uzantısı</a> sayesinde Cepteteb ve Garanti BBVA internet bankacılığı ile tam entegrasyon. Chrome uzantısını kurmak için <a href="https://chrome.google.com/webstore/detail/kolay-b%C3%BCt%C3%A7e/acfnniefnegcmggkdobblgpmghndemai">bu linki</a> kullanabilirsiniz.</p>
     </li>
     <li>
         <p><i class="fas fa-check c-primary mr-1"></i> Tema seçenekleri.</p>
