@@ -27,7 +27,7 @@
         </div>
         <div class="input">
             <label>Açıklama</label>
-            <input type="text" v-model="description" :placeholder="type == 'earning' ? 'Paycheck February' : 'Birthday Present for Angela'" />
+            <input type="text" v-model="description" :placeholder="type == 'earning' ? 'Mart ayı maaşı' : 'Ebru için doğum günü hediyesi'" />
             <validation-error v-if="errors.description" :message="errors.description"></validation-error>
         </div>
         <div class="input">

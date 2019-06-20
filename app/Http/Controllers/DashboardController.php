@@ -10,6 +10,8 @@ use App\Recurring;
 use App\Spending;
 use Auth;
 use DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 
 class DashboardController extends Controller {
     public function __invoke() {
@@ -20,6 +22,15 @@ class DashboardController extends Controller {
         $space_id = session('space')->id;
         $currentYear = date('Y');
         $currentMonth = date('m');
+        $monthYear = date('Y-m');
+
+
+        if(Input::get('yil')){
+            $currentYear = Input::get('yil');
+        }
+        if(Input::get('ay')){
+            $currentMonth= Input::get('ay');
+        }
 
 
         if(session('dashYear') != null){
@@ -59,8 +70,29 @@ class DashboardController extends Controller {
 */
             $dailyBalance[$i] = number_format($balanceTick / 100, 2, '.', '');
         }
+
+        $months = Spending::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(happened_on, '%Y') new_year"), DB::raw("DATE_FORMAT(happened_on, '%m') new_month"),  DB::raw('YEAR(happened_on) year, MONTH(happened_on) month'))
+            ->groupby('year','month')
+            ->orderBy('happened_on', 'desc')
+            ->limit(5)
+            ->get();
+
+
+        $tags=[];
+        foreach ($months as $month) {
+            $monthNumber = (int)$month->new_month;
+            $href = "";
+            if($monthNumber == $currentMonth && $month->new_year == $currentYear ){
+                $href = "";
+                $monthYear = $month->new_year . '-' . $month->new_month;
+            }else{
+                $href = "href='?ay=" . $monthNumber . '&yil=' . $month->new_year . "'";
+            }
+            $tags[] = [true,'key' => $month->new_year . '-' . $month->new_month, 'label' => '<div class="row"><div class="row__column row__column--compact row__column--middle mr-1"><a ' . $href .' ><div style="width: 15px; height: 15px; border-radius: 2px; background: #' . 'F00' . ';"></div></div><div class="row__column row__column--middle">' . Lang::get('calendar.months.' . $monthNumber) .' ' . $month->new_year . '</a></div></div>'];
+
+        }
         return view('dashboard', [
-            'month' => date('n'),
+            'monthYear' => $monthYear,
 
             'balance' => $balance,
             'recurrings' => $recurrings,
@@ -71,7 +103,8 @@ class DashboardController extends Controller {
             'mostExpensiveTags' => $mostExpensiveTags,
 
             'daysInMonth' => $daysInMonth,
-            'dailyBalance' => $dailyBalance
+            'dailyBalance' => $dailyBalance,
+            'tags' => $tags
         ]);
     }
 }
