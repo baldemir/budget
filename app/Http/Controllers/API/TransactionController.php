@@ -17,6 +17,9 @@ use Validator;
 
 class TransactionController extends BaseController
 {
+    public function rand_color() {
+        return str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+    }
 
     /**
      * Display a listing of the resource.
@@ -209,7 +212,7 @@ class TransactionController extends BaseController
 
                             $tag = new Tag();
                             $tag->name = $elem[2];
-                            $tag->color= 'FF0';
+                            $tag->color= $this->rand_color();
                             $tag->space_id = $spaceId;
                             $tag->save();
                         }
@@ -220,20 +223,9 @@ class TransactionController extends BaseController
                             $transaction->tag_id = $tag->id;
                             $transaction->account_id = 1;
                             $amount = $amount * -1;
-                            $isDuplicate = Spending::where('description', $transaction->description)
-                                ->where('happened_on', $transaction->happened_on)
-                                ->where('space_id', $transaction->space_id)
-                                ->where('tag_id', $transaction->tag_id)
-                                ->where('amount', $amount)
-                                ->first();
-
+                            $isDuplicate = $this->getDuplicateSpending($transaction->description, $transaction->happened_on, $transaction->space_id, $transaction->tag_id, $amount);
                         }else{
-                            $isDuplicate = Earning::where('description', $transaction->description)
-                                ->where('happened_on', $transaction->happened_on)
-                                ->where('space_id', $transaction->space_id)
-                                ->where('amount', $amount)
-                                ->first();
-
+                            $isDuplicate = $this->getDuplicateEarning($transaction->description, $transaction->happened_on, $transaction->space_id, $amount);
                         }
                         $transaction->amount = $amount;
 
@@ -258,6 +250,27 @@ class TransactionController extends BaseController
             }
         }
         return $savedTransaction;
+    }
+
+    public function getDuplicateSpending($description, $happened_on, $space_id, $tag_id, $amount){
+        $isDuplicate = Spending::where('description', $description)
+            ->where('happened_on', $happened_on)
+            ->where('space_id', $space_id)
+            ->where('tag_id', $tag_id)
+            ->where('amount', $amount)
+            ->withTrashed()
+            ->first();
+        return $isDuplicate;
+    }
+
+    public function getDuplicateEarning($description, $happened_on, $space_id, $amount){
+        $isDuplicate = Earning::where('description', $description)
+            ->where('happened_on', $happened_on)
+            ->where('space_id', $space_id)
+            ->where('amount', $amount)
+            ->withTrashed()
+            ->first();
+        return $isDuplicate;
     }
 
     /**
@@ -312,7 +325,7 @@ class TransactionController extends BaseController
 
                     $tag = new Tag();
                     $tag->name = "-";
-                    $tag->color= 'FF0';
+                    $tag->color= rand_color();
                     $tag->space_id = $spaceId;
                     $tag->save();
                 }
@@ -326,19 +339,10 @@ class TransactionController extends BaseController
                     $transaction->tag_id = $tag->id;
                     $transaction->account_id = 1;
                     $amount = $amount * -1;
-                    $isDuplicate = Spending::where('description', $transaction->description)
-                        ->where('happened_on', $transaction->happened_on)
-                        ->where('space_id', $transaction->space_id)
-                        ->where('tag_id', $transaction->tag_id)
-                        ->where('amount', $amount)
-                        ->first();
+                    $isDuplicate = $this->getDuplicateSpending($transaction->description, $transaction->happened_on, $transaction->space_id, $transaction->tag_id, $amount);
 
                 }else{
-                    $isDuplicate = Earning::where('description', $transaction->description)
-                        ->where('happened_on', $transaction->happened_on)
-                        ->where('space_id', $transaction->space_id)
-                        ->where('amount', $amount)
-                        ->first();
+                    $isDuplicate = $this->getDuplicateEarning($transaction->description, $transaction->happened_on, $transaction->space_id, $amount);
 
                 }
                 $transaction->amount = $amount;

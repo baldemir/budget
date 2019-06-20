@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Register')
+@section('title'){{ __('general.register') }}@endsection
 
 @section('body')
     <div class="wrapper wrapper--narrow my-3">

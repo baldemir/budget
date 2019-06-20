@@ -32,5 +32,8 @@ return [
 
     'verify_account' => 'Hesabınız henüz onaylanmamış&mdash;lütfen e-mail adresinizi kontrol ediniz',
     'spaces_explanation' => 'Alanlar birden fazla bütçeyi bir arada yönetmeniz içindir.',
-    'know_how_to_make_this_app_better' => 'Öneri ve şikayetleriniz var mı?'
+    'know_how_to_make_this_app_better' => 'Öneri ve şikayetleriniz var mı?',
+    'you_deleted_earning' => "Gelirinizi başarılı şekilde kaldırdınız.",
+    'you_deleted_spending' => "Giderinizi başarılı şekilde kaldırdınız.",
+    'undo' => 'Geri Al',
 ];

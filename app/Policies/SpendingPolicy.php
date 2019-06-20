@@ -17,4 +17,10 @@ class SpendingPolicy {
     public function restore(User $user, Spending $spending) {
         return $user->spaces->contains($spending->space_id);
     }
+    public function edit(User $user, Spending $spending) {
+        return $user->spaces->contains($spending->space_id);
+    }
+    public function update(User $user, Spending $spending) {
+        return $user->spaces->contains($spending->space_id);
+    }
 }

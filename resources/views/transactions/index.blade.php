@@ -4,6 +4,20 @@
 
 @section('body')
     <div class="wrapper my-3">
+        @if (session('restorableEarning'))
+            <div class="mt-3">{{ __('general.you_deleted_earning') }}</div>
+            <form method="POST" action="/earnings/{{ session('restorableEarning') }}/restore" class="mt-05">
+                {{ csrf_field() }}
+                <button class="button link">{{ __('general.undo') }}</button>
+            </form>
+        @endif
+        @if (session('restorableSpending'))
+            <div class="mt-3">{{ __('general.you_deleted_spending') }}</div>
+            <form method="POST" action="/earnings/{{ session('restorableSpending') }}/restore" class="mt-05">
+                {{ csrf_field() }}
+                <button class="button link">{{ __('general.undo') }}</button>
+            </form>
+        @endif
         <div class="row mb-3">
             <div class="row__column row__column--middle">
                 <h2>{{ __('models.transactions') }}</h2>
@@ -53,6 +67,22 @@
                                         @else
                                             <i class="fas fa-arrow-alt-right fa-sm"></i>
                                         @endif
+                                    </div>
+                                    <div class="row__column row__column--middle row row--right">
+                                        <div class="row__column row__column--compact">
+                                            <a @if (get_class($transaction) == 'App\Earning')href="/earnings/{{ $transaction->id }}/edit" @endif @if (get_class($transaction) == 'App\Spending')href="/spendings/{{ $transaction->id }}/edit" @endif>
+                                                <i class="far fa-pencil"></i>
+                                            </a>
+                                        </div>
+                                        <div class="row__column row__column--compact ml-2">
+                                            <form method="POST" @if (get_class($transaction) == 'App\Earning')action="/earnings/{{ $transaction->id }}" @endif @if(get_class($transaction) == 'App\Spending')action="/spendings/{{ $transaction->id }}" @endif>
+                                                {{ method_field('DELETE') }}
+                                                {{ csrf_field() }}
+                                                <button class="button link">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach

@@ -7,7 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 class SetDefaultLanguageInUsersTable extends Migration {
     public function up() {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('language')->default('en')->change();
+            $table->string('language')->default('tr')->change();
         });
     }
 }

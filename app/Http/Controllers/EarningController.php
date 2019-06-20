@@ -13,7 +13,7 @@ class EarningController extends Controller {
         return [
             'date' => 'required|date|date_format:Y-m-d',
             'description' => 'required|max:255',
-            'amount' => 'required|regex:/^\d*(\.\d{2})?$/'
+            'amount' => 'required|regex:/^(\d{0,3}(?:,\d{3}){0,4})*(\.\d{2})?$/'
         ];
     }
 
@@ -58,11 +58,12 @@ class EarningController extends Controller {
         $this->authorize('update', $earning);
 
         $request->validate($this->validationRules());
+        $amount = str_replace('.', '', str_replace(',', '', $request->input('amount')));
 
         $earning->fill([
             'happened_on' => $request->input('date'),
             'description' => $request->input('description'),
-            'amount' => $request->input('amount')
+            'amount' => $amount
         ])->save();
 
         return redirect()->route('earnings.index');
@@ -76,7 +77,7 @@ class EarningController extends Controller {
         $earning->delete();
 
         return redirect()
-            ->route('earnings.index')
+            ->back()
             ->with([
                 'restorableEarning' => $restorableEarning
             ]);

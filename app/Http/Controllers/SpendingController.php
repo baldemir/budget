@@ -10,6 +10,14 @@ use App\Tag;
 use Auth;
 
 class SpendingController extends Controller {
+    protected function validationRules() {
+        return [
+            'date' => 'required|date|date_format:Y-m-d',
+            'description' => 'required|max:255',
+            'amount' => 'required|regex:/^(\d{0,3}(?:,\d{3}){0,4})*(\.\d{2})?$/',
+            'tag_id' => 'nullable|exists:tags,id'
+        ];
+    }
     public function index(Request $request) {
         $filter = false;
 
@@ -50,8 +58,8 @@ class SpendingController extends Controller {
             'tag_id' => 'nullable|exists:tags,id', // TODO CHECK IF TAG BELONGS TO USER
             'date' => 'required|date|date_format:Y-m-d',
             'description' => 'required|max:255',
-            'amount' => 'required|regex:/^\d*(\.\d{2})?$/',
-            'account_id' => 'nullable|exists:accounts,id', // TODO CHECK IF TAG BELONGS TO USER
+            'amount' => 'required|regex:/^(\d{0,3}(?:,\d{3}){0,4})*(\.\d{2})?$/',
+            'account_id' => 'nullable|exists:accounts,id'
         ]);
 
         $spending = new Spending;
@@ -76,16 +84,30 @@ class SpendingController extends Controller {
         $spending->delete();
 
         return redirect()
-            ->route('spendings.index')
+            ->back()
             ->with([
                 'restorableSpending' => $restorableSpending
             ]);
     }
+    public function update(Request $request, Spending $spending) {
+        $this->authorize('update', $spending);
+
+        $request->validate($this->validationRules());
+        $amount = str_replace(',', '.', str_replace('.', '', $request->input('amount')));
+        $spending->fill([
+            'tag_id' => $request->input('tag_id'),
+            'happened_on' => $request->input('date'),
+            'description' => $request->input('description'),
+            'amount' => $amount
+        ])->save();
+
+        return redirect()->route('transactions.index');
+    }
 
     public function edit(Spending $spending) {
         $this->authorize('edit', $spending);
-
-        return view('spendings.edit', compact('spending'));
+        $tags = session('space')->tags()->orderBy('created_at', 'DESC')->get();
+        return view('spendings.edit', compact('spending', 'tags'));
     }
 
     public function restore($id) {
