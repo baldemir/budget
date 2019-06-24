@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Dashboard')
+@section('title'){{ __('general.dashboard') }}@endsection
 
 @section('body')
     <div class="wrapper my-3">
