@@ -364,4 +364,93 @@ class TransactionController extends BaseController
         return $savedTransaction;
     }
 
+    public function addZiraatTransactions(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+        $content = json_decode($request->get("transactions"));
+        $savedTransaction = 0;
+        $elemValue = null;
+
+        $transactionsStarted = false;
+        foreach ($content as $elem){
+            try{
+                try{
+                    if($elem->islemtutari != null){
+                        $elem->tutar = $elem->islemtutari;
+                    }
+                }catch (\Exception $exception){
+
+                }
+                $elem->tarih = preg_replace('/\s+/', '', $elem->tarih);
+
+
+                if(\DateTime::createFromFormat('d/m/Y', $elem->tarih) == false){
+                    continue;
+                }
+
+                $elem->tutar = preg_replace("/[^0-9,.-]/", "", $elem->tutar);
+                $amount = str_replace(',', '.', str_replace('.', '', $elem->tutar));
+                $amount = str_replace('TL', '', $amount);
+
+                $amount = intVal($amount * 100);
+                $transaction = null;
+                $isNegative = ($request->get("spendingNegative") === 'true');
+                if( $isNegative == false){
+                    $amount = $amount * -1;
+                }
+                if($amount>0){
+                    $transaction = new Earning();
+                }else{
+                    $transaction = new Spending();
+                }
+
+                $spaceId = $user->spaces()->first()->id;
+
+                $transaction->happened_on = \DateTime::createFromFormat('d/m/Y', $elem->tarih)->format('Y-m-d');
+                $transaction->description = trim($elem->aciklama);
+                $tag = Tag::where('name', "-")->first();
+                if($tag == null){
+
+                    $tag = new Tag();
+                    $tag->name = "-";
+                    $tag->color= $this->rand_color();
+                    $tag->space_id = $spaceId;
+                    $tag->save();
+                }
+                $isDuplicate = true;
+
+                $transaction->space_id = $spaceId;
+
+
+
+                if($amount < 0){
+                    $transaction->tag_id = $tag->id;
+                    $transaction->account_id = 1;
+                    $amount = $amount * -1;
+                    $isDuplicate = $this->getDuplicateSpending($transaction->description, $transaction->happened_on, $transaction->space_id, $transaction->tag_id, $amount);
+
+                }else{
+                    $isDuplicate = $this->getDuplicateEarning($transaction->description, $transaction->happened_on, $transaction->space_id, $amount);
+
+                }
+                $transaction->amount = $amount;
+
+
+
+
+                if($isDuplicate != null){
+                    continue;
+                }else{
+
+                }
+                $transaction->save();
+                $savedTransaction++;
+            }catch (\Exception $exception){
+                return $this->sendError('Validation Error.', $exception->getMessage());
+            }
+        }
+
+        return $savedTransaction;
+    }
+
 }
