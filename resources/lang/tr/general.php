@@ -6,7 +6,7 @@ return [
     'balance' => 'Bakiye',
     'recurrings' => 'Tekrar Edenler',
     'left_to_spend' => 'Harcamaya Kalan',
-    'total_earned' => 'Toplam Kazanlılan',
+    'total_earned' => 'Toplam Kazanılan',
     'total_spent' => 'Toplam Harcanan',
     'most_expensive_tag' => 'En Pahalı Etiket',
     'most_expensive_day' => 'En Pahalı Gün',
@@ -39,5 +39,7 @@ return [
     'undo' => 'Geri Al',
     'earnings_distribution' => 'Gelir Dağılımı',
     'spendings_distribution' => 'Gider Dağılımı',
-    'daily_expenses' => 'Günlük Harcamalar'
+    'daily_expenses' => 'Günlük Harcamalar',
+    'email_verified_successfully' => 'E-posta adresiniz onaylandı.',
+    'if_you_email_sent' => "Eğer bu e-posta adresiyle kayıtlıysanız, bir şifre sıfırlama e-postası gönderdik."
 ];

@@ -51,46 +51,6 @@
                 </table> </td>
         </tr>
     </table>
-    <table class="es-content" align="center" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;">
-        <tr style="border-collapse:collapse;">
-        </tr>
-        <tr style="border-collapse:collapse;">
-            <td style="padding:0;Margin:0;background-color:#F7F7F7;" align="center" bgcolor="#f7f7f7">
-                <table class="es-footer-body" align="center" width="600" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#F7F7F7;">
-                    <tr style="border-collapse:collapse;">
-                        <td align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px;">
-                            <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;">
-                                <tr style="border-collapse:collapse;">
-                                    <td align="center" width="560" valign="top" style="padding:0;Margin:0;">
-                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;">
-                                            <tr style="border-collapse:collapse;">
-                                                <td align="center" style="padding:0;Margin:0;padding-bottom:5px;"> <h3 style="Margin:0;line-height:30px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333;">Sosyal ağlarda bizi takip edin...</h3> </td>
-                                            </tr>
-                                            <tr style="border-collapse:collapse;">
-                                                <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px;">
-                                                    <table class="es-table-not-adapt es-social" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;">
-                                                        <tr style="border-collapse:collapse;">
-                                                            <td align="center" valign="top" style="padding:0;Margin:0;padding-right:20px;"> <a href="https://kolaybutce.com/" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:underline;color:#333333;"><img title="Facebook" src="https://ykast.stripocdn.email/content/assets/img/social-icons/logo-black/facebook-logo-black.png" alt="Fb" width="32" height="32" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></a> </td>
-                                                            <td align="center" valign="top" style="padding:0;Margin:0;padding-right:20px;"> <a href="https://kolaybutce.com/" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:underline;color:#333333;"><img title="Youtube" src="https://ykast.stripocdn.email/content/assets/img/social-icons/logo-black/youtube-logo-black.png" alt="Yt" width="32" height="32" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></a> </td>
-                                                            <td align="center" valign="top" style="padding:0;Margin:0;padding-right:20px;"> <a href="https://kolaybutce.com/" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:underline;color:#333333;"><img title="Pinterest" src="https://ykast.stripocdn.email/content/assets/img/social-icons/logo-black/pinterest-logo-black.png" alt="P" width="32" height="32" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></a> </td>
-                                                            <td align="center" valign="top" style="padding:0;Margin:0;padding-right:20px;"> <a href="https://kolaybutce.com/" target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:underline;color:#333333;"><img title="Instagram" src="https://ykast.stripocdn.email/content/assets/img/social-icons/logo-black/instagram-logo-black.png" alt="Ig" width="32" height="32" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></a> </td>
-                                                            <td align="center" valign="top" style="padding:0;Margin:0;"> <a href="https://kolaybutce.com/" target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:underline;color:#333333;"><img title="Twitter" src="https://ykast.stripocdn.email/content/assets/img/social-icons/logo-black/twitter-logo-black.png" alt="Tw" width="32" height="32" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></a> </td>
-                                                        </tr>
-                                                    </table> </td>
-                                            </tr>
-                                            <tr style="border-collapse:collapse;">
-                                                <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px;"> <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;">You are receiving this email because you have visited our site or asked us about the regular newsletter. You can&nbsp;<a target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:underline;color:#333333;line-height:21px;">unsubscribe here</a>&nbsp;or&nbsp;<a target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:underline;color:#333333;line-height:21px;">update your subscription preferences</a>.</p> </td>
-                                            </tr>
-                                            <tr style="border-collapse:collapse;">
-                                                <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px;"> <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;">© 2018</p> </td>
-                                            </tr>
-                                        </table> </td>
-                                </tr>
-                            </table> </td>
-                    </tr>
-                </table> </td>
-        </tr>
-    </table>
 
 @endsection
 

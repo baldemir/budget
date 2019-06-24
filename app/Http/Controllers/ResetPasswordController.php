@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 
 class ResetPasswordController extends Controller {
@@ -51,7 +52,7 @@ class ResetPasswordController extends Controller {
                 ->route('login')
                 ->with([
                     'alert_type' => 'success',
-                    'alert_message' => 'If you registered with that address, we\'ve sent you an e-mail'
+                    'alert_message' => Lang::get("general.if_you_email_sent")
                 ]);
         } else if ($request->has('token') && $request->has('password') && !$request->has('email')) {
             $token = $request->input('token');
