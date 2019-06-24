@@ -162,6 +162,15 @@
             border-radius: 5px;
         }
     </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142139195-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-142139195-1');
+    </script>
 </head>
 <body>
 <ul class="navigation mt-2 mb-8">
