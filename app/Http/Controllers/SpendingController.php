@@ -58,15 +58,13 @@ class SpendingController extends Controller {
             'tag_id' => 'nullable|exists:tags,id', // TODO CHECK IF TAG BELONGS TO USER
             'date' => 'required|date|date_format:Y-m-d',
             'description' => 'required|max:255',
-            'amount' => 'required|regex:/^(\d{0,3}(?:,\d{3}){0,4})*(\.\d{2})?$/',
-            'account_id' => 'nullable|exists:accounts,id'
+            'amount' => 'required|regex:/^(\d{0,3}(?:,\d{3}){0,4})*(\.\d{2})?$/'
         ]);
 
         $spending = new Spending;
 
         $spending->space_id = session('space')->id;
         $spending->tag_id = $request->input('tag_id');
-        $spending->account_id = $request->input('account_id');
         $spending->happened_on = $request->input('date');
         $spending->description = $request->input('description');
         $spending->amount = (int) ($request->input('amount') * 100);

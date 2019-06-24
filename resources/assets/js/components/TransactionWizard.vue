@@ -35,11 +35,6 @@
             <input type="text" v-model="amount" />
             <validation-error v-if="errors.amount" :message="errors.amount"></validation-error>
         </div>
-        <div class="input">
-            <label>Hesap</label>
-            <input type="text" v-model="account_id" />
-            <validation-error v-if="errors.account_id" :message="errors.account_id"></validation-error>
-        </div>
         <div v-if="type == 'spending'">
             <div class="input row">
                 <div class="row__column row__column--compact mr-1">
@@ -78,13 +73,13 @@
             class="button"
             @click="createEarning">
             <span v-if="loading">Loading</span>
-            <span v-if="!loading">Create</span>
+            <span v-if="!loading">Oluştur</span>
         </button>
         <div
             v-if="success"
             class="mt-2"
             style="color: green;"
-        >Successfully created transaction</div>
+        >Başarıyla oluşturuldu</div>
     </div>
 </template>
 
