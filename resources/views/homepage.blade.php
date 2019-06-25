@@ -182,6 +182,7 @@
     </li>
 </ul>
 <div class="text-center my-8">
+    <img class="active" src="/storage/solo_120.png" style="height: 60px;">
     <h1>Kolay Bütçe 🚀</h1>
     <h2 class="mt-2 mb-4">Bütçenizi kontrol etmek o kadar da zor değil.</h2>
     <a href="/register" class="button button--big">Kayıt Ol</a>

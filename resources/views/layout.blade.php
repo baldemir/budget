@@ -144,7 +144,7 @@
                     <div class="wrapper">
                         <ul class="navigation__menu">
                             <li>
-                                <a href="/dashboard" {!! (Request::path() == 'dashboard') ? 'class="active"' : '' !!}><i class="far fa-home fa-sm color-blue"></i> <span class="hidden ml-05">{{ __('general.dashboard') }}</span></a>
+                                <a href="/dashboard" {!! (Request::path() == 'dashboard') ? 'class="active"' : '' !!}><img class="active" src="/storage/logo_header_trans.png" style="height: 60px;"> <span class="hidden ml-05">{{ __('general.dashboard') }}</span></a>
                             </li>
                             <li>
                                 <a href="/transactions" {!! (Request::path() == 'transactions') ? 'class="active"' : '' !!}><i class="far fa-exchange-alt fa-sm color-green"></i> <span class="hidden ml-05">{{ __('models.transactions') }}</span></a>
@@ -212,6 +212,22 @@
                         </ul>
                     </div>
                 </div>
+            @else
+                <div class="navigation">
+                    <div class="wrapper">
+                        <ul class="navigation__menu">
+                            <li>
+                                <a href="/" {!! (Request::path() == 'dashboard') ? 'class="active"' : '' !!}><img class="active" src="/storage/logo_header_trans.png" style="height: 60px;"> <span class="hidden ml-05">{{ env('APP_NAME') }}</span></a>
+                            </li>
+                            <li>
+                                <a href="/login" {!! (Request::path() == 'transactions') ? 'class="active"' : '' !!}><i class="far fa-sign-in-alt fa-sm color-green"></i> <span class="hidden ml-05">{{ __('general.login') }}</span></a>
+                            </li>
+                            <li>
+                                <a href="/transactions" {!! (Request::path() == 'transactions') ? 'class="active"' : '' !!}><i class="far fa-user-plus fa-sm color-green"></i> <span class="hidden ml-05">{{ __('general.register') }}</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             @endif
             @if (Auth::check() && Auth::user()->verification_token)
                 <div class="text-center" style="
@@ -223,7 +239,7 @@
             @yield('body')
             @if (auth()->check())
                 <div class="text-center mb-3">
-                    <a class="fs-sm" href="/ideas/create">{{ __('general.know_how_to_make_this_app_better') }}?</a>
+                    <a class="fs-sm" href="/ideas/create">{{ __('general.know_how_to_make_this_app_better') }}</a>
                 </div>
             @endif
         </div>

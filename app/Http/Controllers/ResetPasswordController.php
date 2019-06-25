@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ResetPassword;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
@@ -12,6 +13,9 @@ use Illuminate\Support\Facades\Mail;
 
 class ResetPasswordController extends Controller {
     public function get(Request $request) {
+        if(Auth::check()){
+            return redirect()->route('dashboard');
+        }
         return view('reset_password', [
             'token' => $request->get('token')
         ]);

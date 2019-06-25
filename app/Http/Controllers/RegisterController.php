@@ -16,6 +16,9 @@ use Mail;
 
 class RegisterController extends Controller {
     public function index() {
+        if(Auth::check()){
+            return redirect()->route('dashboard');
+        }
         $currencies = [];
 
         foreach (Currency::all() as $currency) {
