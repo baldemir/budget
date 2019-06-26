@@ -223,7 +223,7 @@
                                 <a href="/login" {!! (Request::path() == 'transactions') ? 'class="active"' : '' !!}><i class="far fa-sign-in-alt fa-sm color-green"></i> <span class="hidden ml-05">{{ __('general.login') }}</span></a>
                             </li>
                             <li>
-                                <a href="/transactions" {!! (Request::path() == 'transactions') ? 'class="active"' : '' !!}><i class="far fa-user-plus fa-sm color-green"></i> <span class="hidden ml-05">{{ __('general.register') }}</span></a>
+                                <a href="/register" {!! (Request::path() == 'transactions') ? 'class="active"' : '' !!}><i class="far fa-user-plus fa-sm color-green"></i> <span class="hidden ml-05">{{ __('general.register') }}</span></a>
                             </li>
                         </ul>
                     </div>
