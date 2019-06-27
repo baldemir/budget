@@ -42,5 +42,8 @@ return [
     'spendings_distribution' => 'Spendings Distribution',
     'daily_expenses' => 'Daily Expenses',
     'email_verified_successfully' => 'Your email verified successfully.',
-    'if_you_email_sent' => "If you registered with that address, we've sent you an e-mail"
+    'if_you_email_sent' => "If you registered with that address, we've sent you an e-mail",
+    'bug_or_error' => 'Bug or Error',
+    'type' => 'Type',
+    'suggestion' => 'Suggestion'
 ];

@@ -41,5 +41,8 @@ return [
     'spendings_distribution' => 'Gider Dağılımı',
     'daily_expenses' => 'Günlük Harcamalar',
     'email_verified_successfully' => 'E-posta adresiniz onaylandı.',
-    'if_you_email_sent' => "Eğer bu e-posta adresiyle kayıtlıysanız, bir şifre sıfırlama e-postası gönderdik."
+    'if_you_email_sent' => "Eğer bu e-posta adresiyle kayıtlıysanız, bir şifre sıfırlama e-postası gönderdik.",
+    'bug_or_error' => 'Hata',
+    'type' => 'Tür',
+    'suggestion' => 'Öneri'
 ];

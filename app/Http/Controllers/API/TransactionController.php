@@ -207,7 +207,7 @@ class TransactionController extends BaseController
 
                         $transaction->happened_on = \DateTime::createFromFormat('d/m/Y', $elem[0])->format('Y-m-d');
                         $transaction->description = $elem[1];
-                        $tag = Tag::where('name', $elem[2])->first();
+                        $tag = Tag::where('name', $elem[2])->where('space_id', $spaceId)->first();
                         if($tag == null){
 
                             $tag = new Tag();
