@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 use Validator;
 
 
@@ -319,7 +320,7 @@ class TransactionController extends BaseController
 
                 $transaction->happened_on = \DateTime::createFromFormat('d/m/Y', $elem->tarih)->format('Y-m-d');
                 $transaction->description = $elem->aciklama;
-                $tag = Tag::where('name', "-")->first();
+                $tag = Tag::where('name', "-")->where('space_id', $spaceId)->first();
                 if($tag == null){
 
                     $tag = new Tag();
@@ -363,7 +364,21 @@ class TransactionController extends BaseController
 
         return $savedTransaction;
     }
-
+    public function turkishDateToNumeric($str){
+        $str = str_replace('Oca', '/01/', $str);
+        $str = str_replace('Şub', '/02/', $str);
+        $str = str_replace('Mar', '/03/', $str);
+        $str = str_replace('Nis', '/04/', $str);
+        $str = str_replace('May', '/05/', $str);
+        $str = str_replace('Haz', '/06/', $str);
+        $str = str_replace('Tem', '/07/', $str);
+        $str = str_replace('Ağu', '/08/', $str);
+        $str = str_replace('Eyl', '/09/', $str);
+        $str = str_replace('Eki', '/10/', $str);
+        $str = str_replace('Kas', '/11/', $str);
+        $str = str_replace('Ara', '/12/', $str);
+        return $str;
+    }
     public function addZiraatTransactions(Request $request)
     {
         $user = Auth::guard('api')->user();
@@ -382,16 +397,18 @@ class TransactionController extends BaseController
 
                 }
                 $elem->tarih = preg_replace('/\s+/', '', $elem->tarih);
-
+                $elem->tarih = $this->turkishDateToNumeric($elem->tarih);
 
                 if(\DateTime::createFromFormat('d/m/Y', $elem->tarih) == false){
                     continue;
                 }
 
-                $elem->tutar = preg_replace("/[^0-9,.-]/", "", $elem->tutar);
+                $elem->tutar = preg_replace("/[^0-9,.+-]/", "", $elem->tutar);
                 $amount = str_replace(',', '.', str_replace('.', '', $elem->tutar));
                 $amount = str_replace('TL', '', $amount);
-
+                if (strpos($amount, '+') !== false) {
+                    $amount = $amount * -1;
+                }
                 $amount = intVal($amount * 100);
                 $transaction = null;
                 $isNegative = ($request->get("spendingNegative") === 'true');
@@ -408,11 +425,11 @@ class TransactionController extends BaseController
 
                 $transaction->happened_on = \DateTime::createFromFormat('d/m/Y', $elem->tarih)->format('Y-m-d');
                 $transaction->description = trim($elem->aciklama);
-                $tag = Tag::where('name', "-")->first();
+                $tag = Tag::where('name', Lang::get("general.other"))->where('space_id', $spaceId)->first();
                 if($tag == null){
 
                     $tag = new Tag();
-                    $tag->name = "-";
+                    $tag->name = Lang::get("general.other");
                     $tag->color= $this->rand_color();
                     $tag->space_id = $spaceId;
                     $tag->save();

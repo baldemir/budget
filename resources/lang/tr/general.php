@@ -44,5 +44,6 @@ return [
     'if_you_email_sent' => "Eğer bu e-posta adresiyle kayıtlıysanız, bir şifre sıfırlama e-postası gönderdik.",
     'bug_or_error' => 'Hata',
     'type' => 'Tür',
-    'suggestion' => 'Öneri'
+    'suggestion' => 'Öneri',
+    "other" => 'Diğer'
 ];

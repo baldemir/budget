@@ -45,5 +45,7 @@ return [
     'if_you_email_sent' => "If you registered with that address, we've sent you an e-mail",
     'bug_or_error' => 'Bug or Error',
     'type' => 'Type',
-    'suggestion' => 'Suggestion'
+    'suggestion' => 'Suggestion',
+    "other" => 'Other'
+
 ];
