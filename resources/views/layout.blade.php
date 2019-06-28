@@ -236,6 +236,13 @@
                     background: #F86380;
                 ">{!! __('general.verify_account') !!}</div>
             @endif
+            @if (Auth::check() && Auth::user()->api_token == null)
+                <div class="text-center" style="
+                padding: 15px;
+                color: #FFF;
+                background: #F86380;
+            ">{!! __('general.chrome_extension_warning') !!}</div>
+            @endif
             @yield('body')
             @if (auth()->check())
                 <div class="text-center mb-3">

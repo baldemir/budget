@@ -46,6 +46,7 @@ return [
     'bug_or_error' => 'Bug or Error',
     'type' => 'Type',
     'suggestion' => 'Suggestion',
-    "other" => 'Other'
+    "other" => 'Other',
+    "chrome_extension_warning" => "Looks like you haven't downloaded our Chrome Extension yet. You can download it by <a href='https://chrome.google.com/webstore/detail/kolay-b%C3%BCt%C3%A7e/acfnniefnegcmggkdobblgpmghndemai'> clicking here.</a>"
 
 ];
