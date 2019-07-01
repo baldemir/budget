@@ -98,14 +98,21 @@ class DashboardController extends Controller {
             $dailyBalance[$i] = number_format($balanceTick / 100, 2, '.', '');
         }
 
-        $months = Spending::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(happened_on, '%Y') new_year"), DB::raw("DATE_FORMAT(happened_on, '%m') new_month"),  DB::raw('YEAR(happened_on) year, MONTH(happened_on) month'))
-            ->groupby('year','month')
-            ->orderBy('happened_on', 'desc')
-            ->limit(5)
-            ->get();
-
 
         $tags=[];
+        $months = [];
+        for($i = 0; $i<5;$i++){
+            $month = new \stdClass();
+            if(date('m') - $i <= 0){
+                $month->new_year = date('Y') - 1;
+                $month->new_month = 12 + date('m') - $i;
+            } else{
+                $month->new_year = date('Y');
+                $month->new_month = date('m') - $i;
+            }
+            $months[] = $month;
+        }
+
         foreach ($months as $month) {
             $monthNumber = (int)$month->new_month;
             $href = "";
