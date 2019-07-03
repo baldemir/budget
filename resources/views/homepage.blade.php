@@ -161,6 +161,17 @@
             box-shadow: 0 5px 10px rgba(0, 0, 0, .05);
             border-radius: 5px;
         }
+        .outer-center{
+            width: 100%;
+            text-align: center;
+        }
+        .inner-center{
+            display: inline-block;
+        }
+
+        .inner-center img{
+            height: 150px;
+        }
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142139195-1"></script>
@@ -202,6 +213,19 @@
         </div>
     </div>
 </div>
+<div class="outer-center">
+    <div class="inner-center">
+        <b>Tek Tıkla Senkronizasyon</b>
+    </div>
+</div>
+<div class="outer-center">
+    <div class="inner-center">
+        <img src="/storage/garanti1.png">
+        <img src="/storage/cepteteb1.png">
+        <img src="/storage/ziraat1.png">
+    </div>
+</div>
+
 <ul class="wrapper">
     <li>
         <p><i class="fas fa-check c-primary mr-1"></i> Banka hesap hareketlerinizi otomatik olarak içe aktarma.</p>
