@@ -7,7 +7,7 @@ return [
     ],
 
     'most_expensive_tags' => [
-        'title' => 'En pahalı etiketler',
-        'description' => 'Toplam harcamalardaki en pahalı etiket&mdash;en çok neye para harcadığınızı görün.'
+        'title' => 'En pahalı kategoriler',
+        'description' => 'Toplam harcamalardaki en pahalı kategori&mdash;en çok neye para harcadığınızı görün.'
     ]
 ];

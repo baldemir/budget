@@ -7,8 +7,8 @@ return [
     'accounts' => 'Hesaplar',
     'account' => 'Hesap',
 
-    'tags' => 'Etiketler',
-    'tag' => 'Etiket',
+    'tags' => 'Kategoriler',
+    'tag' => 'Kategori',
 
     'recurrings' => 'Tekrar Eden İşlemler',
     'recurring' => 'Tekrar Eden İşlem',

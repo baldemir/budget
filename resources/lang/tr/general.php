@@ -8,7 +8,7 @@ return [
     'left_to_spend' => 'Harcamaya Kalan',
     'total_earned' => 'Toplam Kazanılan',
     'total_spent' => 'Toplam Harcanan',
-    'most_expensive_tag' => 'En Pahalı Etiket',
+    'most_expensive_tag' => 'En Pahalı Kategori',
     'most_expensive_day' => 'En Pahalı Gün',
     'total_earnt' => "Toplam Kazanılan",
     'difference' => "Fark",

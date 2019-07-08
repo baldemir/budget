@@ -12,8 +12,8 @@ return [
     ],
 
     'tag' => [
-        'created' => 'Etiket Oluşturuldu',
-        'deleted' => 'Etiket Silindi'
+        'created' => 'Kategori Oluşturuldu',
+        'deleted' => 'Kategori Silindi'
     ],
 
     'import' => [
