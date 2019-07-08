@@ -11,7 +11,7 @@
                 @click="switchType('spending')">Gider</button>
         </div>
         <div class="input" v-if="type == 'spending'">
-            <label>Etiket</label>
+            <label>Kategori</label>
             <searchable
                 name="tag"
                 :items="tags"
