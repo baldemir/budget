@@ -10,7 +10,12 @@ class TagRepository {
             SELECT
                 tags.name AS name,
                 tags.color AS color,
-                SUM(spendings.amount) AS amount
+                SUM(spendings.amount) AS amount,
+                tags.id AS id,
+                tags.space_id as space_id,
+                tags.created_at,
+                tags.updated_at,
+                tags.deleted_at
             FROM
                 tags
             LEFT OUTER JOIN

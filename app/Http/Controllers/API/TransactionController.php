@@ -5,19 +5,30 @@ namespace App\Http\Controllers\API;
 
 
 use App\Earning;
+use App\Repositories\TagRepository;
+use App\Repositories\TransactionRepository;
+use App\Result;
 use App\Space;
 use App\Spending;
 use App\Tag;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Storage;
 use Validator;
+use Image;
 
 
 class TransactionController extends BaseController
 {
+
+    public function __construct(TransactionRepository $transactionRepository) {
+        $this->repository = $transactionRepository;
+    }
+
     public function rand_color() {
         return str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
     }
@@ -42,14 +53,12 @@ class TransactionController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function saveTransaction(Request $request)
     {
         $input = $request->all();
-
         $validator = Validator::make($input, [
-            'space_id' => 'required|exists:spaces,id',
             'tag_id' => 'nullable|exists:tags,id', // TODO CHECK IF TAG BELONGS TO USER
-            'date' => 'required|date|date_format:Y-m-d',
+            'happened_on' => 'required|date|date_format:Y-m-d',
             'description' => 'required|max:255',
             'amount' => 'required|regex:/^\d*(\.\d{2})?$/',
             'account_id' => 'nullable|exists:accounts,id', // TODO CHECK IF account BELONGS TO USER
@@ -60,19 +69,19 @@ class TransactionController extends BaseController
         }
 
         $user = Auth::guard('api')->user();
+        $spaceId = $user->spaces()->first()->id;
+        $input["space_id"] = $spaceId;
 
-        $userOwnsSpace = Space::find($request->get('space_id'))->users()->get()->contains($user->id);
+        $input["amount"] = $input["amount"] * 100;
 
-        if(!$userOwnsSpace){
-            return $this->sendError('Authentication Error.');
+        if($input["type"] == 1){
+            $product = Earning::create($input);
+        }else{
+            if($input["import_id"] == 0){
+                $input = \array_diff_key($input, ["import_id" => "xy"]);
+            }
+            $product = Spending::create($input);
         }
-
-
-
-
-
-        $product = Spending::create($input);
-
 
         return $this->sendResponse($product->toArray(), 'Transaction created successfully.');
     }
@@ -439,6 +448,7 @@ class TransactionController extends BaseController
                 $transaction->space_id = $spaceId;
 
 
+                DB::beginTransaction();
 
                 if($amount < 0){
                     $transaction->tag_id = $tag->id;
@@ -462,12 +472,246 @@ class TransactionController extends BaseController
                 }
                 $transaction->save();
                 $savedTransaction++;
+                DB::commit();
             }catch (\Exception $exception){
                 return $this->sendError('Validation Error.', $exception->getMessage());
             }
         }
 
         return $savedTransaction;
+    }
+
+    public function getMonthlySummary(Request $request){
+        $user = Auth::guard('api')->user();
+        //$month = 1;//$request->input('month');
+        //$year = 2019;//$request->input('year');
+
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        $yearMonths = [];
+
+        $day = 1;
+
+        // Populate yearMonths with earnings
+        foreach ($user->spaces()->first()->earnings()->whereMonth('happened_on', '=',$month)->whereYear('happened_on', '=',$year)->groupBy('happened_on')->orderBy('happened_on')->selectRaw('SUM(amount) amount, DAY(happened_on) day')->get() as $earning) {
+            $earning->type = 1;
+            $earning->amount = $earning->amount/100;
+            if($earning->day>$day){
+                for($i=$day;$i<$earning->day;$i++){
+                    $tempEarning = new \stdClass();
+                    $tempEarning->day=$i;
+                    $tempEarning->amount=0;
+                    $tempEarning->type=1;
+                    $yearMonths[] = $tempEarning;
+                }
+            }
+            $day = $earning->day+1;
+            $yearMonths[] = $earning;
+        }
+
+        $numberOfDays = cal_days_in_month(CAL_GREGORIAN, $month, $year); // 31
+
+        if(count($yearMonths) > 0){
+            if($yearMonths[count($yearMonths)- 1]->day < $numberOfDays){
+                for($i=$yearMonths[count($yearMonths) - 1]->day+1 ;$i<=$numberOfDays;$i++){
+                    $tempEarning = new \stdClass();
+                    $tempEarning->day=$i;
+                    $tempEarning->amount=0;
+                    $tempEarning->type=1;
+                    $yearMonths[] = $tempEarning;
+                }
+            }
+        }else{
+            for($i=1 ;$i<=$numberOfDays;$i++){
+                $tempEarning = new \stdClass();
+                $tempEarning->day=$i;
+                $tempEarning->amount=0;
+                $tempEarning->type=1;
+                $yearMonths[] = $tempEarning;
+            }
+        }
+
+        $monthlySpendings= [];
+        $day = 1;
+
+        // Populate yearMonths with earnings
+        foreach ($user->spaces()->first()->spendings()->whereMonth('happened_on', '=',$month)->whereYear('happened_on', '=',$year)->groupBy('happened_on')->orderBy('happened_on')->selectRaw('SUM(amount) amount, DAY(happened_on) day')->get() as $spending) {
+            $spending->type = 1;
+            $spending->amount = $spending->amount/100;
+            if($spending->day>$day){
+                for($i=$day;$i<$spending->day;$i++){
+                    $tempSpending= new \stdClass();
+                    $tempSpending->day=$i;
+                    $tempSpending->amount=0;
+                    $tempSpending->type=-1;
+                    $monthlySpendings[] = $tempSpending;
+                }
+            }
+            $day = $spending->day+1;
+            $monthlySpendings[] = $spending;
+        }
+
+        $numberOfDays = cal_days_in_month(CAL_GREGORIAN, $month, $year); // 31
+
+        if(count($monthlySpendings) > 0) {
+            if ($monthlySpendings[count($monthlySpendings) - 1]->day < $numberOfDays) {
+                for ($i = $monthlySpendings[count($monthlySpendings) - 1]->day + 1; $i <= $numberOfDays; $i++) {
+                    $tempSpending = new \stdClass();
+                    $tempSpending->day = $i;
+                    $tempSpending->amount = 0;
+                    $tempSpending->type = -1;
+                    $monthlySpendings[] = $tempSpending;
+                }
+            }
+        }else{
+            for($i=1 ;$i<=$numberOfDays;$i++){
+                $tempSpending = new \stdClass();
+                $tempSpending->day=$i;
+                $tempSpending->amount=0;
+                $tempSpending->type=-1;
+                $monthlySpendings[] = $tempSpending;
+            }
+        }
+
+        $result = new \stdClass();
+        $result->spendings = $monthlySpendings;
+        $result->earnings = $yearMonths;
+
+        return $this->responseObject($result);
+    }
+
+    public function getDailyTransactions(Request $request){
+        $user = Auth::guard('api')->user();
+        $yearMonths = [];
+
+        // Populate yearMonths with earnings
+        foreach ($user->spaces()->first()->earnings()->whereMonth('happened_on', '=',$request->input('month'))->whereYear('happened_on', '=',$request->input('year'))->whereDay('happened_on', '=',$request->input('day'))->get() as $earning) {
+            $earning->type = 1;
+            $yearMonths[] = $earning;
+        }
+        foreach ($user->spaces()->first()->spendings()->whereMonth('happened_on', '=',$request->input('month'))->whereYear('happened_on', '=',$request->input('year'))->whereDay('happened_on', '=',$request->input('day'))->get() as $earning) {
+            $earning->type = -1;
+            $yearMonths[] = $earning;
+        }
+        usort($yearMonths, function ($a, $b) {
+            return $a->happened_on < $b->happened_on;
+        });
+
+        return $this->responseObject($yearMonths);
+    }
+
+
+    public function getMonthlyTransactions(Request $request){
+        $user = Auth::guard('api')->user();
+        $yearMonths = [];
+
+        // Populate yearMonths with earnings
+        foreach ($user->spaces()->first()->earnings()->whereMonth('happened_on', '=',$request->input('month'))->whereYear('happened_on', '=',$request->input('year'))->get() as $earning) {
+            $earning->type = 1;
+            $yearMonths[] = $earning;
+        }
+        foreach ($user->spaces()->first()->spendings()->whereMonth('happened_on', '=',$request->input('month'))->whereYear('happened_on', '=',$request->input('year'))->get() as $earning) {
+            $earning->type = -1;
+            $yearMonths[] = $earning;
+        }
+        usort($yearMonths, function ($a, $b) {
+            return $a->happened_on < $b->happened_on;
+        });
+
+        return $this->responseObject($yearMonths);
+    }
+
+    public function getMonthlyEarnings(Request $request){
+        $user = Auth::guard('api')->user();
+        $yearMonths = [];
+
+        // Populate yearMonths with earnings
+        foreach ($user->spaces()->first()->earnings()->whereMonth('happened_on', '=',$request->input('month'))->whereYear('happened_on', '=',$request->input('year'))->get() as $earning) {
+            $earning->type = 1;
+            $yearMonths[] = $earning;
+        }
+        usort($yearMonths, function ($a, $b) {
+            return $a->happened_on < $b->happened_on;
+        });
+
+        return $this->responseObject($yearMonths);
+    }
+
+    public function getMonthlySpendings(Request $request){
+        $user = Auth::guard('api')->user();
+        $yearMonths = [];
+
+        // Populate yearMonths with earnings
+        foreach ($user->spaces()->first()->spendings()->whereMonth('happened_on', '=',$request->input('month'))->whereYear('happened_on', '=',$request->input('year'))->get() as $earning) {
+            $earning->type = -1;
+            $yearMonths[] = $earning;
+        }
+        usort($yearMonths, function ($a, $b) {
+            return $a->happened_on < $b->happened_on;
+        });
+
+        return $this->responseObject($yearMonths);
+    }
+
+    public function getMonthlyCategories(Request $request){
+        //$month = 5;//$request->input('month');
+        //$year = 2019;//$request->input('year');
+
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+
+        $user = Auth::guard('api')->user();
+        $spaceId = $user->spaces()->first()->id;
+        $tagRepository = new TagRepository();
+        $mostExpensiveTags = $tagRepository->getMostExpensiveTags($spaceId, 5, $year, $month);
+        return $this->responseObject($mostExpensiveTags);
+    }
+
+    public function getUser(Request $request){
+        $user = Auth::guard('api')->user();
+        $user->overall_balance = $user->spaces()->first()->overallBalance();
+        return $this->responseObject($user);
+    }
+
+    public function setUserImage(Request $request){
+        $user = Auth::guard('api')->user();
+        $request->validate([
+            'avatar' => 'nullable|mimes:jpeg,jpg,png,gif',
+        ]);
+
+        // Profile
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+
+            $fileName = $file->hashName();
+
+            $image = Image::make($file)
+                ->fit(500);
+
+            Storage::put('public/avatars/' . $fileName, (string) $image->encode());
+
+            $user->avatar = $fileName;
+            $user->save();
+            return $this->responseObject("Başarılı");
+        }else{
+
+        }
+
+        return $this->failureResponse(Result::$FAILURE_PROCESS, "");
+
+    }
+
+
+    function responseObject($result){
+        $res = Result::$SUCCESS->setContent($result);
+        return response()->json($res, 200, [], JSON_NUMERIC_CHECK);
+    }
+
+    function failureResponse($result, $content){
+        $res = $result->setContent($content);
+        return response()->json($res, 200, [], JSON_NUMERIC_CHECK);
     }
 
 }

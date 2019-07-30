@@ -64,6 +64,22 @@ class Space extends Model {
         return $query->balance;
     }
 
+    public function overallBalance() {
+        $query = DB::selectOne('
+            SELECT (
+                SELECT SUM(amount) 
+                FROM earnings
+                WHERE space_id = :e_space_id 
+            ) - (
+                SELECT SUM(amount) 
+                FROM spendings
+                WHERE space_id = :s_space_id 
+            ) AS balance;
+        ', ['e_space_id' => $this->id, 's_space_id' => $this->id]);
+
+        return $query->balance;
+    }
+
     public function monthlyRecurrings($year, $month) {
         $query = DB::selectOne('
             SELECT SUM(amount) as amount
