@@ -466,6 +466,7 @@ class TransactionController extends BaseController
 
 
                 if($isDuplicate != null){
+                    DB::rollBack();
                     continue;
                 }else{
 
