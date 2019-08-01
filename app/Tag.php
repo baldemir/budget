@@ -12,12 +12,17 @@ class Tag extends Model {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['space_id', 'name', 'color'];
+    protected $fillable = ['space_id', 'name', 'color', 'image'];
 
     protected $dispatchesEvents = [
         'created' => TagCreated::class,
         'deleted' => TagDeleted::class
     ];
+
+    // Accessors
+    public function getImageAttribute($image) {
+        return $image ? '/storage/category/' . $image : 'https://via.placeholder.com/250';
+    }
 
     // Relations
     public function spendings() {

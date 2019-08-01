@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use Image;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -45,6 +47,21 @@ class TagController extends Controller {
         $this->authorize('update', $tag);
 
         $request->validate($this->validationRules);
+
+        if ($request->hasFile('image')) {
+
+            $file = $request->file('image');
+
+            $fileName = $file->hashName();
+
+            $image = Image::make($file)
+                ->fit(500);
+
+            Storage::put('public/category/' . $fileName, (string) $image->encode());
+
+            $tag->image = $fileName;
+        }
+
 
         $tag->fill([
             'name' => $request->input('name'),

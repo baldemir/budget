@@ -11,6 +11,7 @@ use App\Result;
 use App\Space;
 use App\Spending;
 use App\Tag;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Socialite\Facades\Socialite;
 use Validator;
 use Image;
 
@@ -656,8 +658,6 @@ class TransactionController extends BaseController
     }
 
     public function getMonthlyCategories(Request $request){
-        //$month = 5;//$request->input('month');
-        //$year = 2019;//$request->input('year');
 
         $month = $request->input('month');
         $year = $request->input('year');
@@ -668,6 +668,14 @@ class TransactionController extends BaseController
         $tagRepository = new TagRepository();
         $mostExpensiveTags = $tagRepository->getMostExpensiveTags($spaceId, 5, $year, $month);
         return $this->responseObject($mostExpensiveTags);
+    }
+
+    public function getUserTags(Request $request){
+
+        $user = Auth::guard('api')->user();
+        $space = $user->spaces()->first();
+        $userTags = $space->tags()->get();
+        return $this->responseObject($userTags);
     }
 
     public function getUser(Request $request){
@@ -714,5 +722,7 @@ class TransactionController extends BaseController
         $res = $result->setContent($content);
         return response()->json($res, 200, [], JSON_NUMERIC_CHECK);
     }
+
+
 
 }

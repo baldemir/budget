@@ -17,5 +17,6 @@ return [
 
     'file' => 'File',
 
-    'color' => 'Color'
+    'color' => 'Color',
+    'image' => 'Image'
 ];

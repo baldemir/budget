@@ -17,5 +17,6 @@ return [
 
     'file' => 'Dosya',
 
-    'color' => 'Renk'
+    'color' => 'Renk',
+    'image' => 'Resim'
 ];

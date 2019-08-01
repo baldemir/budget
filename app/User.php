@@ -9,7 +9,7 @@ class User extends Authenticatable {
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','facebook_id'
     ];
 
     protected $hidden = [
@@ -24,5 +24,18 @@ class User extends Authenticatable {
     // Relations
     public function spaces() {
         return $this->belongsToMany(Space::class, 'user_space')->withPivot('role');
+    }
+
+    public function addNew($input)
+    {
+        $check = static::where('facebook_id',$input['facebook_id'])->first();
+
+
+        if(is_null($check)){
+            return static::create($input);
+        }
+
+
+        return $check;
     }
 }

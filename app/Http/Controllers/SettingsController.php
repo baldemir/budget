@@ -40,6 +40,7 @@ class SettingsController extends Controller {
             Storage::put('public/avatars/' . $fileName, (string) $image->encode());
 
             $user->avatar = $fileName;
+            var_dump($fileName);die;
         }
 
         if ($request->has('name')) {
