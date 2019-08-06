@@ -595,6 +595,7 @@ class TransactionController extends BaseController
         }
         foreach ($user->spaces()->first()->spendings()->whereMonth('happened_on', '=',$request->input('month'))->whereYear('happened_on', '=',$request->input('year'))->whereDay('happened_on', '=',$request->input('day'))->get() as $earning) {
             $earning->type = -1;
+            $earning->tag = $earning->tag()->first();
             $yearMonths[] = $earning;
         }
         usort($yearMonths, function ($a, $b) {
@@ -616,7 +617,31 @@ class TransactionController extends BaseController
         }
         foreach ($user->spaces()->first()->spendings()->whereMonth('happened_on', '=',$request->input('month'))->whereYear('happened_on', '=',$request->input('year'))->get() as $earning) {
             $earning->type = -1;
+            $earning->tag = $earning->tag()->first();
             $yearMonths[] = $earning;
+        }
+        usort($yearMonths, function ($a, $b) {
+            return $a->happened_on < $b->happened_on;
+        });
+
+        return $this->responseObject($yearMonths);
+    }
+
+    public function getMonthlyTransactionsByCategory(Request $request){
+        $user = Auth::guard('api')->user();
+        $yearMonths = [];
+        // Populate yearMonths with earnings
+        /*
+        foreach ($user->spaces()->first()->earnings()->whereMonth('happened_on', '=',$request->input('month'))->whereYear('happened_on', '=',$request->input('year'))->get() as $earning) {
+            $earning->type = 1;
+            $yearMonths[] = $earning;
+        }
+        */
+        foreach ($user->spaces()->first()->spendings()->where('tag_id', $request->get('categoryId'))->whereMonth('happened_on', '=',$request->get('month'))->whereYear('happened_on', '=',$request->get('year'))->get() as $spending) {
+            $spending->type = -1;
+            $spending->tag = $spending->tag()->first();
+            $yearMonths[] = $spending;
+
         }
         usort($yearMonths, function ($a, $b) {
             return $a->happened_on < $b->happened_on;
@@ -648,6 +673,7 @@ class TransactionController extends BaseController
         // Populate yearMonths with earnings
         foreach ($user->spaces()->first()->spendings()->whereMonth('happened_on', '=',$request->input('month'))->whereYear('happened_on', '=',$request->input('year'))->get() as $earning) {
             $earning->type = -1;
+            $earning->tag = $earning->tag()->first();
             $yearMonths[] = $earning;
         }
         usort($yearMonths, function ($a, $b) {

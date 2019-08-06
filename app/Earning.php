@@ -31,5 +31,7 @@ class Earning extends Model {
     }
 
     // Relations
-    //
+    public function tag() {
+        return $this->belongsTo(Tag::class);
+    }
 }

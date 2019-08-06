@@ -5,7 +5,7 @@ namespace App\Repositories;
 use Illuminate\Support\Facades\DB;
 
 class TagRepository {
-    public function getMostExpensiveTags(int $spaceId, int $limit = null, int $year = null, int $month = null) {
+    public function getMostExpensiveTags($spaceId, $limit = null, $year = null, $month = null) {
         $sql = '
             SELECT
                 tags.name AS name,
@@ -13,6 +13,8 @@ class TagRepository {
                 SUM(spendings.amount) AS amount,
                 tags.id AS id,
                 tags.space_id as space_id,
+                Concat("/storage/category/", tags.image) as image,
+                tags.type as type,
                 tags.created_at,
                 tags.updated_at,
                 tags.deleted_at

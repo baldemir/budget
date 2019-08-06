@@ -5,9 +5,6 @@ namespace App\Http\Controllers\API;
 
 
 use App\Result;
-use App\Space;
-use App\Spending;
-use App\Tag;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddImageToTagsTable extends Migration
+class AddTypeToTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddImageToTagsTable extends Migration
      */
     public function up()
     {
-        Schema::table("tags", function (Blueprint $table) {
-            $table->string('image', 191)->after('color');
+        Schema::table('tags', function (Blueprint $table) {
+            $table->smallInteger('type')->after('image')->default(1);
         });
     }
 
@@ -26,7 +26,7 @@ class AddImageToTagsTable extends Migration
     public function down()
     {
         Schema::table('tags', function (Blueprint $table) {
-            $table->dropColumn('image');
+            $table->dropColumn('type');
         });
     }
 }

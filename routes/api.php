@@ -23,6 +23,8 @@ Route::middleware('auth:api')->group( function () {
     Route::post('setUserImage', 'API\TransactionController@setUserImage');
     Route::post('saveTransaction', 'API\TransactionController@saveTransaction');
     Route::post('loginWithFacebookToken', 'API\LoginController@loginWithFacebookAccessToken');
+
+    Route::get('getMonthlyTransactionsByCategory', 'API\TransactionController@getMonthlyTransactionsByCategory');
 });
 
 
