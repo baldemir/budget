@@ -1,0 +1,841 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/all.js"></script>
+
+
+          <script>
+        $(function() {
+            setupLanguages(["bash","javascript"]);
+        });
+      </script>
+      </head>
+
+  <body class="">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+        <img src="images/logo.png" />
+                    <div class="lang-selector">
+                                  <a href="#" data-language-name="bash">bash</a>
+                                  <a href="#" data-language-name="javascript">javascript</a>
+                            </div>
+                            <div class="search">
+              <input type="text" class="search" id="input-search" placeholder="Search">
+            </div>
+            <ul class="search-results"></ul>
+              <div id="toc">
+      </div>
+                    <ul class="toc-footer">
+                                  <li><a href='http://github.com/mpociot/documentarian'>Documentation Powered by Documentarian</a></li>
+                            </ul>
+            </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+          <!-- START_INFO -->
+<h1>Info</h1>
+<p>Welcome to the generated API reference.
+<a href="http://kolaybutce.com/docs/collection.json">Get Postman Collection</a></p>
+<!-- END_INFO -->
+<h1>general</h1>
+<!-- START_1ba53c50d1711ea4aa2c84e2e0a2eab5 -->
+<h2>api/getDailyTransactions</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "https://kolaybutce.com/api/getDailyTransactions" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"year":1,"month":1,"day":20}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/getDailyTransactions");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "year": 1,
+    "month": 1,
+    "day": 20
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unauthenticated."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/getDailyTransactions</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>year</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified year.</td>
+</tr>
+<tr>
+<td>month</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified month.</td>
+</tr>
+<tr>
+<td>day</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified day of month.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_1ba53c50d1711ea4aa2c84e2e0a2eab5 -->
+<!-- START_ccca629322b53c27dd79b31d3c5a32f7 -->
+<h2>api/getMonthlyTransactions</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "https://kolaybutce.com/api/getMonthlyTransactions" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"year":10,"month":8}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/getMonthlyTransactions");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "year": 10,
+    "month": 8
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unauthenticated."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/getMonthlyTransactions</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>year</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified year.</td>
+</tr>
+<tr>
+<td>month</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified month.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_ccca629322b53c27dd79b31d3c5a32f7 -->
+<!-- START_93d10e10a29b8b526f65b761e898e672 -->
+<h2>api/getMonthlyEarnings</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "https://kolaybutce.com/api/getMonthlyEarnings" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"year":6,"month":2}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/getMonthlyEarnings");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "year": 6,
+    "month": 2
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unauthenticated."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/getMonthlyEarnings</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>year</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified year.</td>
+</tr>
+<tr>
+<td>month</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified month.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_93d10e10a29b8b526f65b761e898e672 -->
+<!-- START_5a371f07c8675ec3300f89a8dc12c591 -->
+<h2>api/getMonthlySpendings</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "https://kolaybutce.com/api/getMonthlySpendings" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"year":1,"month":15}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/getMonthlySpendings");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "year": 1,
+    "month": 15
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unauthenticated."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/getMonthlySpendings</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>year</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified year.</td>
+</tr>
+<tr>
+<td>month</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified month.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_5a371f07c8675ec3300f89a8dc12c591 -->
+<!-- START_d036b8aace5560ad16211d5103237fd3 -->
+<h2>api/getMonthlySummary</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "https://kolaybutce.com/api/getMonthlySummary" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"year":7,"month":15}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/getMonthlySummary");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "year": 7,
+    "month": 15
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unauthenticated."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/getMonthlySummary</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>year</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified year.</td>
+</tr>
+<tr>
+<td>month</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified month.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_d036b8aace5560ad16211d5103237fd3 -->
+<!-- START_b9805f9a5588059d0c0d57c5f05f45ce -->
+<h2>api/getMonthlyCategories</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "https://kolaybutce.com/api/getMonthlyCategories" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"year":3,"month":1}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/getMonthlyCategories");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "year": 3,
+    "month": 1
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unauthenticated."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/getMonthlyCategories</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>year</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified year.</td>
+</tr>
+<tr>
+<td>month</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified month.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_b9805f9a5588059d0c0d57c5f05f45ce -->
+<!-- START_191f3bfb75684719c820ab8ad8fa0cb2 -->
+<h2>api/getUserCategories</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "https://kolaybutce.com/api/getUserCategories" \
+    -H "Authorization: Bearer {token}"</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/getUserCategories");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unauthenticated."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/getUserCategories</code></p>
+<!-- END_191f3bfb75684719c820ab8ad8fa0cb2 -->
+<!-- START_de8c14bf8c667d39af01ea1e6fcc847a -->
+<h2>api/getUser</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "https://kolaybutce.com/api/getUser" \
+    -H "Authorization: Bearer {token}"</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/getUser");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unauthenticated."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/getUser</code></p>
+<!-- END_de8c14bf8c667d39af01ea1e6fcc847a -->
+<!-- START_64b4b376384828178185ada57582a3e1 -->
+<h2>api/setUserImage</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "https://kolaybutce.com/api/setUserImage" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"avatar":"voluptatem"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/setUserImage");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "avatar": "voluptatem"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unauthenticated."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/setUserImage</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>avatar</td>
+<td>file</td>
+<td>required</td>
+<td>The photo for user.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_64b4b376384828178185ada57582a3e1 -->
+<!-- START_ff47f10adcd3d80d9f512f95eda6ff6b -->
+<h2>api/saveTransaction</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "https://kolaybutce.com/api/saveTransaction" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"tag_id":5,"happened_on":"quae","description":"debitis","amount":1}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/saveTransaction");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "tag_id": 5,
+    "happened_on": "quae",
+    "description": "debitis",
+    "amount": 1
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unauthenticated."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/saveTransaction</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tag_id</td>
+<td>integer</td>
+<td>required</td>
+<td>Category id of transaction.</td>
+</tr>
+<tr>
+<td>happened_on</td>
+<td>string</td>
+<td>required</td>
+<td>Date of transaction in format of YYY-mm-dd.</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>required</td>
+<td>The description(name) of transaction.</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>integer</td>
+<td>required</td>
+<td>The amount of transaction.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_ff47f10adcd3d80d9f512f95eda6ff6b -->
+<!-- START_e9285fdb83c137e9c5a10f46e139ef64 -->
+<h2>api/getMonthlyTransactionsByCategory</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "https://kolaybutce.com/api/getMonthlyTransactionsByCategory" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"year":17,"month":16,"categoryId":14}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/getMonthlyTransactionsByCategory");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "year": 17,
+    "month": 16,
+    "categoryId": 14
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unauthenticated."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/getMonthlyTransactionsByCategory</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>year</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified year.</td>
+</tr>
+<tr>
+<td>month</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified month.</td>
+</tr>
+<tr>
+<td>categoryId</td>
+<td>integer</td>
+<td>required</td>
+<td>The specified category id.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_e9285fdb83c137e9c5a10f46e139ef64 -->
+<!-- START_01ad17aef4cd45cdba2ae5ae2050e8de -->
+<h2>api/extensionLogin</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "https://kolaybutce.com/api/extensionLogin" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"email":"similique","password":"et"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/extensionLogin");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "email": "similique",
+    "password": "et"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "resultText": "Authentication error.",
+    "resultCode": "GUPPY.701",
+    "content": "Authentication Error 2."
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/extensionLogin</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>required</td>
+<td>Email of user.</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>required</td>
+<td>Password of user.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_01ad17aef4cd45cdba2ae5ae2050e8de -->
+<!-- START_d53d217f20a48e4022e531901041d531 -->
+<h2>api/loginWithFacebookToken</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "https://kolaybutce.com/api/loginWithFacebookToken" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"token":"unde"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("https://kolaybutce.com/api/loginWithFacebookToken");
+
+let headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "token": "unde"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "Server Error"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/loginWithFacebookToken</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>token</td>
+<td>string</td>
+<td>required</td>
+<td>Token acquired from facebook login attempt.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_d53d217f20a48e4022e531901041d531 -->
+      </div>
+      <div class="dark-box">
+                        <div class="lang-selector">
+                                    <a href="#" data-language-name="bash">bash</a>
+                                    <a href="#" data-language-name="javascript">javascript</a>
+                              </div>
+                </div>
+    </div>
+  </body>
+</html>

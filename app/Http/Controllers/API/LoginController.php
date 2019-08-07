@@ -16,7 +16,10 @@ use Validator;
 
 class LoginController extends BaseController
 {
-
+    /**
+     * @bodyParam email string required Email of user.
+     * @bodyParam password string required Password of user.
+     */
     public function extensionLogin(Request $request){
         $credentials = [
             'email'    => $request->email,
@@ -44,6 +47,9 @@ class LoginController extends BaseController
         return bin2hex(random_bytes(20));
     }
 
+    /**
+     * @bodyParam token string required Token acquired from facebook login attempt.
+     */
     public function loginWithFacebookAccessToken(Request $request)
     {
         try{
@@ -66,7 +72,6 @@ class LoginController extends BaseController
         }catch (Exception $e){
             return $this->failureResponse(Result::$FAILURE_PROCESS, $e->getMessage());
         }
-
     }
 
     function responseObject($result){

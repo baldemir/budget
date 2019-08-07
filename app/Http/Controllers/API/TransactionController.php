@@ -50,10 +50,10 @@ class TransactionController extends BaseController
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @bodyParam tag_id int required Category id of transaction.
+     * @bodyParam happened_on string required Date of transaction in format of YYY-mm-dd.
+     * @bodyParam description string required The description(name) of transaction.
+     * @bodyParam amount int required The amount of transaction.
      */
     public function saveTransaction(Request $request)
     {
@@ -118,11 +118,12 @@ class TransactionController extends BaseController
 
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified transaction.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @bodyParam tag_id int required Category id of transaction.
+     * @bodyParam happened_on string required Date of transaction in format of YYY-mm-dd.
+     * @bodyParam description string required The description(name) of transaction.
+     * @bodyParam amount int required The amount of transaction.
      */
     public function update(Request $request, Spending $product)
     {
@@ -150,7 +151,7 @@ class TransactionController extends BaseController
 
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified transaction from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -159,8 +160,7 @@ class TransactionController extends BaseController
     {
         $product->delete();
 
-
-        return $this->sendResponse($product->toArray(), 'Product deleted successfully.');
+        return $this->sendResponse($product->toArray(), 'Transaction deleted successfully.');
     }
 
 
@@ -484,10 +484,12 @@ class TransactionController extends BaseController
         return $savedTransaction;
     }
 
+    /**
+     * @bodyParam year int required The specified year.
+     * @bodyParam month int required The specified month.
+     */
     public function getMonthlySummary(Request $request){
         $user = Auth::guard('api')->user();
-        //$month = 1;//$request->input('month');
-        //$year = 2019;//$request->input('year');
 
         $month = $request->input('month');
         $year = $request->input('year');
@@ -583,7 +585,11 @@ class TransactionController extends BaseController
 
         return $this->responseObject($result);
     }
-
+    /**
+     * @bodyParam year int required The specified year.
+     * @bodyParam month int required The specified month.
+     * @bodyParam day int required The specified day of month.
+     */
     public function getDailyTransactions(Request $request){
         $user = Auth::guard('api')->user();
         $yearMonths = [];
@@ -605,7 +611,10 @@ class TransactionController extends BaseController
         return $this->responseObject($yearMonths);
     }
 
-
+    /**
+     * @bodyParam year int required The specified year.
+     * @bodyParam month int required The specified month.
+     */
     public function getMonthlyTransactions(Request $request){
         $user = Auth::guard('api')->user();
         $yearMonths = [];
@@ -627,6 +636,11 @@ class TransactionController extends BaseController
         return $this->responseObject($yearMonths);
     }
 
+    /**
+     * @bodyParam year int required The specified year.
+     * @bodyParam month int required The specified month.
+     * @bodyParam categoryId int required The specified category id.
+     */
     public function getMonthlyTransactionsByCategory(Request $request){
         $user = Auth::guard('api')->user();
         $yearMonths = [];
@@ -649,7 +663,10 @@ class TransactionController extends BaseController
 
         return $this->responseObject($yearMonths);
     }
-
+    /**
+     * @bodyParam year int required The specified year.
+     * @bodyParam month int required The specified month.
+     */
     public function getMonthlyEarnings(Request $request){
         $user = Auth::guard('api')->user();
         $yearMonths = [];
@@ -666,12 +683,16 @@ class TransactionController extends BaseController
         return $this->responseObject($yearMonths);
     }
 
+    /**
+     * @bodyParam year int required The specified year.
+     * @bodyParam month int required The specified month.
+     */
     public function getMonthlySpendings(Request $request){
         $user = Auth::guard('api')->user();
         $yearMonths = [];
 
         // Populate yearMonths with earnings
-        foreach ($user->spaces()->first()->spendings()->whereMonth('happened_on', '=',$request->input('month'))->whereYear('happened_on', '=',$request->input('year'))->get() as $earning) {
+        foreach ($user->spaces()->first()->spendings()->whereMonth('happened_on', '=',$request->get('month'))->whereYear('happened_on', '=',$request->get('year'))->get() as $earning) {
             $earning->type = -1;
             $earning->tag = $earning->tag()->first();
             $yearMonths[] = $earning;
@@ -682,7 +703,10 @@ class TransactionController extends BaseController
 
         return $this->responseObject($yearMonths);
     }
-
+    /**
+     * @bodyParam year int required The specified year.
+     * @bodyParam month int required The specified month.
+     */
     public function getMonthlyCategories(Request $request){
 
         $month = $request->input('month');
@@ -709,7 +733,9 @@ class TransactionController extends BaseController
         $user->overall_balance = $user->spaces()->first()->overallBalance();
         return $this->responseObject($user);
     }
-
+    /**
+     * @bodyParam avatar file required The photo for user.
+     */
     public function setUserImage(Request $request){
         $user = Auth::guard('api')->user();
         $request->validate([

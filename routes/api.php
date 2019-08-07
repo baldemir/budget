@@ -22,10 +22,10 @@ Route::middleware('auth:api')->group( function () {
     Route::get('getUser', 'API\TransactionController@getUser');
     Route::post('setUserImage', 'API\TransactionController@setUserImage');
     Route::post('saveTransaction', 'API\TransactionController@saveTransaction');
-    Route::post('loginWithFacebookToken', 'API\LoginController@loginWithFacebookAccessToken');
 
     Route::get('getMonthlyTransactionsByCategory', 'API\TransactionController@getMonthlyTransactionsByCategory');
 });
 
 
 Route::post('extensionLogin', 'API\LoginController@extensionLogin');
+Route::post('loginWithFacebookToken', 'API\LoginController@loginWithFacebookAccessToken');
