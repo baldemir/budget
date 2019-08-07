@@ -14,4 +14,10 @@ class IndexController extends Controller {
         return view('homepage');
         //return redirect()->route('login');
     }
+
+    public function terms() {
+
+        return view('terms');
+        //return redirect()->route('login');
+    }
 }
