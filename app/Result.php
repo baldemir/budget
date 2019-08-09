@@ -120,5 +120,16 @@ class Result
     {
         return json_encode($this);
     }
+
+    static function responseObject($result){
+        $res = Result::$SUCCESS->setContent($result);
+        return response()->json($res, 200, [], JSON_NUMERIC_CHECK);
+    }
+
+    static function failureResponse($result, $content){
+        $res = $result->setContent($content);
+        return response()->json($res, 200, [], JSON_NUMERIC_CHECK);
+    }
+
 }
 Result::constructor_default();

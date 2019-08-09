@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         return 'window.i18n = ' . json_encode($strings) . ';';
     });
+    Route::get('/loginRedirectIsbank', 'IntegrationController@loginRedirectIsbank');
 });
 
 Route::get('/logout', 'LogoutController@index')->name('logout');

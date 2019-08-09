@@ -26,6 +26,10 @@ class User extends Authenticatable {
         return $this->belongsToMany(Space::class, 'user_space')->withPivot('role');
     }
 
+    public function connectedProviders() {
+        return $this->hasMany(ConnectedProvider::class);
+    }
+
     public function addNew($input)
     {
         $check = static::where('facebook_id',$input['facebook_id'])->first();
