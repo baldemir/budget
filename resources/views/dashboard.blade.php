@@ -7,6 +7,7 @@
         @if (session('alert_type') && session('alert_message'))
             @include('partials.alerts.' . session('alert_type'), ['payload' => ['classes' => 'mb-2', 'message' => session('alert_message')]])
         @endif
+        
         <h2>{{ __('general.dashboard') }}</h2>
         <searchable
                 name="tag"
