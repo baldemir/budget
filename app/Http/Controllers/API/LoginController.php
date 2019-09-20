@@ -4,12 +4,15 @@
 namespace App\Http\Controllers\API;
 
 
+use App\Mail\VerifyRegistration;
 use App\Result;
+use App\Space;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mail;
 use Laravel\Socialite\Facades\Socialite;
 use Validator;
 
@@ -54,19 +57,28 @@ class LoginController extends BaseController
     {
         try{
             $user = Socialite::driver('facebook')->userFromToken($request->get('token'));
-
             $userModel = new User();
             $create['name'] = $user->getName();
             $create['email'] = $user->getEmail();
             $create['facebook_id'] = $user->getId();
-
             $existingUser = User::where('email', $user->getEmail())->first();
             if($existingUser == null){
                 $createdUser = $userModel->addNew($create);
+                // Space
+                $space = new Space;
+                $space->currency_id = 1;
+                $space->name = $createdUser->name . '\'s Space';
+                $space->save();
+                $createdUser->spaces()->attach($space->id, ['role' => 'admin']);
+                Mail::to($createdUser->email)->queue(new VerifyRegistration($createdUser));
             }else{
                 $existingUser->facebook_id = $user->getId();
                 $existingUser->save();
                 $createdUser = $existingUser;
+            }
+            if($createdUser->api_token ==null){
+                $createdUser->api_token = $this->generateToken();
+                $createdUser->save();
             }
             return $this->responseObject($createdUser);
         }catch (Exception $e){
