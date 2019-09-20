@@ -60,6 +60,15 @@ Route::group(['middleware' => ['auth']], function () {
         'destroy'
     ]);
 
+    Route::resource('/providers', 'ConnectedProviderController')->only([
+        'index',
+        'create',
+        'store',
+        'edit',
+        'update',
+        'destroy'
+    ]);
+
     Route::resource('/accounts', 'AccountController')->only([
         'index',
         'create',
@@ -69,6 +78,7 @@ Route::group(['middleware' => ['auth']], function () {
         'destroy'
     ]);
 
+    Route::post('/accounts/{account}/status', 'AccountController@updateStatus');
 
     Route::get('/reports', 'ReportController@index')->name('reports.index');
     Route::get('/reports/{slug}', 'ReportController@show');

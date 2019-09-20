@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Account;
+use App\ConnectedProvider;
 use App\Earning;
 use App\Import;
+use App\Policies\AccountPolicy;
+use App\Policies\ConnectedProviderPolicy;
 use App\Policies\EarningPolicy;
 use App\Policies\ImportPolicy;
 use App\Policies\SpendingPolicy;
@@ -28,7 +32,10 @@ class AuthServiceProvider extends ServiceProvider
         Spending::class => SpendingPolicy::class,
         Recurring::class => RecurringPolicy::class,
         Tag::class => TagPolicy::class,
-        Import::class => ImportPolicy::class
+        Import::class => ImportPolicy::class,
+        ConnectedProvider::class => ConnectedProviderPolicy::class,
+        Account::class => AccountPolicy::class,
+
     ];
 
     /**

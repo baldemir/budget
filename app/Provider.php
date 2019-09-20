@@ -11,4 +11,10 @@ class Provider extends Model {
 
     protected $fillable = ['name', 'alias', 'icon'];
 
+    public function accounts($spaceId) {
+        return $this->hasMany(Account::class)->where('space_id', $spaceId);
+    }
+    public function connectedProviders() {
+        return $this->hasMany(ConnectedProvider::class);
+    }
 }

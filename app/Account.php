@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Events\AccountCreated;
+use App\Events\AccountDeleted;
 use App\Events\TagCreated;
 use App\Events\TagDeleted;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +24,11 @@ class Account extends Model {
     // Relations
     public function spendings() {
         return $this->hasMany(Spending::class);
+    }
+
+
+    public function provider() {
+        return $this->belongsTo(Provider::class);
     }
 
     // Custom

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -62,5 +63,18 @@ class AccountController extends Controller {
         }
 
         return redirect()->route('tags.index');
+    }
+
+    public function updateStatus(Request $request, Account $account){
+        $this->authorize('update', $account);
+        if($request->get('status') != null){
+            $account->status = 1;
+            IntegrationController::synchronizeIsbankTransactions($account->id);
+        }else{
+            $account->status = 0;
+        }
+        $account->save();
+
+        return redirect()->back();
     }
 }

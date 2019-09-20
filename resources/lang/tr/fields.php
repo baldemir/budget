@@ -18,5 +18,8 @@ return [
     'file' => 'Dosya',
 
     'color' => 'Renk',
-    'image' => 'Resim'
+    'image' => 'Resim',
+    'synchronize' => 'Senkronize Edilsin',
+    'provider' => 'Sağlayıcı',
+    'account_name' => 'Hesap Adı'
 ];

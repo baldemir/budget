@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use App\ConnectedProvider;
 use App\Provider;
 use App\Result;
@@ -52,6 +53,23 @@ class IntegrationController extends Controller {
                 //no refresh token
             }
             $connectedProvider->save();
+            /*
+            $userAccounts = self::getIsbankAccounts($connectedProvider->access_token, $currentProvider->client_id, $currentProvider->client_secret)->data;
+            foreach ($userAccounts as $userAccount){
+                $newAccount = new Account();
+                if(Account::where('real_id', $userAccount->account_id)->where('space_id', session('space')->id)->first() != null){
+                    continue;
+                }else{
+                    $newAccount->space_id = session('space')->id;
+                    $newAccount->name = $currentProvider->name;
+                    $newAccount->provider_id = $currentProvider->id;
+                    $newAccount->currency_id = 0;
+                    $newAccount->sync_url = "https://api.sandbox.isbank.com.tr/v1/accounts/" . $userAccount->account_id . "/transactions";
+                    $newAccount->real_id = $userAccount->account_id;
+                    $newAccount->save();
+                }
+            }
+            */
             return redirect()
                 ->route('dashboard')
                 ->with([
@@ -64,14 +82,44 @@ class IntegrationController extends Controller {
         }
     }
 
+    public static function getIsbankAccounts($token, $clientId, $clientSecret){
+        $headers = ['authorization' => 'Bearer ' . $token, 'x-ibm-client-id' => $clientId , 'x-ibm-client-secret' => $clientSecret];
+        $body = [];
+        return self::getGuzzleRequest($headers, 'https://api.sandbox.isbank.com.tr/v1/accounts', $body);
+    }
+
+    public static function synchronizeIsbankTransactions($accountId){
+        $user = Auth::user();
+        $account = Account::find($accountId);
+        $provider = $account->provider()->first();
+        $connectedProvider = $provider->connectedProviders()->where('user_id', $user->id)->first();
+        return self::getIsbankAccounts($connectedProvider->access_token, $provider->client_id, $provider->client_secret);
+        $headers = ['authorization' => 'Bearer ' . $connectedProvider->access_token, 'x-ibm-client-id' => $provider->client_id, 'x-ibm-client-secret' => $provider->client_secret];
+        $body = [];
+        return Result::responseObject(self::getGuzzleRequest($headers, $account->sync_url, $body));
+
+    }
 
 
 
-    public function postGuzzleRequest($headers, $url, $body)
+
+    public static function postGuzzleRequest($headers, $url, $body)
     {
         //$client = new \GuzzleHttp\Client(['headers' => ['X-Foo' => 'Bar']]);
         $client = new \GuzzleHttp\Client(['headers' => $headers]);
         $response = $client->post($url,  array('form_params'=>$body));
+
+        $response = json_decode($response->getBody());
+
+
+        return $response;
+    }
+
+    public static function getGuzzleRequest($headers, $url, $body)
+    {
+        //$client = new \GuzzleHttp\Client(['headers' => ['X-Foo' => 'Bar']]);
+        $client = new \GuzzleHttp\Client(['headers' => $headers]);
+        $response = $client->get($url,  array('form_params'=>$body));
 
         $response = json_decode($response->getBody());
 
