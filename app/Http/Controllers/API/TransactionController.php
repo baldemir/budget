@@ -722,8 +722,8 @@ class TransactionController extends BaseController
 
     public function getUserTags(Request $request){
 
-        //$user = Auth::guard('api')->user();
-        $user = User::find(1);
+        $user = Auth::guard('api')->user();
+
         $space = $user->spaces()->first();
         $userTags = $space->tags()->get();
         return $this->responseObject($userTags);
