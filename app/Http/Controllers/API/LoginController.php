@@ -7,6 +7,7 @@ namespace App\Http\Controllers\API;
 use App\Mail\VerifyRegistration;
 use App\Result;
 use App\Space;
+use App\Tag;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
@@ -71,6 +72,7 @@ class LoginController extends BaseController
                 $space->save();
                 $createdUser->spaces()->attach($space->id, ['role' => 'admin']);
                 Mail::to($createdUser->email)->queue(new VerifyRegistration($createdUser));
+                $this->createDefaultCategories($createdUser);
             }else{
                 $existingUser->facebook_id = $user->getId();
                 $existingUser->save();
@@ -85,6 +87,24 @@ class LoginController extends BaseController
             return $this->failureResponse(Result::$FAILURE_PROCESS, $e->getMessage());
         }
     }
+
+    public function createDefaultCategories($user){
+
+        $userDefault = User::find(1);
+        $space = $userDefault->spaces()->first();
+        $userTags = $space->tags()->get();
+        $spaceId = $user->spaces()->first()->id;
+        foreach ($userTags as $userTag){
+            Tag::create([
+                'space_id' => $spaceId,
+                'name' => $userTag->name,
+                'color' => $userTag->color,
+                'image' => $userTag->image
+            ]);
+        }
+
+    }
+
 
     function responseObject($result){
         $res = Result::$SUCCESS->setContent($result);
