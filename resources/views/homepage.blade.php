@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <!-- saved from url=(0046)#feature -->
 <html data-wf-domain="soft-html-template.webflow.io" data-wf-page="5d0b7ed20369a4019ed4b12b" data-wf-site="5c93901939f21ebf812cec22" data-wf-status="1" class="w-mod-js wf-montserrat-n5-active wf-josefinsans-n7-active wf-montserrat-n7-active wf-josefinsans-n4-active wf-montserrat-n1-active wf-montserrat-i1-active wf-montserrat-i2-active wf-montserrat-n3-active wf-montserrat-i3-active wf-montserrat-n4-active wf-montserrat-i4-active wf-montserrat-n6-active wf-montserrat-i7-active wf-montserrat-n8-active wf-montserrat-n9-active wf-montserrat-n2-active wf-montserrat-i5-active wf-montserrat-i6-active wf-montserrat-i8-active w-mod-ix wf-montserrat-i9-active wf-active"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Soft - Webflow HTML Website Template</title>
-    <meta content="Soft is an app Webflow HTML Landing Page. I flat, uncluttered and fully responsive design will make your app stand out. This is a responsive HTML5 website template. Use Soft for your next App idea!" name="description">
-    <meta content="Soft - Webflow HTML Website Template" property="og:title">
-    <meta content="Soft is an app Webflow HTML Landing Page. I flat, uncluttered and fully responsive design will make your app stand out. This is a responsive HTML5 website template. Use Soft for your next App idea!" property="og:description">
+    <title>Kolay Bütçe - Yeni Nesil Bütçe Kontrol Uygulaması</title>
+    <meta content="Kolay Bütçe kişisel bütçenizi kontrol altına almanızı sağlayan bir servistir. Banka entegrasyonlarıyla işinizi kolaylaştırır." name="description">
+    <meta content="Kolay Bütçe - Bütçe Kontrol Uygulaması" property="og:title">
+    <meta content="Kolay bütçe ile aylık gelir ve giderlerinizi tek çatı altında toplayabilirsiniz. Bu sayede nereye ne zaman ne kadar para harcadığınızın takibini kolaylıkla yapabilirsiniz. Hemen kayıt olun ve kullanmaya başlayın!" property="og:description">
     <meta content="summary" name="twitter:card">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="Webflow" name="generator">
