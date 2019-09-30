@@ -74,7 +74,7 @@
 
 
             </div>
-            <div class="footer-links-wrap"><div class="footer-link-block"><a href="#feature" class="underline-link">Features</a></div><div class="footer-link-block"><a href="#slider-section" class="underline-link">Categories</a></div><div class="footer-link-block"><a href="#blue-block" class="underline-link">How it works</a></div><div class="footer-link-block"><a href="#for-block" class="underline-link">Pricing</a></div></div></div></footer>
+            <div class="footer-links-wrap"><div class="footer-link-block"><a href="#feature" class="underline-link">Özellikler</a></div><div class="footer-link-block"><a href="#slider-section" class="underline-link">Ekranlar</a></div><div class="footer-link-block"><a href="#blue-block" class="underline-link">Avantajlar</a></div><div class="footer-link-block"><a href="#for-block" class="underline-link">İndir</a></div></div></div></footer>
 
 
 
