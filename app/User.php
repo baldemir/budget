@@ -30,6 +30,7 @@ class User extends Authenticatable {
         return $this->hasMany(ConnectedProvider::class);
     }
 
+
     public function addNew($input)
     {
         $check = static::where('facebook_id',$input['facebook_id'])->first();

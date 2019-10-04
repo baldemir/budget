@@ -125,7 +125,13 @@ Route::group(['middleware' => ['auth']], function () {
 
         return 'window.i18n = ' . json_encode($strings) . ';';
     });
-    Route::get('/loginRedirectIsbank', 'IntegrationController@loginRedirectIsbank');
+    Route::get('/loginRedirectIsbank', 'Integration\IntegrationController@loginRedirectIsbank');
+    Route::get('/loginRedirectAlbaraka', 'IntegrationController@loginRedirectAlbaraka');
+    Route::get('/loginRedirectYapi', 'Integration\YapiKrediController@loginRedirectYapi');
+    Route::get('/loginRedirectKuveyt', 'Integration\KuveytTurkController@loginRedirectKuveyt');
+    Route::get('/getIsbankAccounts', 'IntegrationController@printIsbankAccounts');
+    Route::get('/getAlbarakaAccounts', 'IntegrationController@printAlbarakaAccounts');
+    Route::get('/getKuveytAccounts', 'Integration\KuveytTurkController@printAccounts');
 });
 
 Route::get('/logout', 'LogoutController@index')->name('logout');

@@ -21,7 +21,7 @@ class CreateProvidersTable extends Migration
             $table->string('icon');
             $table->string('client_id', 120);
             $table->string('client_secret', 120);
-            $table->string('login_url', 150);
+            $table->string('login_url', 350);
         });
     }
 

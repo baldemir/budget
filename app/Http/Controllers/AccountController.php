@@ -36,10 +36,10 @@ class AccountController extends Controller {
         return redirect()->route('tags.index');
     }
 
-    public function edit(Tag $tag) {
-        $this->authorize('edit', $tag);
+    public function edit(Account $account) {
+        $this->authorize('edit', $account);
 
-        return view('tags.edit', compact('tag'));
+        return view('accounts.edit', compact('account'));
     }
 
     public function update(Request $request, Tag $tag) {
