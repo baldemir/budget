@@ -42,24 +42,25 @@ class AccountController extends Controller {
         return view('accounts.edit', compact('account'));
     }
 
-    public function update(Request $request, Tag $tag) {
-        $this->authorize('update', $tag);
+    public function update(Request $request, Account $account) {
+        $this->authorize('update', $account);
 
         $request->validate($this->validationRules);
 
-        $tag->fill([
+        $account->fill([
             'name' => $request->input('name'),
-            'color' => $request->input('color')
+            'color' => $request->input('color'),
+            'description' => $request->input('description')
         ])->save();
 
-        return redirect()->route('tags.index');
+        return redirect()->route('accounts.index');
     }
 
-    public function destroy(Tag $tag) {
-        $this->authorize('delete', $tag);
+    public function destroy(Account $account) {
+        $this->authorize('delete', $account);
 
-        if (!$tag->spendings->count()) {
-            $tag->delete();
+        if (!$account->spendings->count()) {
+            $account->delete();
         }
 
         return redirect()->route('tags.index');

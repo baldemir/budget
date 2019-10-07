@@ -14,7 +14,7 @@ class Account extends Model {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['space_id', 'name'];
+    protected $fillable = ['space_id', 'name', 'color', 'description', ''];
 
     protected $dispatchesEvents = [
         'created' => AccountCreated::class,
