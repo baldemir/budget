@@ -26,6 +26,6 @@ return [
     'import' => 'İçe Aktarım',
     'providers' => 'Bankalar',
     'connected_providers' => 'Bağlı Bankalar',
-
+    'bank_accounts' => 'Banka Hesapları'
 
 ];

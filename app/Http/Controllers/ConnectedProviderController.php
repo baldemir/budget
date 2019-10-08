@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\ConnectedProvider;
-use App\Policies\ConnectedProviderPolicy;
-use App\Provider;
 use Illuminate\Http\Request;
 
 use App\Spending;
@@ -18,8 +16,8 @@ class ConnectedProviderController extends Controller {
     public function index(Request $request) {
         $filter = false;
 
-        $providers = Provider::all();
-        return view('providers.index', compact('providers'));
+        $connectedProviders = ConnectedProvider::all();
+        return view('providers.index', compact('connectedProviders'));
     }
 
     public function edit(ConnectedProvider $provider) {

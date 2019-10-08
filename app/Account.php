@@ -26,6 +26,10 @@ class Account extends Model {
         return $this->hasMany(Spending::class);
     }
 
+    public function earnings() {
+        return $this->hasMany(Earning::class);
+    }
+
 
     public function provider() {
         return $this->belongsTo(Provider::class);

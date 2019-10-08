@@ -29,8 +29,6 @@ class ConnectedProvider extends Model {
         return $this->provider()->first()->accounts($this->user()->first()->id);
     }
 
-
-
     public function provider() {
         return $this->belongsTo(Provider::class);
     }

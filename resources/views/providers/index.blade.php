@@ -13,30 +13,30 @@
             </div>
         </div>
         <div class="box">
-            @if (count($providers))
+            @if (count($connectedProviders ))
                 <div class="box__section box__section--header row">
                     <div class="row__column row__column--compact mr-2" style="width: 20px;"></div>
                     <div class="row__column">{{ __('fields.name') }}</div>
                     <div class="row__column row__column--double" style="flex: 2;">{{ __('models.accounts') }}</div>
                 </div>
-                @foreach ($providers as $provider)
+                @foreach ($connectedProviders as $connectedProvider)
                     <div class="box__section row">
                         <div class="row__column row__column--compact row__column--middle mr-2">
-                            <img style="width: 15px; height: 15px; border-radius: 2px;" src="{{ $provider->icon }}"/>
+                            <img style="width: 15px; height: 15px; border-radius: 2px;" src="{{ $connectedProvider->provider->icon }}"/>
                         </div>
-                        <div class="row__column row__column--middle">{{ $provider->name }}</div>
-                        <div class="row__column row__column--middle">{{ $provider->accounts(1)->count() }}</div>
+                        <div class="row__column row__column--middle">{{ $connectedProvider->provider->name }}</div>
+                        <div class="row__column row__column--middle">{{ $connectedProvider->accounts()->count() }}</div>
                         <div class="row__column row__column--middle row row--right">
                             <div class="row__column row__column--compact">
-                                <a href="/tags/{{ $provider->id }}/edit">
+                                <a href="/providers/{{ $connectedProvider->id }}/edit">
                                     <i class="far fa-pencil"></i>
                                 </a>
                             </div>
                             <div class="row__column row__column--compact ml-2">
-                                @if ($provider->accounts(1)->count())
+                                @if ($connectedProvider->accounts()->count())
                                     <i class="far fa-trash-alt"></i>
                                 @else
-                                    <form method="POST" action="/providers/{{ $provider->id }}">
+                                    <form method="POST" action="/providers/{{ $connectedProvider->id }}">
                                         {{ method_field('DELETE') }}
                                         {{ csrf_field() }}
                                         <button class="button link">

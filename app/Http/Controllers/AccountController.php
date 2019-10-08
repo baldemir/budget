@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\Http\Controllers\Integration\IntegrationController;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -59,18 +60,17 @@ class AccountController extends Controller {
     public function destroy(Account $account) {
         $this->authorize('delete', $account);
 
-        if (!$account->spendings->count()) {
+        if (!$account->spendings->count() && !$account->earnings->count()) {
             $account->delete();
         }
 
-        return redirect()->route('tags.index');
+        return redirect()->back();
     }
 
     public function updateStatus(Request $request, Account $account){
         $this->authorize('update', $account);
         if($request->get('status') != null){
             $account->status = 1;
-            IntegrationController::synchronizeIsbankTransactions($account->id);
         }else{
             $account->status = 0;
         }

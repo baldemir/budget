@@ -10,16 +10,17 @@
                 <div class="box__section box__section--header row">
                     <div class="row__column row__column--compact mr-2" style="width: 20px;"></div>
                     <div class="row__column row__column--double">{{ __('fields.provider') }}</div>
-                    <div class="row__column " style="">{{ __('fields.account_name') }}</div>
+                    <div class="row__column">{{ __('fields.account_name') }}</div>
                     <div class="row__column row row--right">{{ __('fields.synchronize') }}</div>
+                    <div class="row__column row__column--compact ml-2">{{ __('actions.delete') }}</div>
                 </div>
                 @foreach ($accounts as $account)
                     <div class="box__section row">
-                        <div class="row__column row__column--compact row__column--middle mr-2">
+                        <div class="row__column row__column--compact mr-2">
                             <img style="width: 15px; height: 15px; border-radius: 2px;" src="{{ $account->icon }}"/>
                         </div>
-                        <div class="row__column row__column--double">{{ $account->name }}</div>
-                        <div class="row__column ">-</div>
+                        <div class="row__column row__column--double">{{ $account->provider->name }}</div>
+                        <div class="row__column ">{{ $account->name }}</div>
                         <div class="row__column row row--right">
                             <div class="row__column row__column--compact">
                                 <input name="account-{{$account->id}}" @if($account->status == 1) checked @endif class="account-toggle" type="checkbox">
@@ -35,10 +36,23 @@
                                 </form>
                             </div>
                         </div>
+                        <div class="row__column row__column--compact ml-2">
+                            @if ($account->spendings()->count())
+                                <i class="far fa-trash-alt"></i>
+                            @else
+                                <form method="POST" action="/accounts/{{ $account->id }}">
+                                    {{ method_field('DELETE') }}
+                                    {{ csrf_field() }}
+                                    <button class="button link">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
                 @endforeach
             @else
-                @include('partials.empty_state', ['payload' => 'tags'])
+                @include('partials.empty_state', ['payload' => 'accounts'])
             @endif
         </div>
     </div>

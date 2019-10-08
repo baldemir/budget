@@ -172,6 +172,9 @@
                             <li>
                                 <a href="/reports" {!! (Request::path() == 'reports') ? 'class="active"' : '' !!}><i class="far fa-chart-line fa-sm color-blue"></i> <span class="hidden ml-05">Raporlar</span></a>
                             </li>
+                            <li>
+                                <a href="/providers" {!! (Request::path() == 'providers') ? 'class="active"' : '' !!}><i class="far fa-briefcase fa-sm color-red"></i> <span class="hidden ml-05">{{ __('models.connected_providers') }}</span></a>
+                            </li>
                         </ul>
                         <ul class="navigation__menu">
                             <li>

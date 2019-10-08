@@ -27,4 +27,5 @@ return [
 
     'providers' => 'Banks',
     'connected_providers' => 'Connected Banks',
+    'bank_accounts' => 'Bank Accounts'
 ];

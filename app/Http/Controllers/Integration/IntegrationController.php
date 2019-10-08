@@ -159,14 +159,17 @@ class IntegrationController extends Controller {
     }
 
     public static function synchronizeIsbankTransactions($accountId){
+        /*
         $user = Auth::user();
         $account = Account::find($accountId);
         $provider = $account->provider()->first();
         $connectedProvider = $provider->connectedProviders()->where('user_id', $user->id)->first();
         return self::getIsbankAccounts($connectedProvider->access_token, $provider->client_id, $provider->client_secret);
+
         $headers = ['authorization' => 'Bearer ' . $connectedProvider->access_token, 'x-ibm-client-id' => $provider->client_id, 'x-ibm-client-secret' => $provider->client_secret];
         $body = [];
         return Result::responseObject(self::getGuzzleRequest($headers, $account->sync_url, $body));
+        */
     }
 
 
