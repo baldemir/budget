@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', __('actions.edit') . ' ' . __('models.tag'))
+@section('title', __('actions.edit') . ' ' . __('models.bank_accounts'))
 
 @section('body')
     <div class="wrapper my-3">

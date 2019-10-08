@@ -23,5 +23,8 @@ return [
     'transaction' => 'Transaction',
 
     'imports' => 'Imports',
-    'import' => 'Import'
+    'import' => 'Import',
+
+    'providers' => 'Banks',
+    'connected_providers' => 'Connected Banks',
 ];

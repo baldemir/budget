@@ -1,12 +1,12 @@
 @extends('layout')
 
-@section('title', __('models.tags'))
+@section('title', __('models.providers'))
 
 @section('body')
     <div class="wrapper my-3">
         <div class="row mb-3">
             <div class="row__column row__column--middle">
-                <h2>{{ __('models.bank_accounts') }}</h2>
+                <h2>{{ __('models.connected_providers') }}</h2>
             </div>
             <div class="row__column row__column--compact row__column--middle">
                 <a href="/providers/create" class="button">{{ __('actions.create') }} {{ __('models.tag') }}</a>

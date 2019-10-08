@@ -18,5 +18,15 @@ return [
     'file' => 'File',
 
     'color' => 'Color',
-    'image' => 'Image'
+    'image' => 'Image',
+    'synchronize' => 'Senkronize Edilsin',
+    'provider' => 'Sağlayıcı',
+    'account_name' => 'Hesap Adı',
+
+
+    'branch_name' =>'Şube Adı',
+    'open_date' =>'Open Date',
+    'balance' =>'Balance',
+    'last_sync' =>'Last Sync',
+
 ];

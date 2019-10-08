@@ -24,5 +24,8 @@ return [
 
     'imports' => 'İçe Aktarımlar',
     'import' => 'İçe Aktarım',
-    'bank_accounts' => 'Banka Hesapları'
+    'providers' => 'Bankalar',
+    'connected_providers' => 'Bağlı Bankalar',
+
+
 ];

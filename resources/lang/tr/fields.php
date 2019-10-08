@@ -21,5 +21,10 @@ return [
     'image' => 'Resim',
     'synchronize' => 'Senkronize Edilsin',
     'provider' => 'Sağlayıcı',
-    'account_name' => 'Hesap Adı'
+    'account_name' => 'Hesap Adı',
+
+    'branch_name' =>'Şube Adı',
+    'open_date' =>'Açılış Tarihi',
+    'balance' =>'Bakiye',
+    'last_sync' =>'Son Senkronizasyon',
 ];
