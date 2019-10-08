@@ -54,4 +54,9 @@ class Spending extends Model {
     public function tag() {
         return $this->belongsTo(Tag::class);
     }
+
+    public function account() {
+        return $this->belongsTo(Account::class);
+    }
+
 }

@@ -69,6 +69,11 @@
                                             <i class="fas fa-arrow-alt-right fa-sm"></i>
                                         @endif
                                     </div>
+
+                                    <div class="row__column row__column--compact row__column--middle ml-1 color-red">
+                                        <img alt="{{ $transaction->account->provider->name }}" src="{{ $transaction->account->provider->icon }}" style="width: 30px; border-radius: 50%;">
+                                    </div>
+
                                     <div class="row__column row__column--middle row row--right">
                                         <div class="row__column row__column--compact">
                                             <a @if (get_class($transaction) == 'App\Earning')href="/earnings/{{ $transaction->id }}/edit" @endif @if (get_class($transaction) == 'App\Spending')href="/spendings/{{ $transaction->id }}/edit" @endif>

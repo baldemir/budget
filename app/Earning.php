@@ -30,6 +30,10 @@ class Earning extends Model {
         return ($secondsDifference / 60 / 60 / 24) . ' days ago';
     }
 
+    public function account() {
+        return $this->belongsTo(Account::class);
+    }
+
     // Relations
     public function tag() {
         return $this->belongsTo(Tag::class);
