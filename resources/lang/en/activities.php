@@ -19,5 +19,16 @@ return [
     'import' => [
         'created' => 'Created Import',
         'deleted' => 'Deleted Import'
-    ]
+    ],
+
+    'account' => [
+        'created' => 'Account Created',
+        'deleted' => 'Account Deleted'
+    ],
+
+    'provider' => [
+        'connected' => 'Provider Connected',
+        'created' => 'Provider Created',
+        'deleted' => 'Provider Deleted'
+    ],
 ];

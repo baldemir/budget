@@ -23,5 +23,7 @@ return [
     'transaction' => 'Transaction',
 
     'imports' => 'Imports',
-    'import' => 'Import'
+    'import' => 'Import',
+
+    'activities' => 'Activities',
 ];

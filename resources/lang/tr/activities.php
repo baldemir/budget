@@ -19,5 +19,16 @@ return [
     'import' => [
         'created' => 'İçe Aktarma Oluşturuldu',
         'deleted' => 'İçe Aktarma Silindi'
-    ]
+    ],
+
+    'account' => [
+        'created' => 'Hesap Oluşturuldu',
+        'deleted' => 'Hesap Silindi'
+    ],
+
+    'provider' => [
+        'connected' => 'Sağlayıcı Bağlandı',
+        'created' => 'Sağlayıcı Oluşturuldu',
+        'deleted' => 'Sağlayıcı Silindi'
+    ],
 ];

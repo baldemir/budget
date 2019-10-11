@@ -23,5 +23,7 @@ return [
     'transaction' => 'İşlem',
 
     'imports' => 'İçe Aktarımlar',
-    'import' => 'İçe Aktarım'
+    'import' => 'İçe Aktarım',
+
+    'activities' => 'Aktiviteler',
 ];
