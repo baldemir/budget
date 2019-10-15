@@ -90,6 +90,93 @@ class KuveytTurkController extends Controller {
         return base64_encode($signature);
     }
 
+    /**
+     * @return string
+     * @desc Local signature yaratmak için eklenmiþtir.
+     * @deprecated SÝLÝNECEK
+     */
+    public function createSignature(){
+
+        $accessToken = "03a65bad19804caff2056188ccac237a5a56a5568257088d63442491da67b90c";
+        $queryString = "?scope=accounts";
+
+        $postbody=false;
+        if($postbody){
+            $queryString ="?grant_type=refresh_token&refresh_token=5d851583751e876901fb175f938a90d18bccbbe421598f1ae93f63260b7ba7f6";
+        }
+
+        return $this->signData($accessToken,$queryString);
+    }
+
+
+    /**
+     * @desc  This function updates access_token and refresh_token
+     *
+     */
+    public function refreshToken(){
+
+        // GET connected_providers of user
+        $user = Auth::user();
+        $connectedProvider = $user->connectedProviders->where('provider_id', 4)->first();
+        // $connectedProvider = ConnectedProvider::find($connectedProviderId);
+
+        if($connectedProvider == null){
+            return Result::failureResponse(Result::$FAILURE_DB, "Can't find the connected provider.");
+        }
+
+        // GET providers clientId & clientSecret
+        $currentProvider = Provider::where('alias', 'kuveyt')->first();
+        $clientId = $currentProvider->client_id;
+        $clientSecret = $currentProvider->client_secret;
+
+        $headers = [];
+        $body['grant_type'] = "refresh_token";
+        $body['refresh_token'] = $connectedProvider->refresh_token;
+        $body['client_id'] = $clientId;
+        $body['client_secret'] = $clientSecret;
+
+        // REQUEST ACCESS & REFRESH TOKENS
+        $result = $this->postGuzzleRequest($headers, "https://idprep.kuveytturk.com.tr/api/connect/token", $body);
+
+        if($result->access_token == null){
+            return Result::failureResponse(Result::$FAILURE_PROCESS, "Can't get the access token from provider.");
+        }
+
+        $connectedProvider->access_token = $result->access_token;
+        $connectedProvider->expiry_time = Carbon::now()->addSeconds($result->expires_in)->toDateTimeString();
+        $connectedProvider->refresh_token = $result->refresh_token;
+        $connectedProvider->save();
+
+        // Return JSON
+        echo json_encode($connectedProvider);die;
+    }
+
+
+    /**
+     * @desc  This function imports account transactions
+     */
+    public function importAccountTransaction(){
+
+        // GET connected_providers of user
+        $user = Auth::user();
+        $connectedProvider = $user->connectedProviders->where('provider_id', 4)->first();
+
+        $token = $connectedProvider->access_token;
+
+        $suffix = '1';
+        $path = "https://apitest.kuveytturk.com.tr/prep/v1/accounts/".$suffix."/transactions";
+        $queryString= "?onlyOpen=true&onlyWithNoBalance=false&onlyCurrent=true&sharedWithMultiSignature=true";
+        $headers = [
+            'Authorization' => 'Bearer ' . $token ,
+            'Signature' => $this->signData($token, $queryString)
+        ];
+        $body = [];
+
+        // GET Account Transactions
+        $result = self::getGuzzleRequest($headers, $path . $queryString, $body);
+        echo json_encode($result);
+    }
+
 
     public function importAccounts($token, $clientId, $clientSecret){
         $user = Auth::user();
