@@ -88,6 +88,47 @@ class TransactionController extends BaseController
         return $this->sendResponse($product->toArray(), 'Transaction created successfully.');
     }
 
+    /**
+     * @bodyParam id int required id of transaction.
+     * @bodyParam tag_id int required Category id of transaction.
+     * @bodyParam happened_on string required Date of transaction in format of YYY-mm-dd.
+     * @bodyParam description string required The description(name) of transaction.
+     * @bodyParam amount int required The amount of transaction.
+     */
+    public function editTransaction(Request $request)
+    {
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'id' => 'required', // TODO CHECK IF TAG BELONGS TO USER
+            'tag_id' => 'nullable|exists:tags,id', // TODO CHECK IF TAG BELONGS TO USER
+            'happened_on' => 'required|date|date_format:Y-m-d',
+            'description' => 'required|max:255',
+            'amount' => 'required|regex:/^\d*(\.\d{2})?$/',
+            'account_id' => 'nullable|exists:accounts,id', // TODO CHECK IF account BELONGS TO USER
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $user = Auth::guard('api')->user();
+        $spaceId = $user->spaces()->first()->id;
+        $input["space_id"] = $spaceId;
+
+        $input["amount"] = $input["amount"] * 100;
+
+        if($input["type"] == 1){
+            $product = Earning::update($input);
+        }else{
+            if($input["import_id"] == 0){
+                $input = \array_diff_key($input, ["import_id" => "xy"]);
+            }
+            $product = Spending::update($input);
+        }
+
+        return $this->sendResponse($product->toArray(), 'Transaction updated successfully.');
+    }
+
 
     /**
      * Display the specified resource.
@@ -119,20 +160,22 @@ class TransactionController extends BaseController
 
     /**
      * Update the specified transaction.
-     *
      * @bodyParam tag_id int required Category id of transaction.
      * @bodyParam happened_on string required Date of transaction in format of YYY-mm-dd.
      * @bodyParam description string required The description(name) of transaction.
      * @bodyParam amount int required The amount of transaction.
      */
-    public function update(Request $request, Spending $product)
+    public function updateSpending(Request $request, Spending $spending)
     {
+        $this->authorize('update', $spending);
         $input = $request->all();
 
 
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'detail' => 'required'
+            'date' => 'required|date|date_format:Y-m-d',
+            'description' => 'required|max:255',
+            'amount' => 'required|regex:/^(\d{0,3}(?:,\d{3}){0,4})*(\.\d{2})?$/',
+            'tag_id' => 'nullable|exists:tags,id'
         ]);
 
 
@@ -141,12 +184,53 @@ class TransactionController extends BaseController
         }
 
 
-        $product->name = $input['name'];
-        $product->detail = $input['detail'];
-        $product->save();
+        $amount = str_replace('.', '', str_replace(',', '', $request->input('amount')));
+        $spending->fill([
+            'tag_id' => $request->input('tag_id'),
+            'happened_on' => $request->input('date'),
+            'description' => $request->input('description'),
+            'amount' => $amount
+        ])->save();
 
 
-        return $this->sendResponse($product->toArray(), 'Product updated successfully.');
+        return $this->sendResponse($spending->toArray(), 'Transaction updated successfully.');
+    }
+
+    /**
+     * Update the specified transaction.
+     * @bodyParam tag_id int required Category id of transaction.
+     * @bodyParam happened_on string required Date of transaction in format of YYY-mm-dd.
+     * @bodyParam description string required The description(name) of transaction.
+     * @bodyParam amount int required The amount of transaction.
+     */
+    public function updateEarning(Request $request, Earning $earning)
+    {
+        $this->authorize('update', $earning);
+        $input = $request->all();
+
+
+        $validator = Validator::make($input, [
+            'date' => 'required|date|date_format:Y-m-d',
+            'description' => 'required|max:255',
+            'amount' => 'required|regex:/^(\d{0,3}(?:,\d{3}){0,4})*(\.\d{2})?$/',
+        ]);
+
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+
+        $amount = str_replace('.', '', str_replace(',', '', $request->input('amount')));
+        $earning->fill([
+            'tag_id' => $request->input('tag_id'),
+            'happened_on' => $request->input('date'),
+            'description' => $request->input('description'),
+            'amount' => $amount
+        ])->save();
+
+
+        return $this->sendResponse($earning->toArray(), 'Transaction updated successfully.');
     }
 
 

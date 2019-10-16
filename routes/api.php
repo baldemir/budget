@@ -24,6 +24,10 @@ Route::middleware('auth:api')->group( function () {
     Route::post('saveTransaction', 'API\TransactionController@saveTransaction');
 
     Route::get('getMonthlyTransactionsByCategory', 'API\TransactionController@getMonthlyTransactionsByCategory');
+
+    Route::post('/updateSpending/{spending}', 'API\TransactionController@updateSpending');
+    Route::post('/updateEarning/{earning}', 'API\TransactionController@updateEarning');
+
 });
 
 
