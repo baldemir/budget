@@ -133,7 +133,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/getAlbarakaAccounts', 'Integration\IntegrationController@printAlbarakaAccounts');
     Route::get('/getKuveytAccounts', 'Integration\KuveytTurkController@printAccounts');
     Route::get('/getKuveytRefreshAccessToken', 'Integration\KuveytTurkController@refreshToken');
-    Route::get('/getKuveytAllAccountTransactions', 'Integration\KuveytTurkController@importAllAccountTransaction');
+    Route::get('/getKuveytAllAccountTransactions', 'Integration\KuveytTurkController@importAllAccountTransactions');
+    Route::get('/getKuveytAccount/{accountId}/transactions', 'Integration\KuveytTurkController@importAccountTransactions');
     Route::get('/getKuveytSignature', 'Integration\KuveytTurkController@createSignature');
 });
 

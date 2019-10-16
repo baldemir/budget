@@ -17,8 +17,10 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Lang;
+use League\Flysystem\Exception;
 
 class KuveytTurkController extends Controller {
+
     /**
      * @bodyParam token string required Token acquired from facebook login attempt.
      */
@@ -115,7 +117,7 @@ class KuveytTurkController extends Controller {
      * @desc  This function updates access_token and refresh_token
      *
      */
-    public function refreshToken(){
+    public static function refreshToken(){
 
         // GET connected_providers of user
         $user = Auth::user();
@@ -138,7 +140,7 @@ class KuveytTurkController extends Controller {
         $body['client_secret'] = $clientSecret;
 
         // REQUEST ACCESS & REFRESH TOKENS
-        $result = $this->postGuzzleRequest($headers, "https://idprep.kuveytturk.com.tr/api/connect/token", $body);
+        $result = self::postGuzzleRequest($headers, "https://idprep.kuveytturk.com.tr/api/connect/token", $body);
 
         if($result->access_token == null){
             return Result::failureResponse(Result::$FAILURE_PROCESS, "Can't get the access token from provider.");
@@ -150,14 +152,17 @@ class KuveytTurkController extends Controller {
         $connectedProvider->save();
 
         // Return JSON
-        echo json_encode($connectedProvider);die;
+        return json_encode($connectedProvider);
     }
 
 
     /**
      * @desc  This function imports account transactions
      */
-    public function importAllAccountTransaction(){
+    public function importAllAccountTransactions(){
+
+        // Check Access Token Expiry Date
+        self::checkAccessTokenExpiryDate();
 
         // GET connected_providers of user
         $user = Auth::user();
@@ -183,26 +188,14 @@ class KuveytTurkController extends Controller {
 
                 // kuveytturk account transaction düzgün gelmediðinden kontrol eklenmiþtir
                 if($transaction->suffix==$suffix){
-
-                    // Spending Transactions
-                    if($transaction->amount<0){
-                        $newTransaction = new Spending();
-                        $newTransaction->description = $transaction->description;
-                        $newTransaction->amount = $transaction->amount;
-                        $newTransaction->account_id = $account->id;
-                        $newTransaction->space_id = $account->space_id;
-                        $newTransaction->happened_on = Carbon::createFromTimestamp( strtotime($transaction->date))->toDateTimeString();
-                        $newTransaction->save();
-                    // Earning Transactions
-                    }else{
-                        $newTransaction = new Earning();
-                        $newTransaction->description = $transaction->description;
-                        $newTransaction->amount = $transaction->amount;
-                        $newTransaction->account_id = $account->id;
-                        $newTransaction->space_id = $account->space_id;
-                        $newTransaction->happened_on = Carbon::createFromTimestamp( strtotime($transaction->date))->toDateTimeString();
-                        $newTransaction->save();
-                    }
+                    $newTransaction = $transaction->amount<0 ? new Spending() : new Earning();
+                    $newTransaction->description = $transaction->description;
+                    $newTransaction->amount = $transaction->amount;
+                    $newTransaction->account_id = $account->id;
+                    $newTransaction->space_id = $account->space_id;
+                    $newTransaction->happened_on = Carbon::createFromTimestamp( strtotime($transaction->date))->toDateTimeString();
+                    $newTransaction->real_id = $transaction->businessKey;
+                    $newTransaction->save();
                 }
             }
         }
@@ -211,7 +204,65 @@ class KuveytTurkController extends Controller {
     }
 
 
+    /**
+     * @desc  This function imports account transactions
+     */
+    public function importAccountTransactions($accountId){
+
+        // Check Access Token Expiry Date
+        self::checkAccessTokenExpiryDate();
+
+        // GET connected_providers of user
+        $user = Auth::user();
+        $connectedProvider = $user->connectedProviders->where('provider_id', 4)->first();
+        $token = $connectedProvider->access_token;
+
+        // GET user provider accounts
+        $account = Account::where('account_suffix' , $accountId)->first();
+
+        if($account == null){
+            return Result::failureResponse(Result::$FAILURE_DB, "Can't find the account by given suffix");
+        }
+
+        $suffix = $account->account_suffix;
+        $path = "https://apitest.kuveytturk.com.tr/prep/v1/accounts/".$suffix."/transactions";
+        $queryString= "?onlyOpen=true&onlyWithNoBalance=false&onlyCurrent=true&sharedWithMultiSignature=true";
+        $headers = [
+            'Authorization' => 'Bearer ' . $token ,
+            'Signature' => $this->signData($token, $queryString)
+        ];
+        $body = [];
+
+        // GET Account Transactions
+        $result = self::getGuzzleRequest($headers, $path . $queryString, $body);
+
+        foreach ($result->value as $transaction){
+
+            // kuveytturk account transaction düzgün gelmediðinden kontrol eklenmiþtir
+            if($transaction->suffix==$suffix){
+                try{
+                    $newTransaction = $transaction->amount<0 ? new Spending() : new Earning();
+                    $newTransaction->description = $transaction->description;
+                    $newTransaction->amount = $transaction->amount;
+                    $newTransaction->account_id = $account->id;
+                    $newTransaction->space_id = $account->space_id;
+                    $newTransaction->happened_on = Carbon::createFromTimestamp( strtotime($transaction->date))->toDateTimeString();
+                    $newTransaction->real_id = $transaction->businessKey;
+                    $newTransaction->save();
+                }catch (Exception $e){
+                    return Result::failureResponse(Result::$FAILURE_DB, "Duplicate entry error");
+                }
+            }
+        }
+
+        echo \GuzzleHttp\json_encode($account);die;
+
+    }
+
+
     public function importAccounts($token){
+        // Check Access Token Expiry Date
+        self::checkAccessTokenExpiryDate();
 
         $currentProvider = Provider::where('alias', 'kuveyt')->first();
         $currentSpace = Space::find(session('space')->id);
@@ -282,28 +333,32 @@ class KuveytTurkController extends Controller {
 
 
 
+    public static function checkAccessTokenExpiryDate(){
+        $user = Auth::user();
+        $connectedProvider = $user->connectedProviders->where('provider_id', 4)->first();
+        $accessTokenExpiryDate = Carbon::createFromFormat('Y-m-d H:i:s' ,$connectedProvider->expiry_time);
+
+        // Refresh token if its necessary
+        $threshold=5;
+        if(!$accessTokenExpiryDate->greaterThan(Carbon::now()->addMinutes($threshold))){
+            $result = self::refreshToken();
+        }
+    }
+
 
     public static function postGuzzleRequest($headers, $url, $body)
     {
-        //$client = new \GuzzleHttp\Client(['headers' => ['X-Foo' => 'Bar']]);
         $client = new \GuzzleHttp\Client(['headers' => $headers]);
         $response = $client->post($url, array('form_params' => $body));
-
         $response = json_decode($response->getBody()->getContents());
-
-
         return $response;
     }
 
     public static function getGuzzleRequest($headers, $url, $body)
     {
-        //$client = new \GuzzleHttp\Client(['headers' => ['X-Foo' => 'Bar']]);
         $client = new \GuzzleHttp\Client(['headers' => $headers]);
         $response = $client->get($url,  array('form_params'=>$body, 'verify'=> false));
-
         $response = json_decode($response->getBody());
-
-
         return $response;
     }
 
