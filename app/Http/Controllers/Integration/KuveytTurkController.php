@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Integration;
 
 use App\Account;
 use App\ConnectedProvider;
+use App\Earning;
 use App\Http\Controllers\Controller;
 use App\Provider;
 use App\Result;
 use App\Space;
+use App\Spending;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
@@ -75,7 +77,7 @@ class KuveytTurkController extends Controller {
         $user = Auth::user();
         $provider = $user->connectedProviders->where('provider_id', 4)->first();
 
-        var_dump(self::importAccounts($provider->access_token, $provider->client_id, $provider->client_secret));
+        self::importAccounts($provider->access_token);
     }
 
     public static function signData($accessToken, $queryString){
@@ -155,31 +157,61 @@ class KuveytTurkController extends Controller {
     /**
      * @desc  This function imports account transactions
      */
-    public function importAccountTransaction(){
+    public function importAllAccountTransaction(){
 
         // GET connected_providers of user
         $user = Auth::user();
         $connectedProvider = $user->connectedProviders->where('provider_id', 4)->first();
-
         $token = $connectedProvider->access_token;
 
-        $suffix = '1';
-        $path = "https://apitest.kuveytturk.com.tr/prep/v1/accounts/".$suffix."/transactions";
-        $queryString= "?onlyOpen=true&onlyWithNoBalance=false&onlyCurrent=true&sharedWithMultiSignature=true";
-        $headers = [
-            'Authorization' => 'Bearer ' . $token ,
-            'Signature' => $this->signData($token, $queryString)
-        ];
-        $body = [];
+        // GET user provider accounts
+        $accountList = Account::where('provider_id' , 4)->get();
+        foreach ($accountList as $account){
+            $suffix = $account->account_suffix;
+            $path = "https://apitest.kuveytturk.com.tr/prep/v1/accounts/".$suffix."/transactions";
+            $queryString= "?onlyOpen=true&onlyWithNoBalance=false&onlyCurrent=true&sharedWithMultiSignature=true";
+            $headers = [
+                'Authorization' => 'Bearer ' . $token ,
+                'Signature' => $this->signData($token, $queryString)
+            ];
+            $body = [];
 
-        // GET Account Transactions
-        $result = self::getGuzzleRequest($headers, $path . $queryString, $body);
-        echo json_encode($result);
+            // GET Account Transactions
+            $result = self::getGuzzleRequest($headers, $path . $queryString, $body);
+
+            foreach ($result->value as $transaction){
+
+                // kuveytturk account transaction düzgün gelmediðinden kontrol eklenmiþtir
+                if($transaction->suffix==$suffix){
+
+                    // Spending Transactions
+                    if($transaction->amount<0){
+                        $newTransaction = new Spending();
+                        $newTransaction->description = $transaction->description;
+                        $newTransaction->amount = $transaction->amount;
+                        $newTransaction->account_id = $account->id;
+                        $newTransaction->space_id = $account->space_id;
+                        $newTransaction->happened_on = Carbon::createFromTimestamp( strtotime($transaction->date))->toDateTimeString();
+                        $newTransaction->save();
+                    // Earning Transactions
+                    }else{
+                        $newTransaction = new Earning();
+                        $newTransaction->description = $transaction->description;
+                        $newTransaction->amount = $transaction->amount;
+                        $newTransaction->account_id = $account->id;
+                        $newTransaction->space_id = $account->space_id;
+                        $newTransaction->happened_on = Carbon::createFromTimestamp( strtotime($transaction->date))->toDateTimeString();
+                        $newTransaction->save();
+                    }
+                }
+            }
+        }
+        echo \GuzzleHttp\json_encode($accountList);die;
+
     }
 
 
-    public function importAccounts($token, $clientId, $clientSecret){
-        $user = Auth::user();
+    public function importAccounts($token){
 
         $currentProvider = Provider::where('alias', 'kuveyt')->first();
         $currentSpace = Space::find(session('space')->id);
@@ -191,7 +223,7 @@ class KuveytTurkController extends Controller {
         $headers = ['authorization' => 'Bearer ' . $token,'Signature' => $this->signData($token, $queryString)];
         $body = ["context"=>"channel"];
         $result = self::getGuzzleRequest($headers, $path . $queryString, $body);
-        var_dump($result->value);
+
         $providerAccountIds = [];
         foreach ($userCurrentAccounts as $currentAccount){
             $providerAccountIds[] = $currentAccount->real_id;
@@ -228,8 +260,11 @@ class KuveytTurkController extends Controller {
             $newAccount->available_balance = $account->availableBalance;
             $newAccount->open_date = $account->openDate;
             $newAccount->branch_name= $account->branchName;
+            $newAccount->account_suffix= $account->suffix;
             $newAccount->save();
         }
+
+        echo \GuzzleHttp\json_encode($result);die;
     }
 
 
