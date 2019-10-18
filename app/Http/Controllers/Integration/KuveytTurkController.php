@@ -172,6 +172,66 @@ class KuveytTurkController extends Controller {
         // GET user provider accounts
         $accountList = Account::where('provider_id' , 4)->get();
         foreach ($accountList as $account){
+
+            if($account->status==1){
+                $suffix = $account->account_suffix;
+                $path = "https://apitest.kuveytturk.com.tr/prep/v1/accounts/".$suffix."/transactions";
+                $queryString= "?onlyOpen=true&onlyWithNoBalance=false&onlyCurrent=true&sharedWithMultiSignature=true";
+                $headers = [
+                    'Authorization' => 'Bearer ' . $token ,
+                    'Signature' => $this->signData($token, $queryString)
+                ];
+                $body = [];
+
+                // GET Account Transactions
+                $result = self::getGuzzleRequest($headers, $path . $queryString, $body);
+
+                foreach ($result->value as $transaction){
+
+                    // kuveytturk account transaction düzgün gelmediðinden kontrol eklenmiþtir
+                    if($transaction->suffix==$suffix){
+                        try{
+                            $newTransaction = $transaction->amount<0 ? new Spending() : new Earning();
+                            $newTransaction->description = $transaction->description;
+                            $newTransaction->amount = $transaction->amount;
+                            $newTransaction->account_id = $account->id;
+                            $newTransaction->space_id = $account->space_id;
+                            $newTransaction->happened_on = Carbon::createFromTimestamp( strtotime($transaction->date))->toDateTimeString();
+                            $newTransaction->real_id = $transaction->businessKey;
+                            $newTransaction->save();
+                        }catch (\Exception $e){
+                            return Result::failureResponse(Result::$FAILURE_DB, "Duplicate entry error >> importAllAccountTransactions");
+                        }
+                    }
+                }
+            }
+
+        }
+        echo \GuzzleHttp\json_encode($accountList);die;
+
+    }
+
+
+    /**
+     * @desc  This function imports account transactions
+     */
+    public function importAccountTransactions($accountId){
+
+        // Check Access Token Expiry Date
+        self::checkAccessTokenExpiryDate();
+
+        $account = Account::find($accountId);
+        if($account == null){
+            return Result::failureResponse(Result::$FAILURE_DB, "Can't find the account by given suffix");
+        }
+
+        if($account->status==1){
+
+            // GET connected_providers of user
+            $user = Auth::user();
+            $connectedProvider = $user->connectedProviders->where('provider_id', 4)->first();
+            $token = $connectedProvider->access_token;
+
             $suffix = $account->account_suffix;
             $path = "https://apitest.kuveytturk.com.tr/prep/v1/accounts/".$suffix."/transactions";
             $queryString= "?onlyOpen=true&onlyWithNoBalance=false&onlyCurrent=true&sharedWithMultiSignature=true";
@@ -188,75 +248,22 @@ class KuveytTurkController extends Controller {
 
                 // kuveytturk account transaction düzgün gelmediðinden kontrol eklenmiþtir
                 if($transaction->suffix==$suffix){
-                    $newTransaction = $transaction->amount<0 ? new Spending() : new Earning();
-                    $newTransaction->description = $transaction->description;
-                    $newTransaction->amount = $transaction->amount;
-                    $newTransaction->account_id = $account->id;
-                    $newTransaction->space_id = $account->space_id;
-                    $newTransaction->happened_on = Carbon::createFromTimestamp( strtotime($transaction->date))->toDateTimeString();
-                    $newTransaction->real_id = $transaction->businessKey;
-                    $newTransaction->save();
+                    try{
+                        $newTransaction = $transaction->amount<0 ? new Spending() : new Earning();
+                        $newTransaction->description = $transaction->description;
+                        $newTransaction->amount = $transaction->amount;
+                        $newTransaction->account_id = $account->id;
+                        $newTransaction->space_id = $account->space_id;
+                        $newTransaction->happened_on = Carbon::createFromTimestamp( strtotime($transaction->date))->toDateTimeString();
+                        $newTransaction->real_id = $transaction->businessKey;
+                        $newTransaction->save();
+                    }catch (\Exception $e){
+                        return Result::failureResponse(Result::$FAILURE_DB, "Duplicate entry error >> importAccountTransactions");
+                    }
                 }
             }
         }
-        echo \GuzzleHttp\json_encode($accountList);die;
-
-    }
-
-
-    /**
-     * @desc  This function imports account transactions
-     */
-    public function importAccountTransactions($accountId){
-
-        // Check Access Token Expiry Date
-        self::checkAccessTokenExpiryDate();
-
-        // GET connected_providers of user
-        $user = Auth::user();
-        $connectedProvider = $user->connectedProviders->where('provider_id', 4)->first();
-        $token = $connectedProvider->access_token;
-
-        // GET user provider accounts
-        $account = Account::where('account_suffix' , $accountId)->first();
-
-        if($account == null){
-            return Result::failureResponse(Result::$FAILURE_DB, "Can't find the account by given suffix");
-        }
-
-        $suffix = $account->account_suffix;
-        $path = "https://apitest.kuveytturk.com.tr/prep/v1/accounts/".$suffix."/transactions";
-        $queryString= "?onlyOpen=true&onlyWithNoBalance=false&onlyCurrent=true&sharedWithMultiSignature=true";
-        $headers = [
-            'Authorization' => 'Bearer ' . $token ,
-            'Signature' => $this->signData($token, $queryString)
-        ];
-        $body = [];
-
-        // GET Account Transactions
-        $result = self::getGuzzleRequest($headers, $path . $queryString, $body);
-
-        foreach ($result->value as $transaction){
-
-            // kuveytturk account transaction düzgün gelmediðinden kontrol eklenmiþtir
-            if($transaction->suffix==$suffix){
-                try{
-                    $newTransaction = $transaction->amount<0 ? new Spending() : new Earning();
-                    $newTransaction->description = $transaction->description;
-                    $newTransaction->amount = $transaction->amount;
-                    $newTransaction->account_id = $account->id;
-                    $newTransaction->space_id = $account->space_id;
-                    $newTransaction->happened_on = Carbon::createFromTimestamp( strtotime($transaction->date))->toDateTimeString();
-                    $newTransaction->real_id = $transaction->businessKey;
-                    $newTransaction->save();
-                }catch (Exception $e){
-                    return Result::failureResponse(Result::$FAILURE_DB, "Duplicate entry error");
-                }
-            }
-        }
-
         echo \GuzzleHttp\json_encode($account);die;
-
     }
 
 
