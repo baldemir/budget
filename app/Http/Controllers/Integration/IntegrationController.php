@@ -67,6 +67,57 @@ class IntegrationController extends Controller {
     }
 
 
+    /**
+     * @desc  This function imports account transactions
+     */
+    public function importAccountTransactions($accountId){
+
+        // Check Access Token Expiry Date
+        // self::checkAccessTokenExpiryDate();
+
+        $account = Account::find($accountId);
+        if($account == null){
+            return Result::failureResponse(Result::$FAILURE_DB, "Can't find the account by given accountId");
+        }
+
+        if($account->status==1){
+
+            // GET connected_providers of user
+            $user = Auth::user();
+            $connectedProvider = $user->connectedProviders->where('provider_id', self::$providerId)->first();
+            $token = $connectedProvider->access_token;
+
+            $isBankProvider=Provider::find(self::$providerId);
+            $providerAccountId = $account->provider_account_id;
+            $path="https://api.sandbox.isbank.com.tr/v1/accounts/".$providerAccountId."/transactions";
+            $headers = [
+                'Authorization' => 'Bearer ' . $token,
+                'X-IBM-client-id' => $isBankProvider->client_id,
+                'X-IBM-client-secret' => $isBankProvider->client_secret
+            ];
+            $body = [];
+            $result = self::getGuzzleRequest($headers, $path, $body);
+
+            foreach ($result->data as $transaction){
+                // account transaction düzgün gelmediðinden kontrol eklenmiþtir
+                try{
+                    $newTransaction = $transaction->amount<0 ? new Spending() : new Earning();
+                    $newTransaction->account_id = $account->id;
+                    $newTransaction->space_id = $account->space_id;
+                    $newTransaction->description = $transaction->description;
+                    $newTransaction->amount = $transaction->amount;
+                    $newTransaction->happened_on = Carbon::createFromTimestamp( strtotime($transaction->time))->toDateTimeString();
+                    $newTransaction->real_id = $transaction->id;
+                    $newTransaction->save();
+                }catch (\Exception $e){
+                    //return Result::failureResponse(Result::$FAILURE_DB, "Duplicate entry error >> importAccountTransactions");
+                }
+            }
+        }
+        echo \GuzzleHttp\json_encode($result);die;
+    }
+
+
     public function importAccounts($token){
         // Check Access Token Expiry Date
         //self::checkAccessTokenExpiryDate();
@@ -115,9 +166,10 @@ class IntegrationController extends Controller {
                 $newAccount->available_balance = $account->available_amount;
                 //$newAccount->open_date = $account->openDate;
                 $newAccount->branch_name= $account->branch_name;
+                $newAccount->provider_account_id = $account->account_id;
                 $newAccount->save();
             }catch (\Exception $e){
-                // TODO: 
+                // TODO:
                 // Burada hata kodu append edilecek
             }
         }

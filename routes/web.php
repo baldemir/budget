@@ -127,6 +127,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::get('/loginRedirectIsbank', 'Integration\IntegrationController@loginRedirectIsbank');
     Route::get('/getIsBankAccounts', 'Integration\IntegrationController@printAccounts');
+    Route::get('/getIsBankAccount/{accountId}/transactions', 'Integration\IntegrationController@importAccountTransactions');
     Route::get('/loginRedirectYapi', 'Integration\YapiKrediController@loginRedirectYapi');
     Route::get('/loginRedirectKuveyt', 'Integration\KuveytTurkController@loginRedirectKuveyt');
     Route::get('/getKuveytAccounts', 'Integration\KuveytTurkController@printAccounts');

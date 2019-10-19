@@ -222,7 +222,7 @@ class KuveytTurkController extends Controller {
 
         $account = Account::find($accountId);
         if($account == null){
-            return Result::failureResponse(Result::$FAILURE_DB, "Can't find the account by given suffix");
+            return Result::failureResponse(Result::$FAILURE_DB, "Can't find the account by given accountId");
         }
 
         if($account->status==1){
