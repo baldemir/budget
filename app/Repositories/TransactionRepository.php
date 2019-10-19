@@ -5,7 +5,7 @@ namespace App\Repositories;
 use Carbon\Carbon;
 
 class TransactionRepository {
-    public function getTransactionsByYearMonth($filterBy = null) {
+    public function getTransactionsByYearMonth($filterBy = null, $accountId = null) {
         $yearMonths = [];
 
         // Populate yearMonths with earnings
@@ -15,6 +15,15 @@ class TransactionRepository {
             if (!$filterBy) {
                 $shouldAdd = true;
             }
+
+            if ($accountId != null) {
+                if ($earning->account_id == $accountId) {
+                    $shouldAdd = true;
+                }else{
+                    $shouldAdd = false;
+                }
+            }
+
 
             if ($shouldAdd) {
                 $i = Carbon::parse($earning->happened_on)->format('Y-m');
@@ -37,6 +46,15 @@ class TransactionRepository {
                     $shouldAdd = false;
                 }
             }
+
+            if ($accountId != null) {
+                if ($spending->account_id != $accountId) {
+                    $shouldAdd = false;
+                }else{
+                    $shouldAdd = true;
+                }
+            }
+
 
             if ($shouldAdd) {
                 $i = Carbon::parse($spending->happened_on)->format('Y-m');

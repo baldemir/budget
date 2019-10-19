@@ -46,5 +46,12 @@ return [
     'type' => 'Tür',
     'suggestion' => 'Öneri',
     "other" => 'Diğer',
-    "chrome_extension_warning" => 'Görünüşe göre Chrome uzantımızı hala indirmemişsiniz. <a href="https://chrome.google.com/webstore/detail/kolay-b%C3%BCt%C3%A7e/acfnniefnegcmggkdobblgpmghndemai">Bu linkten</a> hemen indirebilirsiniz.'
+    "chrome_extension_warning" => 'Görünüşe göre Chrome uzantımızı hala indirmemişsiniz. <a href="https://chrome.google.com/webstore/detail/kolay-b%C3%BCt%C3%A7e/acfnniefnegcmggkdobblgpmghndemai">Bu linkten</a> hemen indirebilirsiniz.',
+    'no_transactions_yet' => 'Henüz hiç işlem yok.',
+    'currency_0'=> '-',
+    'currency_1'=> 'Türk Lirası',
+    'currency_2'=> 'Amerikan Doları',
+    'currency_3'=> 'Pound',
+    'currency_4'=> 'Euro',
+
 ];

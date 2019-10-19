@@ -47,6 +47,10 @@ return [
     'type' => 'Type',
     'suggestion' => 'Suggestion',
     "other" => 'Other',
-    "chrome_extension_warning" => "Looks like you haven't downloaded our Chrome Extension yet. You can download it by <a href='https://chrome.google.com/webstore/detail/kolay-b%C3%BCt%C3%A7e/acfnniefnegcmggkdobblgpmghndemai'> clicking here.</a>"
-
+    "chrome_extension_warning" => "Looks like you haven't downloaded our Chrome Extension yet. You can download it by <a href='https://chrome.google.com/webstore/detail/kolay-b%C3%BCt%C3%A7e/acfnniefnegcmggkdobblgpmghndemai'> clicking here.</a>",
+    'no_transactions_yet' => 'No transactions yet.',
+    'currency_1'=> 'Turkish Lira',
+    'currency_2'=> 'American Dollar',
+    'currency_3'=> 'Pound',
+    'currency_4'=> 'Euro',
 ];
