@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\Http\Controllers\Integration\IntegrationController;
+use App\Repositories\TransactionRepository;
 use Illuminate\Http\Request;
 
 use Auth;
 use App\Tag;
 
 class AccountController extends Controller {
+
+    public function __construct(TransactionRepository $transactionRepository) {
+        $this->repository = $transactionRepository;
+    }
+
     private $validationRules = [
         'name' => 'required|max:255',
         'color' => 'required|max:6'
@@ -39,8 +45,8 @@ class AccountController extends Controller {
 
     public function edit(Account $account) {
         $this->authorize('edit', $account);
-
-        return view('accounts.edit', compact('account'));
+        $yearMonths = $this->repository->getTransactionsByYearMonth(null, $account->id);
+        return view('accounts.edit', compact('account', 'yearMonths'));
     }
 
     public function update(Request $request, Account $account) {
