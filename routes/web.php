@@ -126,11 +126,9 @@ Route::group(['middleware' => ['auth']], function () {
         return 'window.i18n = ' . json_encode($strings) . ';';
     });
     Route::get('/loginRedirectIsbank', 'Integration\IntegrationController@loginRedirectIsbank');
-    Route::get('/loginRedirectAlbaraka', 'Integration\IntegrationController@loginRedirectAlbaraka');
+    Route::get('/getIsBankAccounts', 'Integration\IntegrationController@printAccounts');
     Route::get('/loginRedirectYapi', 'Integration\YapiKrediController@loginRedirectYapi');
     Route::get('/loginRedirectKuveyt', 'Integration\KuveytTurkController@loginRedirectKuveyt');
-    Route::get('/getIsbankAccounts', 'Integration\IntegrationController@printIsbankAccounts');
-    Route::get('/getAlbarakaAccounts', 'Integration\IntegrationController@printAlbarakaAccounts');
     Route::get('/getKuveytAccounts', 'Integration\KuveytTurkController@printAccounts');
     Route::get('/getKuveytRefreshAccessToken', 'Integration\KuveytTurkController@refreshToken');
     Route::get('/getKuveytAllAccountTransactions', 'Integration\KuveytTurkController@importAllAccountTransactions');
