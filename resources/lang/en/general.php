@@ -53,4 +53,5 @@ return [
     'currency_2'=> 'American Dollar',
     'currency_3'=> 'Pound',
     'currency_4'=> 'Euro',
+    'added'=>'Added'
 ];

@@ -53,5 +53,6 @@ return [
     'currency_2'=> 'Amerikan Doları',
     'currency_3'=> 'Pound',
     'currency_4'=> 'Euro',
+    'added'=>'Eklendi'
 
 ];

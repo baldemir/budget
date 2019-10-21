@@ -11,5 +11,9 @@ return [
     'verify' => 'Doğrula',
 
     'yes' => 'Evet',
-    'no' => 'Hayır'
+    'no' => 'Hayır',
+
+    'add'=>'Ekle',
+
+    'add_provider' => 'Banka Ekle',
 ];

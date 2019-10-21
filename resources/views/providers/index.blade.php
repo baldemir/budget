@@ -9,7 +9,7 @@
                 <h2>{{ __('models.connected_providers') }}</h2>
             </div>
             <div class="row__column row__column--compact row__column--middle">
-                <a href="/providers/create" class="button">{{ __('actions.create') }} {{ __('models.tag') }}</a>
+                <a href="/providers/create" class="button">{{ __('actions.add_provider') }}</a>
             </div>
         </div>
         <div class="box">

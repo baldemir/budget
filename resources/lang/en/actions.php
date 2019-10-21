@@ -11,5 +11,9 @@ return [
     'verify' => 'Verify',
 
     'yes' => 'Yes',
-    'no' => 'No'
+    'no' => 'No',
+
+    'add'=>'Add',
+
+    'add_provider' => 'Add Provider',
 ];
