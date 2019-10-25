@@ -800,7 +800,7 @@ class TransactionController extends BaseController
         $user = Auth::guard('api')->user();
         $spaceId = $user->spaces()->first()->id;
         $tagRepository = new TagRepository();
-        $mostExpensiveTags = $tagRepository->getMostExpensiveTags($spaceId, 5, $year, $month);
+        $mostExpensiveTags = $tagRepository->getMostExpensiveTags($spaceId, 25, $year, $month);
         return $this->responseObject($mostExpensiveTags);
     }
 
