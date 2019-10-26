@@ -44,6 +44,7 @@ class FacebookController extends Controller
             $create['name'] = $user->getName();
             $create['email'] = $user->getEmail();
             $create['facebook_id'] = $user->getId();
+            $create['verification_token'] = str_random(100);
 
 
             $userModel = new User;
