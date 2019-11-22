@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Events\AccountCreated;
+use App\Events\AccountDeleted;
 use App\Events\TagCreated;
 use App\Events\TagDeleted;
 use Illuminate\Database\Eloquent\Model;

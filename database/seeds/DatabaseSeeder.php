@@ -8,30 +8,57 @@ class DatabaseSeeder extends Seeder {
 
         // User
         $user = \App\User::create([
-            'name' => 'Daan',
-            'email' => 'daniel@pixely.me',
-            'password' => '$2y$12$eQ4s9CL8xg7Y6PoGNY4xuehr.d2u0e0VJ5CywkwqtQoyy/ntoP.pO' // hoi
+            'name' => 'KOLAY BUTCE',
+            'email' => 'test@kolaybutce.com',
+            'password' => '$2y$10$T0pGj.Cc/dI3DxrH2STYWuiJhrQD5bgf4s/fQErvMaPPnHTTfy6IK' // test1234
         ]);
 
         // Space
         $space = \App\Space::create([
             'currency_id' => 1,
-            'name' => 'Daan\'s Space'
+            'name' => 'KOLAY BUTCE TEST\'s Space'
         ]);
 
         $user->spaces()->attach($space);
 
         // Tags
-        $tagBills = \App\Tag::create(['space_id' => $space->id, 'name' => 'Bills']);
-        $tagFood = \App\Tag::create(['space_id' => $space->id, 'name' => 'Food']);
-        $tagTransport = \App\Tag::create(['space_id' => $space->id, 'name' => 'Transport']);
+        $tagBills = \App\Tag::create(['space_id' => $space->id, 'name' => 'Fatura']);
+        $tagFood = \App\Tag::create(['space_id' => $space->id, 'name' => 'Yemek']);
+        $tagTransport = \App\Tag::create(['space_id' => $space->id, 'name' => 'Ulasim']);
 
+        // CREATE Provider
+        $provider = \App\Provider::create([
+            'id' => 0,
+            'name' => 'default_provider',
+            'alias' => 'default',
+            'icon' => '-',
+            'client_id' => '-',
+            'client_secret' => '-',
+            'login_url' => '-'
+        ]);
+
+
+        // CREATE Account
+        $account = \App\Account::create([
+            'space_id' => $space->id,
+            'name' => 'account_RANDOMNUM',
+            'color' => '#CCCCCC',
+            'description' => 'description_RANDOM',
+            'provider_id' => $provider->id,
+            'currency_id' => 1,
+            'sync_url' => '---',
+            'last_sync' => new DateTime(),
+        ]);
+        $account->id=0;
+        $account->update();
+
+        // Add Earnings & Spendings for 1 year
         for ($i = 1; $i < 12; $i ++) {
             // Income
             \App\Earning::create([
                 'space_id' => $space->id,
                 'happened_on' => $year . '-' . $i . '-24',
-                'description' => 'Wage',
+                'description' => 'Maas',
                 'amount' => 25000
             ]);
 
@@ -40,16 +67,18 @@ class DatabaseSeeder extends Seeder {
                 'space_id' => $space->id,
                 'tag_id' => $tagBills->id,
                 'happened_on' => $year . '-' . $i . '-01',
-                'description' => 'Phone Subscription',
-                'amount' => 2500
+                'description' => 'Telefon',
+                'amount' => 2500,
+                'account_id' => $account->id
             ]);
 
             \App\Spending::create([
                 'space_id' => $space->id,
                 'tag_id' => $tagBills->id,
                 'happened_on' => $year . '-' . $i . '-01',
-                'description' => 'Car Insurance',
-                'amount' => 4500
+                'description' => 'Arac Sigortasi',
+                'amount' => 4500,
+                'account_id' => $account->id
             ]);
 
             // Food
@@ -59,7 +88,8 @@ class DatabaseSeeder extends Seeder {
                     'tag_id' => $tagFood->id,
                     'happened_on' => $year . '-' . $i . '-' . rand(1, 28),
                     'description' => '-',
-                    'amount' => 250 * rand(1, 5)
+                    'amount' => 250 * rand(1, 5),
+                    'account_id' => $account->id
                 ]);
             }
 
@@ -70,7 +100,8 @@ class DatabaseSeeder extends Seeder {
                     'tag_id' => $tagTransport->id,
                     'happened_on' => $year . '-' . $i . '-' . rand(1, 28),
                     'description' => '-',
-                    'amount' => 1000 * rand(1, 5)
+                    'amount' => 1000 * rand(1, 5),
+                    'account_id' => $account->id
                 ]);
             }
         }

@@ -8,6 +8,9 @@ class InsertMajorWesternCurrencies extends Migration {
     public function up() {
         DB::table('currencies')->insert([
             [
+                'name' => 'Turk Lirasi',
+                'symbol' => 'TL'
+            ], [
                 'name' => 'Euro',
                 'symbol' => '&euro;'
             ], [

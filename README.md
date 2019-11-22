@@ -36,6 +36,18 @@ php artisan serve
 php artisan queue:work
 ```
 
+## Database: Seeding
+
+To use the application with test user, you need to call database seeding as below. It will create test user, account etc.
+
+```
+php artisan db:seed
+```
+
+username : ***test@kolaybutce.com***
+
+password : ***test1234***
+
 ## Contact
 
 * [Discord](https://discord.gg/QFQdvy3)
