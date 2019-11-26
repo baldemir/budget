@@ -13,6 +13,7 @@ class EarningController extends Controller {
         return [
             'date' => 'required|date|date_format:Y-m-d',
             'description' => 'required|max:255',
+            'additional_desc' => 'max:1000',
             'amount' => 'required|regex:/^(\d{0,3}(?:,\d{3}){0,4})*(\.\d{2})?$/'
         ];
     }
@@ -65,6 +66,7 @@ class EarningController extends Controller {
         $earning->space_id = session('space')->id;
         $earning->happened_on = $request->input('date');
         $earning->description = $request->input('description');
+        $earning->additional_desc = $request->input('additional_desc');
         $earning->amount = (int) ($request->input('amount') * 100);
 
         $earning->save();
@@ -87,6 +89,7 @@ class EarningController extends Controller {
         $earning->fill([
             'happened_on' => $request->input('date'),
             'description' => $request->input('description'),
+            'additional_desc' => $request->input('additional_desc'),
             'amount' => $amount
         ])->save();
 

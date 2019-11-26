@@ -30,6 +30,11 @@
                         <input type="text" name="description" value="{{ $spending->description }}" />
                         @include('partials.validation_error', ['payload' => 'description'])
                     </div>
+                    <div class="input input--small">
+                        <label>{{ __('fields.additional_desc') }}</label>
+                        <input type="text" name="additional_desc" value="{{ $spending->additional_desc }}" />
+                        @include('partials.validation_error', ['payload' => 'additional_desc'])
+                    </div>
                     <div class="input input--small mb-0">
                         <label>{{__('fields.amount')}}</label>
                         <input type="text" data-type='currency' name="amount" value="{{ $spending->formatted_amount }}" />

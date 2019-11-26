@@ -58,6 +58,7 @@ class SpendingController extends Controller {
             'tag_id' => 'nullable|exists:tags,id', // TODO CHECK IF TAG BELONGS TO USER
             'date' => 'required|date|date_format:Y-m-d',
             'description' => 'required|max:255',
+            'additional_desc' => 'required|max:1000',
             'amount' => 'required|regex:/^(\d{0,3}(?:,\d{3}){0,4})*(\.\d{2})?$/'
         ]);
 
@@ -67,6 +68,7 @@ class SpendingController extends Controller {
         $spending->tag_id = $request->input('tag_id');
         $spending->happened_on = $request->input('date');
         $spending->description = $request->input('description');
+        $spending->additional_desc = $request->input('additional_desc');
         $spending->amount = (int) ($request->input('amount') * 100);
 
         $spending->save();
@@ -96,6 +98,7 @@ class SpendingController extends Controller {
             'tag_id' => $request->input('tag_id'),
             'happened_on' => $request->input('date'),
             'description' => $request->input('description'),
+            'additional_desc' => $request->input('additional_desc'),
             'amount' => $amount
         ])->save();
 
