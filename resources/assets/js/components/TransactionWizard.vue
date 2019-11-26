@@ -27,8 +27,13 @@
         </div>
         <div class="input">
             <label>Açıklama</label>
-            <input type="text" v-model="description" :placeholder="type == 'earning' ? 'Mart ayı maaşı' : 'Ebru için doğum günü hediyesi'" />
+            <input type="text" v-model="description" :placeholder="type == 'earning' ? 'Mart ayı maaşı' : 'ANKARA CEPA AVM Media Markt'" />
             <validation-error v-if="errors.description" :message="errors.description"></validation-error>
+        </div>
+        <div class="input">
+            <label>Ek Açıklama</label>
+            <input type="text" v-model="additional_desc" :placeholder="type == 'earning' ? 'Mart ayı maaşı' : 'Ebru için doğum günü hediyesi'" />
+            <validation-error v-if="errors.additional_desc" :message="errors.additional_desc"></validation-error>
         </div>
         <div class="input">
             <label>Tutar</label>
@@ -95,6 +100,7 @@
                 tag: null,
                 date: this.getTodaysDate(),
                 description: '',
+                additional_desc: '',
                 amount: '10.00',
                 isRecurring: false,
                 recurringEnd: 'forever',
@@ -145,6 +151,7 @@
                             _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                             day: this.date.slice(-2),
                             description: this.description,
+                            additional_desc: this.additional_desc,
                             amount: this.amount
                         }
 
@@ -166,6 +173,7 @@
                             _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                             date: this.date,
                             description: this.description,
+                            additional_desc: this.additional_desc,
                             amount: this.amount,
                             account_id: this.account_id
                         }
@@ -193,6 +201,7 @@
 
                 this.date = this.getTodaysDate()
                 this.description = ''
+                this.additional_desc = '';
                 this.amount = ''
                 // Leave isRecurring as is
                 this.recurringEnd = 'forever'

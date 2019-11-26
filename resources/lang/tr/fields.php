@@ -13,6 +13,7 @@ return [
 
     'date' => 'Tarih',
     'description' => 'Açıklama',
+    'additional_desc' => 'Ek Açıklama',
     'amount' => 'Tutar',
 
     'file' => 'Dosya',

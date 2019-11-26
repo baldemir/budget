@@ -18,6 +18,7 @@ class Spending extends Model {
         'tag_id',
         'happened_on',
         'description',
+        'additional_desc',
         'amount',
         'account_id'
     ];
