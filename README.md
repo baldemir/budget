@@ -4,11 +4,11 @@
 
 # Budget
 
-https://budget.pixely.me
+https://kolaybutce.com/
 
 Budget is an open-source web application that helps you keep track of your finances.
 
-![Product](https://user-images.githubusercontent.com/9268822/46098425-a8877300-c1c4-11e8-9293-f43ceb9d6f97.png)
+![Product](http://berataldemir.com/static/desktop.png)
 
 ## Features
 
