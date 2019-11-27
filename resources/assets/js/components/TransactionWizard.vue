@@ -1,15 +1,8 @@
 <template>
     <div>
-        <div class="bg mb-2">
-            <button
-                class="bg__button"
-                :class="{ 'bg__button--active': type == 'earning' }"
-                @click="switchType('earning')">Gelir</button>
-            <button
-                class="bg__button"
-                :class="{ 'bg__button--active': type == 'spending' }"
-                @click="switchType('spending')">Gider</button>
-        </div>
+
+        <button-radio :callback="updateState" :need_callback="true"></button-radio>
+
         <div class="input" v-if="type == 'spending'">
             <label>Kategori</label>
             <searchable
@@ -122,6 +115,10 @@
         },
 
         methods: {
+            updateState(type){
+                this.type=type;
+            },
+
             // Children
             onDateUpdate(date) {
                 this.date = date

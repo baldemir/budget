@@ -9,7 +9,14 @@
             <form method="POST" action="/tags" autocomplete="off">
                 {{ csrf_field() }}
                 <div class="box__section">
-                    <div class="input input--small">
+                    <div class="input input--small mb-0">
+                        <label>{{ __('fields.type') }}</label>
+                        <button-radio :need_callback="false"></button-radio>
+
+                        <!-- TODO:: validation_error eklenecek -->
+
+                    </div>
+                    <div class="input input--small mb-0">
                         <label>{{ __('fields.name') }}</label>
                         <input type="text" name="name" />
                         @include('partials.validation_error', ['payload' => 'name'])
