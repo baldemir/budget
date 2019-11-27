@@ -13,9 +13,19 @@
         <div class="input" v-if="type == 'spending'">
             <label>Kategori</label>
             <searchable
+                :type=1
                 name="tag"
                 :items="tags"
                 @SelectUpdated="tagUpdated"></searchable>
+            <validation-error v-if="errors.tag_id" :message="errors.tag_id"></validation-error>
+        </div>
+        <div class="input" v-if="type == 'earning'">
+            <label>Kategori</label>
+            <searchable
+                    :type=2
+                    name="tag"
+                    :items="tags"
+                    @SelectUpdated="tagUpdated"></searchable>
             <validation-error v-if="errors.tag_id" :message="errors.tag_id"></validation-error>
         </div>
         <div class="input">
@@ -178,7 +188,7 @@
                             account_id: this.account_id
                         }
 
-                        if (this.type == 'spending' && this.tag) {
+                        if (this.tag) {
                             body.tag_id = this.tag
                         }
 
