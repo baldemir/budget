@@ -52,14 +52,16 @@
                                     <div class="row__column row__column--middle">{{ date('d-m-Y', strtotime($transaction->happened_on))}}</div>
                                     <div class="row__column row__column--middle">{{ $transaction->description }}</div>
                                     <div class="row__column">
-                                        @if ($transaction->tag)
-                                            <div class="row">
-                                                <div class="row__column row__column--compact row__column--middle mr-05" style="font-size: 12px;">
-                                                    <i class="fas fa-tag" style="color: #{{ $transaction->tag->color }};"></i>
-                                                </div>
-                                                <div class="row__column row__column--compact row__column--middle">{{ $transaction->tag->name }}</div>
-                                            </div>
-                                        @endif
+
+                                            <select name="tag_id" transaction_id="{{$transaction->id}}" transaction_type="{{ get_class($transaction) == 'App\Spending' ? 1 : 2}}" class="tag-auto-select" onchange="categoryChanged(this, this.value)">
+                                                <option value="">-</option>
+                                                @foreach ($tags as $tag)
+                                                    @if((get_class($transaction) == 'App\Spending' && $tag->type == 1) || (get_class($transaction) == 'App\Earning' && $tag->type == 2))
+                                                        <option @if($transaction->tag_id == $tag->id) selected @endif value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+
                                     </div>
                                     <div class="amount-field row__column row__column--compact row__column--middle {{ get_class($transaction) == 'App\Earning' ? 'color-green' : 'color-red' }}">{!! $currency !!} {{ $transaction->formatted_amount }}</div>
                                     <div class="row__column row__column--compact row__column--middle ml-1 tooltip {{ get_class($transaction) == 'App\Earning' ? 'color-green' : 'color-red' }}">
@@ -102,6 +104,30 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script >
+        function categoryChanged(elem, val){
+            console.log(elem.getAttribute('transaction_id'));
+            console.log(val);
+            var url = "/transactions/update";
+            if(elem.getAttribute('transaction_type') == 1){
+                url += "Spending/";
+            }else{
+                url += "Earning/";
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                method: "POST",
+                url: url + elem.getAttribute('transaction_id'),
+                data: { tag_id: val}
+            }).done(function( msg ) {
+                    alert( "Data Saved: " + msg );
+                });
+        }
+    </script>
 @endsection
 @section('styles')
     <style>
@@ -155,5 +181,13 @@
             visibility: visible;
         }
 
+        .tag-auto-select {
+            max-width: 180px;
+            width: inherit;
+            cursor: pointer;
+        }
+        .tag-auto-select:focus {
+            box-shadow: none;
+        }
     </style>
 @endsection

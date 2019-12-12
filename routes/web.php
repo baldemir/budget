@@ -22,6 +22,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::name('transactions.')->group(function () {
         Route::get('/transactions', 'TransactionController@index')->name('index');
         Route::get('/transactions/create', 'TransactionController@create')->name('create');
+        Route::post('/transactions/updateSpending/{spending}', 'TransactionController@updateSpending')->name('updateSpending');
+        Route::post('/transactions/updateEarning/{earning}', 'TransactionController@updateEarning')->name('updateEarning');
     });
 
     Route::name('earnings.')->group(function () {
