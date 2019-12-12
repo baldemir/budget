@@ -29,7 +29,7 @@ Welcome to the generated API reference.
 curl -X GET -G "https://kolaybutce.com/api/getDailyTransactions" \
     -H "Authorization: Bearer {token}" \
     -H "Content-Type: application/json" \
-    -d '{"year":1,"month":1,"day":20}'
+    -d '{"year":13,"month":13,"day":7}'
 
 ```
 
@@ -43,9 +43,9 @@ let headers = {
 }
 
 let body = {
-    "year": 1,
-    "month": 1,
-    "day": 20
+    "year": 13,
+    "month": 13,
+    "day": 7
 }
 
 fetch(url, {
@@ -87,7 +87,7 @@ Parameter | Type | Status | Description
 curl -X GET -G "https://kolaybutce.com/api/getMonthlyTransactions" \
     -H "Authorization: Bearer {token}" \
     -H "Content-Type: application/json" \
-    -d '{"year":10,"month":8}'
+    -d '{"year":13,"month":17}'
 
 ```
 
@@ -101,8 +101,8 @@ let headers = {
 }
 
 let body = {
-    "year": 10,
-    "month": 8
+    "year": 13,
+    "month": 17
 }
 
 fetch(url, {
@@ -143,7 +143,7 @@ Parameter | Type | Status | Description
 curl -X GET -G "https://kolaybutce.com/api/getMonthlyEarnings" \
     -H "Authorization: Bearer {token}" \
     -H "Content-Type: application/json" \
-    -d '{"year":6,"month":2}'
+    -d '{"year":17,"month":9}'
 
 ```
 
@@ -157,8 +157,8 @@ let headers = {
 }
 
 let body = {
-    "year": 6,
-    "month": 2
+    "year": 17,
+    "month": 9
 }
 
 fetch(url, {
@@ -199,7 +199,7 @@ Parameter | Type | Status | Description
 curl -X GET -G "https://kolaybutce.com/api/getMonthlySpendings" \
     -H "Authorization: Bearer {token}" \
     -H "Content-Type: application/json" \
-    -d '{"year":1,"month":15}'
+    -d '{"year":13,"month":17}'
 
 ```
 
@@ -213,8 +213,8 @@ let headers = {
 }
 
 let body = {
-    "year": 1,
-    "month": 15
+    "year": 13,
+    "month": 17
 }
 
 fetch(url, {
@@ -255,7 +255,7 @@ Parameter | Type | Status | Description
 curl -X GET -G "https://kolaybutce.com/api/getMonthlySummary" \
     -H "Authorization: Bearer {token}" \
     -H "Content-Type: application/json" \
-    -d '{"year":7,"month":15}'
+    -d '{"year":14,"month":2}'
 
 ```
 
@@ -269,8 +269,8 @@ let headers = {
 }
 
 let body = {
-    "year": 7,
-    "month": 15
+    "year": 14,
+    "month": 2
 }
 
 fetch(url, {
@@ -311,7 +311,7 @@ Parameter | Type | Status | Description
 curl -X GET -G "https://kolaybutce.com/api/getMonthlyCategories" \
     -H "Authorization: Bearer {token}" \
     -H "Content-Type: application/json" \
-    -d '{"year":3,"month":1}'
+    -d '{"year":6,"month":14}'
 
 ```
 
@@ -325,8 +325,8 @@ let headers = {
 }
 
 let body = {
-    "year": 3,
-    "month": 1
+    "year": 6,
+    "month": 14
 }
 
 fetch(url, {
@@ -449,7 +449,7 @@ fetch(url, {
 curl -X POST "https://kolaybutce.com/api/setUserImage" \
     -H "Authorization: Bearer {token}" \
     -H "Content-Type: application/json" \
-    -d '{"avatar":"voluptatem"}'
+    -d '{"avatar":"veniam"}'
 
 ```
 
@@ -463,7 +463,7 @@ let headers = {
 }
 
 let body = {
-    "avatar": "voluptatem"
+    "avatar": "veniam"
 }
 
 fetch(url, {
@@ -503,7 +503,7 @@ Parameter | Type | Status | Description
 curl -X POST "https://kolaybutce.com/api/saveTransaction" \
     -H "Authorization: Bearer {token}" \
     -H "Content-Type: application/json" \
-    -d '{"tag_id":5,"happened_on":"quae","description":"debitis","amount":1}'
+    -d '{"tag_id":18,"happened_on":"repudiandae","description":"veniam","amount":8}'
 
 ```
 
@@ -517,10 +517,10 @@ let headers = {
 }
 
 let body = {
-    "tag_id": 5,
-    "happened_on": "quae",
-    "description": "debitis",
-    "amount": 1
+    "tag_id": 18,
+    "happened_on": "repudiandae",
+    "description": "veniam",
+    "amount": 8
 }
 
 fetch(url, {
@@ -563,7 +563,7 @@ Parameter | Type | Status | Description
 curl -X GET -G "https://kolaybutce.com/api/getMonthlyTransactionsByCategory" \
     -H "Authorization: Bearer {token}" \
     -H "Content-Type: application/json" \
-    -d '{"year":17,"month":16,"categoryId":14}'
+    -d '{"year":14,"month":4,"categoryId":6}'
 
 ```
 
@@ -577,9 +577,9 @@ let headers = {
 }
 
 let body = {
-    "year": 17,
-    "month": 16,
-    "categoryId": 14
+    "year": 14,
+    "month": 4,
+    "categoryId": 6
 }
 
 fetch(url, {
@@ -621,7 +621,7 @@ Parameter | Type | Status | Description
 curl -X POST "https://kolaybutce.com/api/extensionLogin" \
     -H "Authorization: Bearer {token}" \
     -H "Content-Type: application/json" \
-    -d '{"email":"similique","password":"et"}'
+    -d '{"email":"iusto","password":"nam"}'
 
 ```
 
@@ -635,8 +635,8 @@ let headers = {
 }
 
 let body = {
-    "email": "similique",
-    "password": "et"
+    "email": "iusto",
+    "password": "nam"
 }
 
 fetch(url, {
@@ -679,7 +679,7 @@ Parameter | Type | Status | Description
 curl -X POST "https://kolaybutce.com/api/loginWithFacebookToken" \
     -H "Authorization: Bearer {token}" \
     -H "Content-Type: application/json" \
-    -d '{"token":"unde"}'
+    -d '{"token":"vel"}'
 
 ```
 
@@ -693,7 +693,7 @@ let headers = {
 }
 
 let body = {
-    "token": "unde"
+    "token": "vel"
 }
 
 fetch(url, {
