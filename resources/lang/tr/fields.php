@@ -17,6 +17,7 @@ return [
     'amount' => 'Tutar',
 
     'file' => 'Dosya',
+    'type' => 'Tür',
 
     'color' => 'Renk',
     'image' => 'Resim'

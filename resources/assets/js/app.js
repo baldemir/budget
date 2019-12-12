@@ -13,6 +13,7 @@ Vue.component('transaction-wizard', require('./components/TransactionWizard.vue'
 Vue.component('validation-error', require('./components/ValidationError.vue'))
 Vue.component('searchable', require('./components/Searchable.vue'))
 Vue.component('color-picker', require('./components/ColorPicker.vue'))
+Vue.component('button-radio', require('./components/RadioButton.vue'))
 
 Vue.directive('click-outside', {
     bind: function (e, binding, vnode) {

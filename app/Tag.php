@@ -12,7 +12,7 @@ class Tag extends Model {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['space_id', 'name', 'color', 'image'];
+    protected $fillable = ['space_id', 'name', 'color', 'image' , 'type'];
 
     protected $dispatchesEvents = [
         'created' => TagCreated::class,

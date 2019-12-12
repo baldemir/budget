@@ -31,7 +31,8 @@ class TagController extends Controller {
         Tag::create([
             'space_id' => session('space')->id,
             'name' => $request->input('name'),
-            'color' => $request->input('color')
+            'color' => $request->input('color'),
+            'type' => intval($request->input('tag_type_id'))
         ]);
 
         return redirect()->route('tags.index');
