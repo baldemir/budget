@@ -1,21 +1,24 @@
 <template>
     <div>
-        <div class="bg mb-2">
-            <button
-                class="bg__button"
-                :class="{ 'bg__button--active': type == 'earning' }"
-                @click="switchType('earning')">Gelir</button>
-            <button
-                class="bg__button"
-                :class="{ 'bg__button--active': type == 'spending' }"
-                @click="switchType('spending')">Gider</button>
-        </div>
+
+        <button-radio :callback="updateState" :need_callback="true"></button-radio>
+
         <div class="input" v-if="type == 'spending'">
             <label>Kategori</label>
             <searchable
+                :type=1
                 name="tag"
                 :items="tags"
                 @SelectUpdated="tagUpdated"></searchable>
+            <validation-error v-if="errors.tag_id" :message="errors.tag_id"></validation-error>
+        </div>
+        <div class="input" v-if="type == 'earning'">
+            <label>Kategori</label>
+            <searchable
+                    :type=2
+                    name="tag"
+                    :items="tags"
+                    @SelectUpdated="tagUpdated"></searchable>
             <validation-error v-if="errors.tag_id" :message="errors.tag_id"></validation-error>
         </div>
         <div class="input">
@@ -112,6 +115,10 @@
         },
 
         methods: {
+            updateState(type){
+                this.type=type;
+            },
+
             // Children
             onDateUpdate(date) {
                 this.date = date
@@ -178,7 +185,7 @@
                             account_id: this.account_id
                         }
 
-                        if (this.type == 'spending' && this.tag) {
+                        if (this.tag) {
                             body.tag_id = this.tag
                         }
 

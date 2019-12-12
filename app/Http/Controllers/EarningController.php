@@ -11,6 +11,7 @@ use Auth;
 class EarningController extends Controller {
     protected function validationRules() {
         return [
+            'tag_id' => 'nullable|exists:tags,id', // TODO CHECK IF TAG BELONGS TO USER
             'date' => 'required|date|date_format:Y-m-d',
             'description' => 'required|max:255',
             'additional_desc' => 'max:1000',
@@ -64,6 +65,7 @@ class EarningController extends Controller {
         $earning = new Earning;
 
         $earning->space_id = session('space')->id;
+        $earning->tag_id = $request->input('tag_id');
         $earning->happened_on = $request->input('date');
         $earning->description = $request->input('description');
         $earning->additional_desc = $request->input('additional_desc');
@@ -87,6 +89,7 @@ class EarningController extends Controller {
         $amount = str_replace('.', '', str_replace(',', '', $request->input('amount')));
 
         $earning->fill([
+            'tag_id' => $request->input('tag_id'),
             'happened_on' => $request->input('date'),
             'description' => $request->input('description'),
             'additional_desc' => $request->input('additional_desc'),
