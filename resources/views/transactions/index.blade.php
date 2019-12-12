@@ -61,13 +61,18 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="row__column row__column--compact row__column--middle {{ get_class($transaction) == 'App\Earning' ? 'color-green' : 'color-red' }}">{!! $currency !!} {{ $transaction->formatted_amount }}</div>
-                                    <div class="row__column row__column--compact row__column--middle ml-1 {{ get_class($transaction) == 'App\Earning' ? 'color-green' : 'color-red' }}">
-                                        @if (get_class($transaction) == 'App\Earning')
-                                            <i class="fas fa-arrow-alt-left fa-sm"></i>
-                                        @else
-                                            <i class="fas fa-arrow-alt-right fa-sm"></i>
+                                    <div class="amount-field row__column row__column--compact row__column--middle {{ get_class($transaction) == 'App\Earning' ? 'color-green' : 'color-red' }}">{!! $currency !!} {{ $transaction->formatted_amount }}</div>
+                                    <div class="row__column row__column--compact row__column--middle ml-1 tooltip {{ get_class($transaction) == 'App\Earning' ? 'color-green' : 'color-red' }}">
+                                        @if($transaction->additional_desc)
+                                            @if (get_class($transaction) == 'App\Earning')
+                                                <i class="fas fa-info-circle fa-sm"></i>
+                                                <span class="tooltiptext green-desc">{{ $transaction->additional_desc }}</span>
+                                            @else
+                                                <i class="fas fa-info-circle fa-sm"></i>
+                                                <span class="tooltiptext red-desc">{{ $transaction->additional_desc }}</span>
+                                            @endif
                                         @endif
+
                                     </div>
                                     <div class="row__column row__column--middle row row--right">
                                         <div class="row__column row__column--compact">
@@ -97,4 +102,58 @@
             </div>
         </div>
     </div>
+@endsection
+@section('styles')
+    <style>
+        .amount-field{
+            width: 85px;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            width: 20px;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            opacity: 1;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            top: -5px;
+            left: 110%;
+        }
+        .red-desc {
+            background-color: #f57c7e;
+        }
+        .green-desc {
+            background-color: #82cc6e;
+        }
+        .red-desc:after{
+            border-color: transparent #f57c7e transparent transparent;
+        }
+        .green-desc:after{
+            border-color: transparent #82cc6e transparent transparent;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            margin-top: -5px;
+            border-width: 5px;
+            border-style: solid;
+
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+
+    </style>
 @endsection

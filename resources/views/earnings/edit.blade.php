@@ -20,6 +20,11 @@
                         <input type="text" name="description" value="{{ $earning->description }}" />
                         @include('partials.validation_error', ['payload' => 'description'])
                     </div>
+                    <div class="input input--small">
+                        <label>{{ __('fields.additional_desc') }}</label>
+                        <input type="text" name="additional_desc" value="{{ $earning->additional_desc }}" />
+                        @include('partials.validation_error', ['payload' => 'additional_desc'])
+                    </div>
                     <div class="input input--small mb-0">
                         <label>Amount</label>
                         <input type="text" data-type='currency'  name="amount" value="{{ $earning->formatted_amount }}" />
