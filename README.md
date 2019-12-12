@@ -2,11 +2,11 @@
 [![GitHub stars](https://img.shields.io/github/stars/range-of-motion/budget.svg)](https://github.com/range-of-motion/budget/stargazers)
 [![GitHub license](https://img.shields.io/github/license/range-of-motion/budget.svg)](https://github.com/range-of-motion/budget/blob/master/LICENSE)
 
-# Budget
+# Kolay Bütçe
 
 https://budget.pixely.me
 
-Budget is an open-source web application that helps you keep track of your finances.
+Kolay Bütçe is an open-source web application that helps you keep track of your finances.
 
 ![Product](https://user-images.githubusercontent.com/9268822/46098425-a8877300-c1c4-11e8-9293-f43ceb9d6f97.png)
 
