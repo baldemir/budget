@@ -10,20 +10,19 @@
                 <input type="search" v-model="query" placeholder="Ara" ref="query" />
                 <ul :style="{ 'max-height': size * 50 + 'px' }">
                     <li
-                        class="row"
-                        v-for="item in queriedItems"
-                        v-if="item.type == type"
-                        @click="select(item)">
+                            class="row"
+                            v-for="item in queriedItems"
+                            @click="select(item)">
                         <div
-                            class="row__column row__column--compact"
-                            style="width: 20px;">
+                                class="row__column row__column--compact"
+                                style="width: 20px;">
                             <i
-                                class="fas fa-check fa-xs"
-                                v-if="isSelected(item)"></i>
+                                    class="fas fa-check fa-xs"
+                                    v-if="isSelected(item)"></i>
                         </div>
                         <div
-                            class="row__column"
-                            v-html="item.label"></div>
+                                class="row__column"
+                                v-html="item.label"></div>
                     </li>
                 </ul>
             </div>
@@ -37,10 +36,8 @@
             name: String,
             size: { type: Number, default: 4 },
             items: Array,
-            initial: String,
-            type: Number
+            initial: String
         },
-
         data() {
             return {
                 shown: false,
@@ -48,25 +45,21 @@
                 query: ''
             }
         },
-
         computed: {
             inputValue() {
                 if (this.selected) {
                     return this.selected.key
                 }
-
                 return ''
             },
-
             queriedItems() {
                 return this.items.filter(item => {
                     if (this.query.length < 1 || item.label.toUpperCase().indexOf(this.query.toUpperCase()) > -1) {
-                        return item
-                    }
-                })
+                    return item
+                }
+            })
             }
         },
-
         methods: {
             getItemByKey(key) {
                 for (let i = 0; i < this.items.length; i ++) {
@@ -75,34 +68,26 @@
                     }
                 }
             },
-
             isSelected(item) {
                 return this.selected == item
             },
-
             toggleShown() {
                 this.shown = !this.shown
-
                 this.$nextTick(() => {
                     if (this.$refs.query) {
-                        this.$refs.query.focus()
-                    }
-                })
+                    this.$refs.query.focus()
+                }
+            })
             },
-
             show() {
                 this.shown = true
             },
-
             hide() {
                 this.shown = false
             },
-
             select(payload) {
                 this.selected = payload
-
                 this.hide()
-
                 // Update parent
                 this.$emit('SelectUpdated', this.selected)
             }

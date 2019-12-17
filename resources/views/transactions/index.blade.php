@@ -124,7 +124,7 @@
                 url: url + elem.getAttribute('transaction_id'),
                 data: { tag_id: val}
             }).done(function( msg ) {
-                    alert( "Data Saved: " + msg );
+                    
                 });
         }
     </script>
