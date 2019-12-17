@@ -76,7 +76,7 @@
                                         @endif
 
                                     </div>
-                                    <div class="row__column row__column--middle row row--right">
+                                    <div class="row__column row__column--middle row row--right row__column--compact">
                                         <div class="row__column row__column--compact">
                                             <a @if (get_class($transaction) == 'App\Earning')href="/earnings/{{ $transaction->id }}/edit" @endif @if (get_class($transaction) == 'App\Spending')href="/spendings/{{ $transaction->id }}/edit" @endif>
                                                 <i class="far fa-pencil"></i>
@@ -124,7 +124,7 @@
                 url: url + elem.getAttribute('transaction_id'),
                 data: { tag_id: val}
             }).done(function( msg ) {
-                    
+
                 });
         }
     </script>
@@ -188,6 +188,9 @@
         }
         .tag-auto-select:focus {
             box-shadow: none;
+        }
+        select.tag-auto-select {
+            width: 170px;
         }
     </style>
 @endsection
