@@ -446,7 +446,7 @@ class TransactionController extends BaseController
                             $classifier->save('berat_tags.cls');
                         }
 
-                        $guess = $classifier->predict('00646-OPET-SAHIN PETROL T ANKARA');
+                        $guess = $classifier->predict($transaction->description);
                         $transaction->tag_id = $guess["label"];
                     }
                     $transaction->account_id = 1;
