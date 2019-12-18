@@ -13,7 +13,8 @@
         "laravel/passport": "^7.3",
         "laravel/socialite": "^3.2.0",
         "laravel/tinker": "~1.0",
-        "nesbot/carbon": "1.25"
+        "nesbot/carbon": "1.25",
+        "teamtnt/tntsearch": "^2.2"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

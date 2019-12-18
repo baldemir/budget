@@ -191,6 +191,7 @@
         }
         select.tag-auto-select {
             width: 170px;
+            margin-left: 8px;
         }
     </style>
 @endsection

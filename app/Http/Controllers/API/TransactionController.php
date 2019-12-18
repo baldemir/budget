@@ -432,6 +432,24 @@ class TransactionController extends BaseController
 
                 if($amount < 0){
                     $transaction->tag_id = $tag->id;
+                    //sadece berat'ın(space_id=1) harcamalarının kategorilerini tahmin et
+                    if($spaceId == 1){
+                        $classifier = new TNTClassifier();
+                        try{
+                            $classifier->load('berat_tags.cls');
+                            echo "no learning";
+                        }catch (\Exception $e){
+                            echo "learning";
+                            $spendings = Spending::where('space_id', 1)->get();
+                            foreach ($spendings as $data){
+                                $classifier->learn($data->description, $data->tag_id);
+                            }
+                            $classifier->save('berat_tags.cls');
+                        }
+
+                        $guess = $classifier->predict('00646-OPET-SAHIN PETROL T ANKARA');
+                        $transaction->tag_id = $guess->label;
+                    }
                     $transaction->account_id = 1;
                     $amount = $amount * -1;
                     $isDuplicate = $this->getDuplicateSpending($transaction->description, $transaction->happened_on, $transaction->space_id, $transaction->tag_id, $amount);
