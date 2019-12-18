@@ -438,9 +438,7 @@ class TransactionController extends BaseController
                         $classifier = new TNTClassifier();
                         try{
                             $classifier->load('berat_tags.cls');
-                            echo "no learning";
                         }catch (\Exception $e){
-                            echo "learning";
                             $spendings = Spending::where('space_id', 1)->get();
                             foreach ($spendings as $data){
                                 $classifier->learn($data->description, $data->tag_id);
@@ -449,7 +447,7 @@ class TransactionController extends BaseController
                         }
 
                         $guess = $classifier->predict('00646-OPET-SAHIN PETROL T ANKARA');
-                        $transaction->tag_id = $guess->label;
+                        $transaction->tag_id = $guess["label"];
                     }
                     $transaction->account_id = 1;
                     $amount = $amount * -1;
