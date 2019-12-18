@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Socialite\Facades\Socialite;
+use TeamTNT\TNTSearch\Classifier\TNTClassifier;
 use Validator;
 use Image;
 
