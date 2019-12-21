@@ -58,7 +58,7 @@ class SpendingController extends Controller {
             'tag_id' => 'nullable|exists:tags,id', // TODO CHECK IF TAG BELONGS TO USER
             'date' => 'required|date|date_format:Y-m-d',
             'description' => 'required|max:255',
-            'additional_desc' => 'required|max:1000',
+            'additional_desc' => 'max:1000',
             'amount' => 'required|regex:/^(\d{0,3}(?:,\d{3}){0,4})*(\.\d{2})?$/'
         ]);
 

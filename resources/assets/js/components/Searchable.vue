@@ -12,6 +12,7 @@
                     <li
                             class="row"
                             v-for="item in queriedItems"
+                            v-if="item.type == type"
                             @click="select(item)">
                         <div
                                 class="row__column row__column--compact"
@@ -36,7 +37,9 @@
             name: String,
             size: { type: Number, default: 4 },
             items: Array,
-            initial: String
+            initial: String,
+            type: Number
+
         },
         data() {
             return {
